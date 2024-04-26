@@ -4,7 +4,7 @@ Tags: Elementor, elementor widgets, elements, elementor addon, elementor templat
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 5.5.0
+Stable tag: 5.5.1
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -428,6 +428,9 @@ We have the most advanced caching architecture, Which will never bloat your site
 12. Unique 22+ Elementor Extensions
 
 == Changelog ==
+
+= 5.5.1 =
+Fix : Post Content : Condition Improvement
 
 = 5.5.0 =
 Compatibility : Elementor Free & Pro 3.21

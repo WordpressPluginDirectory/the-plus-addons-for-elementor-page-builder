@@ -356,7 +356,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 
 			if ( 'default' === $post_content_type ) {
 
-				if ( 'WordPress' === $post_content_editor_type ) {
+				if ( strtolower( 'WordPress' ) === strtolower( $post_content_editor_type ) ) {
 
 					static $views_ids = array();
 					$post_id          = get_the_ID();

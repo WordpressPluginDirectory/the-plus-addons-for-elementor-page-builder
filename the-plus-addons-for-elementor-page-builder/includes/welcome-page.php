@@ -87,7 +87,7 @@ echo '<div class="theplus-panel-welcome-page">';
 				echo '<div class="theplus-sec-subtitle">'.esc_html__('Notable additions made to The Plus Addons for Elementor.','tpebl').'</div>';
 				echo '<div class="theplus-sec-border"></div>';
 				echo '<div class="theplus-changelog-list">';
-					echo '<div class="changelog-date">April 25 , 2024 <span class="changelog-version">Lite Version 5.5.0</span></div>';
+					echo '<div class="changelog-date">April 25 , 2024 <span class="changelog-version">Lite Version 5.5.1</span></div>';
 						echo '<ul class="changelog-list">';
 							echo '<li>'.esc_html__('Add : Post Navigation Widget', 'tpebl').'</li>';
 							echo '<li>'.esc_html__('Add : Dynamic Category Widget', 'tpebl').'</li>';
@@ -98,7 +98,7 @@ echo '<div class="theplus-panel-welcome-page">';
 
 				echo '<div class="theplus-sec-border" style="width:100%;height:1px;background:#DBDBDB;"></div>';
 				echo '<div class="theplus-changelog-list">';
-					echo '<div class="changelog-date">April 25 , 2024 <span class="changelog-version">Pro Version 5.5.0</span></div>';
+					echo '<div class="changelog-date">April 25 , 2024 <span class="changelog-version">Pro Version 5.5.1</span></div>';
 						echo '<ul class="changelog-list">';
 							echo '<li>'.esc_html__('Add : Gallery Listing : Custom Metro Layouts', 'tpebl').'</li>';
 							echo '<li>'.esc_html__('Update : Number Counter : Digit Gradient style condition Improvements', 'tpebl').'</li>';
