@@ -29,7 +29,7 @@ Class L_Plus_Library {
      *
      * @since 2.0
 	 * 
-	 * @version 5.4.1
+	 * @version 5.5.4
      */
     public function get_plus_widget_settings($element = null) {
 		$replace = [
@@ -71,9 +71,13 @@ Class L_Plus_Library {
 			'tp_pricing_table' => 'tp-pricing-table',
 			'tp_post_search' => 'tp-post-search',
 			'tp_progress_bar' => 'tp-progress-bar',
+			'tp_process_steps' => 'tp-process-steps',
 			'tp_scroll_navigation' => 'tp-scroll-navigation',
 			'tp_social_embed' => 'tp-social-embed',
 			'tp_social_icon' => 'tp-social-icon',
+			'tp_syntax_highlighter' => 'tp-syntax-highlighter',
+			'tp_style_list' => 'tp-style-list',
+			'tp_switcher' => 'tp-switcher',
 			'tp_tabs_tours' => 'tp-tabs-tours',
 			'tp_team_member_listout' => 'tp-team-member-listout',
 			'tp_testimonial_listout' => 'tp-testimonial-listout',
@@ -93,10 +97,15 @@ Class L_Plus_Library {
 		    return (array_key_exists($val, $replace) ? $replace[$val] : $val);
         }, $elements);
 		
+
+		if( ! empty( $elements ) ){
+			$merge[] = 'plus-alignmnet-effect';
+		}
+
 		if ( in_array( 'tp-number-counter', $elements ) ) {
-			$merge[]= 'tp-number-counter';
-			$merge[]= 'tp-number-counter-style-1';
-			$merge[]= 'tp-number-counter-style-2';
+			$merge[] = 'tp-number-counter';
+			$merge[] = 'tp-number-counter-style-1';
+			$merge[] = 'tp-number-counter-style-2';
 			$merge[] = 'tp-draw-svg';
 		}
 
@@ -107,10 +116,15 @@ Class L_Plus_Library {
 			$merge[] = 'tp-bloglistout-style-1';
 		}
 
+		if(in_array('tp-flip-box',$elements)){
+			$merge[] = 'plus-responsive-visibility';
+		}
+
 		if(in_array('tp-info-box',$elements)){
 			$merge[] = 'tp-info-box';
 			$merge[] = 'tp-info-box-style_1';
 			$merge[] = 'tp-info-box-style_3';
+			$merge[] = 'plus-responsive-visibility';
 		}
 
 		if ( in_array( 'tp-gallery-listout', $elements ) ) {
@@ -118,11 +132,13 @@ Class L_Plus_Library {
 			$merge[] = 'plus-listing-metro';
 			$merge[] = 'tp-gallery-listout';
 			$merge[] = 'tp-gallery-listout-style-1';
+			$merge[] = 'tp-gallery-listout-style-2';
 		}
 
 		if(in_array('tp-team-member-listout',$elements)){
 			$merge[] = 'tp-team-member-listout';
 			$merge[] = 'tp-team-member-listout-style-1';
+			$merge[] = 'tp-team-member-listout-style-3';
 			$merge[] = 'plus-listing-masonry';
 		}
 
@@ -145,7 +161,14 @@ Class L_Plus_Library {
 		if ( in_array( 'tp-page-scroll', $elements ) ) {
 			$merge[] = 'tp-fullpage';
 			$merge[] = 'tp-fullpage-scroll';
-		}		
+			$merge[] = 'plus-widget-error';
+		}
+
+		if(in_array('tp-process-steps',$elements)){
+			$merge[] = 'tp-process-bg';
+			$merge[] = 'tp-process-counter';
+			$merge[] = 'tp-process-steps-js';
+		}
 		
 		if(!empty($plus_extras) && in_array('section_scroll_animation',$plus_extras)){
 			$merge[] ='plus-extras-section-skrollr';
@@ -156,6 +179,19 @@ Class L_Plus_Library {
 		
 		if(tp_has_lazyload()){
 			$merge[] ='plus-lazyLoad';
+		}
+
+		if(in_array('tp-syntax-highlighter',$elements)){
+			$merge[] = 'tp-syntax-highlighter';
+			$merge[] = 'tp-syntax-highlighter-icons';
+			$merge[] = 'prism_default';
+			$merge[] = 'prism_coy';
+			$merge[] = 'prism_dark';
+			$merge[] = 'prism_funky';
+			$merge[] = 'prism_okaidia';
+			$merge[] = 'prism_solarizedlight';
+			$merge[] = 'prism_tomorrownight';
+			$merge[] = 'prism_twilight';
 		}
 
 		if ( in_array( 'tp-age-gate', $elements ) ) {
@@ -251,7 +287,8 @@ Class L_Plus_Library {
 
 		if ( in_array( 'tp-pricing-table', $elements ) ) {
 			$merge[] = 'tp-pricing-table';
-			$merge[] = 'tp-pricing-table-style-1';
+            $merge[] = 'tp-pricing-table-style-1';
+            $merge[] = 'tp-pricing-ribbon';
 		}
 
 		if ( in_array( 'tp-scroll-navigation', $elements ) ) {

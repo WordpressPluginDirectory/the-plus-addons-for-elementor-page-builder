@@ -208,6 +208,10 @@ class Plus_Widgets_Manager {
 
 		if ( ! empty( $widget_name ) ) {
 
+			if( 'tp-heading-title' === $widget_name || 'tp-button' === $widget_name || 'tp-contact-form-7' === $widget_name || 'tp-post-search' === $widget_name || 'tp-flip-box' === $widget_name || 'tp-info-box' === $widget_name || 'tp-navigation-menu-lite' === $widget_name || 'tp-tabs-tours' === $widget_name || 'tp-social-icon' === $widget_name ){
+				$this->transient_widgets[] = "plus-alignmnet-effect";
+			}
+
 			if ( 'tp-button' === $widget_name ) {
 
 				$hover_effect = ! empty( $options['btn_hover_effects'] ) ? $options['btn_hover_effects'] : '';
@@ -237,8 +241,11 @@ class Plus_Widgets_Manager {
 
 				$gallery_style = ! empty( $options['style'] ) ? $options['style'] : 'style-1';
 
-				$this->transient_widgets[] = 'tp-gallery-listout-' . $gallery_style;
 				$this->transient_widgets[] = 'tp-gallery-listout';
+
+				if ( 'style-1' === $gallery_style || 'style-2' === $gallery_style) {
+					$this->transient_widgets[] = 'tp-gallery-listout-' . $gallery_style;
+				}
 
 				$this->transient_widgets[] = $this->tpebl_layout_listing( $options );
 			}
@@ -247,8 +254,8 @@ class Plus_Widgets_Manager {
 
 				$tm_style = ! empty( $options['style'] ) ? $options['style'] : 'style-1';
 
-				if ( 'style-1' === $tm_style ) {
-
+				if ( 'style-1' === $tm_style || 'style-3' === $tm_style ) {
+					
 					$this->transient_widgets[] = 'tp-team-member-listout-' . $tm_style;
 				}
 				$this->transient_widgets[] = 'tp-team-member-listout';
@@ -298,7 +305,8 @@ class Plus_Widgets_Manager {
 
 				if ( 'tp-info-box' === $widget_name ) {
 
-					$main_style                = ! empty( $options['main_style'] ) ? $options['main_style'] : 'style_1';
+					$main_style = ! empty( $options['main_style'] ) ? $options['main_style'] : 'style_1';
+
 					$this->transient_widgets[] = 'tp-info-box-' . $main_style;
 					$this->transient_widgets[] = 'tp-info-box';
 				}
@@ -310,12 +318,20 @@ class Plus_Widgets_Manager {
 					$this->tp_button_style( $button_style );
 
 				}
+
 				if ( ! empty( $options['box_hover_effects'] ) ) {
 					$this->transient_widgets[] = 'plus-content-hover-effect';
 				}
 				if ( ( ! empty( $options['image_icon'] ) && 'svg' === $options['image_icon'] ) || ( ! empty( $options['loop_select_icon'] ) && 'svg' === $options['loop_select_icon'] ) ) {
 					$this->transient_widgets[] = 'tp-draw-svg';
 				}
+				
+				$respo_visible = ! empty( $options['responsive_visible_opt'] ) ? $options['responsive_visible_opt'] : '';
+
+				if ( 'yes' === $respo_visible ) {
+					$this->transient_widgets[] = 'plus-responsive-visibility';
+				}
+
 			}
 
 			if ( 'tp-number-counter' === $widget_name ) {
@@ -337,6 +353,31 @@ class Plus_Widgets_Manager {
 
 				if ( ! isset( $options['page_scroll_opt'] ) || ( ! empty( $options['page_scroll_opt'] ) && 'tp_full_page' === $options['page_scroll_opt'] ) ) {
 					$this->transient_widgets[] = 'tp-fullpage';
+				}
+				$this->transient_widgets[] = 'plus-widget-error';
+			}
+
+			if ( 'tp-process-steps' === $widget_name ) {
+
+				$display_counter = ! empty( $options['pro_ste_display_counter'] ) ? $options['pro_ste_display_counter'] : 'no';
+				$special_bg      = ! empty( $options['pro_ste_display_special_bg'] ) ? $options['pro_ste_display_special_bg'] : 'no';
+
+				if ( 'yes' == $display_counter ) {
+					$this->transient_widgets[] = 'tp-process-counter';
+				}
+
+				if ( 'yes' == $special_bg ) {
+					$this->transient_widgets[] = 'tp-process-bg';
+				}
+
+				$this->transient_widgets[] = 'tp-process-steps';
+
+				if ( ( ! empty( $options['ps_style'] ) && 'style_2' === $options['ps_style'] ) || ( ! empty( $options['connection_switch'] ) && 'yes' === $options['connection_switch'] && ! empty( $options['connection_unique_id'] ) ) ) {
+					$this->transient_widgets[] = 'tp-process-steps-js';
+				}
+
+				if ( ( ! empty( $options['loop_content'][0]['loop_image_icon'] ) && 'lottie' === $options['loop_content'][0]['loop_image_icon'] ) ) {
+					$this->transient_widgets[] = 'plus-lottie-player';
 				}
 			}
 
@@ -398,6 +439,38 @@ class Plus_Widgets_Manager {
 				$this->transient_widgets[] = 'tp-scroll-navigation';
 			}
 
+			if ( 'tp-syntax-highlighter' === $widget_name ) {
+
+				$themeType     = ! empty( $options['themeType'] ) ? $options['themeType'] : 'prism-default';
+				$cpybtnicon    = ! empty( $options['cpybtnicon']['value'] ) ? $options['cpybtnicon']['value'] : 'fas fa-copy';
+				$copiedbtnicon = ! empty( $options['copiedbtnicon']['value'] ) ? $options['copiedbtnicon']['value'] : 'fas fa-arrow-alt-circle-down';
+				$dwnldBtnIcon  = ! empty( $options['dwnldBtnIcon']['value'] ) ? $options['dwnldBtnIcon']['value'] : 'fas fa-arrow-alt-circle-down';
+				
+				if ( ! empty( $themeType ) ) {
+					$this->transient_widgets[] = 'tp-syntax-highlighter';
+					if ( $themeType == 'prism-default' ) {
+						$this->transient_widgets[] = 'prism_default';
+					} elseif ( $themeType == 'prism-coy' ) {
+						$this->transient_widgets[] = 'prism_coy';
+					} elseif ( $themeType == 'prism-dark' ) {
+						$this->transient_widgets[] = 'prism_dark';
+					} elseif ( $themeType == 'prism-funky' ) {
+						$this->transient_widgets[] = 'prism_funky';
+					} elseif ( $themeType == 'prism-okaidia' ) {
+						$this->transient_widgets[] = 'prism_okaidia';
+					} elseif ( $themeType == 'prism-solarizedlight' ) {
+						$this->transient_widgets[] = 'prism_solarizedlight';
+					} elseif ( $themeType == 'prism-tomorrownight' ) {
+						$this->transient_widgets[] = 'prism_tomorrownight';
+					} elseif ( $themeType == 'prism-twilight' ) {
+						$this->transient_widgets[] = 'prism_twilight';
+					}
+					if ( $cpybtnicon || $copiedbtnicon || $dwnldBtnIcon ) {
+						$this->transient_widgets[] = 'tp-syntax-highlighter-icons';
+					}
+				}
+			}
+
 			if ( 'tp-social-icon' === $widget_name ) {
 
 				$social_icon = ! empty( $options['styles'] ) ? $options['styles'] : 'style-1';
@@ -407,12 +480,19 @@ class Plus_Widgets_Manager {
 			}
 
 			if ( 'tp-pricing-table' === $widget_name ) {
-				$p_style                   = ! empty( $options['pricing_table_style'] ) ? $options['pricing_table_style'] : 'style-1';
+				$p_style = ! empty( $options['pricing_table_style'] ) ? $options['pricing_table_style'] : 'style-1';
 				$this->transient_widgets[] = 'tp-pricing-table-' . $p_style;
 				$this->transient_widgets[] = 'tp-pricing-table';
 
 				$button_style = ! empty( $options['button_style'] ) ? $options['button_style'] : 'style-8';
 				$this->tp_button_style( $button_style );
+
+				$table_ribbon  = ! empty( $options['display_ribbon_pin'] ) ? $options['display_ribbon_pin'] : 'no';
+                $ribbon_style = ! empty( $options['ribbon_pin_style'] ) ? $options['ribbon_pin_style'] : 'style-1';
+
+                if( 'yes' === $table_ribbon && 'style-1' === $ribbon_style ){
+                    $this->transient_widgets[] = 'tp-pricing-ribbon';
+                }
 			}
 
 			if ('tp-video-player' === $widget_name){
