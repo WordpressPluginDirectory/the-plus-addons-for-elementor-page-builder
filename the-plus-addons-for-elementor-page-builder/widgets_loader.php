@@ -65,7 +65,89 @@ final class L_Theplus_Element_Load {
 	 *
 	 * @since 1.0.0
 	 */
-	private function __construct() {
+	public function __construct() {
+
+		add_action( 'in_plugin_update_message-' . L_THEPLUS_PBNAME, array( $this, 'tp_f_in_plugin_update_message' ), 10, 2 );
+
+		if ( ! did_action( 'elementor/loaded' ) ) {
+			add_action( 'admin_notices', array( $this, 'tp_f_elementor_load_notice' ) );
+			return;
+		}
+
+		register_activation_hook( L_THEPLUS_FILE, array( __CLASS__, 'tp_f_activation' ) );
+		register_deactivation_hook( L_THEPLUS_FILE, array( __CLASS__, 'tp_f_deactivation' ) );
+
+		add_action( 'plugins_loaded', array( $this, 'tp_f_plugin_loaded' ) );
+	}
+
+	/**
+	 * When Show Update Notice that time this function is used
+	 *
+	 * @since 5.6.6
+	 *
+	 * @param array  $data     Array of plugin update data.
+	 * @param object $response Object containing response data from the update check.
+	 */
+	public function tp_f_in_plugin_update_message( $data, $response ) {
+
+		if ( isset( $data['upgrade_notice'] ) && ! empty( $data['upgrade_notice'] ) ) {
+			printf( '<div class="update-message">%s</div>', wpautop( $data['upgrade_notice'] ) );
+		}
+	}
+
+	/**
+	 * Elementor Plugin Not install than show this Notice
+	 *
+	 * @since 5.6.6
+	 */
+	public function tp_f_elementor_load_notice() {
+		$plugin = 'elementor/elementor.php';
+
+		$installed_plugins = get_plugins();
+
+		if ( isset( $installed_plugins[ $plugin ] ) ) {
+
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				return;
+			}
+
+			$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $plugin . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $plugin );
+			$admin_notice   = '<p>' . esc_html__( 'Elementor is missing. You need to activate your installed Elementor to use The Plus Addons.', 'tpebl' ) . '</p>';
+			$admin_notice  .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, esc_html__( 'Activate Elementor Now', 'tpebl' ) ) . '</p>';
+		} else {
+			if ( ! current_user_can( 'install_plugins' ) ) {
+				return;
+			}
+			$install_url   = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=elementor' ), 'install-plugin_elementor' );
+			$admin_notice  = '<p>' . esc_html__( 'Elementor Required. You need to install & activate Elementor to use The Plus Addons.', 'tpebl' ) . '</p>';
+			$admin_notice .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, esc_html__( 'Install Elementor Now', 'tpebl' ) ) . '</p>';
+		}
+
+		echo '<div class="notice notice-error is-dismissible" style="border-left-color: #8072fc;">' . $admin_notice . '</div>';
+	}
+
+	/**
+	 * Plugin Activation.
+	 *
+	 * @return void
+	 */
+	public static function tp_f_activation() {}
+
+	/**
+	 * Plugin deactivation.
+	 *
+	 * @return void
+	 */
+	public static function tp_f_deactivation() {}
+
+	/**
+	 * After Load Plugin All set than call this function
+	 *
+	 * @since 5.6.6
+	 */
+	public function tp_f_plugin_loaded() {
+
+		$this->tp_f_load_textdomain();
 
 		// Register class automatically.
 		$this->tp_manage_files();
@@ -87,6 +169,16 @@ final class L_Theplus_Element_Load {
 	}
 
 	/**
+	 * Load Text Domain.
+	 * Text Domain : tpebl
+	 *
+	 * @since 5.6.6
+	 */
+	public function tp_f_load_textdomain() {
+		load_plugin_textdomain( 'tpebl', false, L_THEPLUS_PNAME . '/lang' );
+	}
+
+	/**
 	 * Include and manage files related to notices.
 	 *
 	 * This function includes the class responsible for managing notices in ThePlus plugin.
@@ -95,8 +187,15 @@ final class L_Theplus_Element_Load {
 	 * @since 5.1.18
 	 */
 	public function tp_manage_files() {
+
+		require_once L_THEPLUS_PATH . 'includes/admin/tpae_hooks/class-tpae-hooks.php';
+		do_action( 'tpae_db_widget_default' );
+
 		include L_THEPLUS_PATH . 'includes/notices/class-tp-notices-main.php';
 		include L_THEPLUS_PATH . 'includes/user-experience/class-tp-user-experience-main.php';
+
+		// Front or Elementor Editor
+		require_once L_THEPLUS_PATH . 'includes/tp-lazy-function.php';
 	}
 
 	/**
@@ -140,34 +239,12 @@ final class L_Theplus_Element_Load {
 	 */
 	private function includes() {
 
-		require_once L_THEPLUS_INCLUDES_URL . 'tp-lazy-function.php';
-
 		if ( ! class_exists( 'CMB2' ) ) {
 			require_once L_THEPLUS_INCLUDES_URL . 'plus-options/metabox/init.php';
 		}
 
-		$option_name = 'default_plus_options';
-
-		$value = '1';
-
-		if ( is_admin() && false === get_option( $option_name ) ) {
-			$default_load = get_option( 'theplus_options' );
-
-			$autoload = 'no';
-
-			if ( ! empty( $default_load ) ) {
-				add_option( $option_name, $value, '', $autoload );
-			} else {
-				$theplus_options = get_option( 'theplus_options' );
-
-				$theplus_options['check_elements'] = array( 'tp_accordion', 'tp_adv_text_block', 'tp_blockquote', 'tp_blog_listout', 'tp_button', 'tp_contact_form_7', 'tp_countdown', 'tp_clients_listout', 'tp_gallery_listout', 'tp_flip_box', 'tp_heading_animation', 'tp_header_extras', 'tp_heading_title', 'tp_info_box', 'tp_navigation_menu_lite', 'tp_page_scroll', 'tp_progress_bar', 'tp_number_counter', 'tp_pricing_table', 'tp_scroll_navigation', 'tp_social_icon', 'tp_tabs_tours', 'tp_team_member_listout', 'tp_testimonial_listout', 'tp_video_player' );
-
-				add_option( 'theplus_options', $theplus_options, '', $autoload );
-				add_option( $option_name, $value, '', $autoload );
-			}
-		}
-
 		require_once L_THEPLUS_INCLUDES_URL . 'plus_addon.php';
+		require_once L_THEPLUS_PATH . 'modules/widgets-feature/class-tp-widgets-feature-main.php';
 
 		if ( file_exists( L_THEPLUS_INCLUDES_URL . 'plus-options/metabox/init.php' ) ) {
 			require_once L_THEPLUS_INCLUDES_URL . 'plus-options/includes.php';
@@ -358,7 +435,7 @@ final class L_Theplus_Element_Load {
 			}
 
 			$to_return = array();
-	
+
 			\Elementor\Plugin::$instance->db->iterate_data(
 				$meta_data,
 				function ( $element ) use ( $tp_widgets_list, &$to_return ) {
@@ -440,7 +517,7 @@ final class L_Theplus_Element_Load {
 	 */
 	public function print_style() {
 		?>
-			<style>*:not(.elementor-editor-active) .plus-conditions--hidden {display: none;}</style>
+		<style>*:not(.elementor-editor-active) .plus-conditions--hidden {display: none;}</style> 
 		<?php
 	}
 

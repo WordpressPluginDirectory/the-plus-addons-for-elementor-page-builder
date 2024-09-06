@@ -35,7 +35,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 	 *
 	 * @var tp_doc of the class.
 	 */
-	public $tp_doc = L_THEPLUS_Tpdoc;
+	public $tp_doc = L_THEPLUS_TPDOC;
 
 	/**
 	 * Get Widget Name.
@@ -2305,7 +2305,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 						$output .= '<div class="grid-item ' . $desktop_class . ' ' . $tablet_class . ' ' . $mobile_class . '">';
 						if ( ! empty( $style ) ) {
 							ob_start();
-							include L_THEPLUS_PATH . 'includes/testimonial/testimonial-' . sanitize_file_name( $style ) . '.php';
+							include L_THEPLUS_WSTYLES . 'testimonial/testimonial-' . sanitize_file_name( $style ) . '.php';
 							$output .= ob_get_contents();
 							ob_end_clean();
 						}
@@ -2334,7 +2334,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 
 				if ( ! empty( $style ) ) {
 					ob_start();
-					include L_THEPLUS_PATH . 'includes/testimonial/testimonial-' . sanitize_file_name( $style ) . '.php';
+					include L_THEPLUS_WSTYLES . 'testimonial/testimonial-' . sanitize_file_name( $style ) . '.php';
 					$output .= ob_get_contents();
 					ob_end_clean();
 				}
