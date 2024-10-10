@@ -2,9 +2,9 @@
 Contributors: posimyththemes, nirmalkavaiya, devangvachheta, sagarpatel124
 Tags: elementor, elementor widgets, elementor addons, elementor templates, widgets for elementor
 Requires at least: 6.0
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 5.6.10
+Stable tag: 5.6.13
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -383,13 +383,23 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 5.6.13 =
+Fix : Minor Bug Fixes & performance Improvements
+
+= 5.6.12 =
+Update : Accordion : Security Patch ( Low security )
+Fix : Minor Bug Fixes & performance Improvements
+
+= 5.6.11 =
+Fix : Navigation Menu Lite : Mobile Menu Backend issue  
+Fix : Minor Bug Fixes & performance Improvements
+
 = 5.6.10 =
 Update : Widgets Need Help Button Links Update
 Update : Info Box : Icon color Improvement
 Improvement : Scroll Navigation : UI Improvement
 Improvement : Smooth Scroll : UI Improvement
 Improvement : Page Scroll : UI Improvement
-Fix : Minor Bug Fixes & performance Improvements
 Fix : Minor Bug Fixes & performance Improvements
 
 = 5.6.9 =
