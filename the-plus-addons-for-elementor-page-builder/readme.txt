@@ -4,7 +4,7 @@ Tags: elementor, elementor widgets, elementor addons, elementor templates, widge
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 5.6.13
+Stable tag: 6.0.1
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -383,32 +383,20 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
-= 5.6.13 =
-Fix : Minor Bug Fixes & performance Improvements
+= 6.0.1 =
+Improvement : Design for responsive screen
+Improvement : Add Mobile menu for small screen
+Improvement : Elementor Widget Banner Design Responsive error
+Fix : Setting page error
+Fix: Minor bug fixes and performance improvements
 
-= 5.6.12 =
-Update : Accordion : Security Patch ( Low security )
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.11 =
-Fix : Navigation Menu Lite : Mobile Menu Backend issue  
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.10 =
-Update : Widgets Need Help Button Links Update
-Update : Info Box : Icon color Improvement
-Improvement : Scroll Navigation : UI Improvement
-Improvement : Smooth Scroll : UI Improvement
-Improvement : Page Scroll : UI Improvement
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.9 =
-Update : Code Improved For Better Performance and Security
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.8 =
-Update : Remove Onbording Nexter Theme Option 
-Fix : Minor Bug Fixes & performance Improvements
+= 6.0.0 =
+New: Revamped Dashboard for new UI/UX
+New: Dashboard: Plugin Rollback Option
+Improvement: Unnecessary code removed for better performance
+Improvement: Code enhanced for better performance and security
+Improvement: Unnecessary files removed, and file structure improved
+Fix: Minor bug fixes and performance improvements
 
 = 5.6.7 =
 Update : File Structures
