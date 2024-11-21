@@ -80,7 +80,7 @@ class L_ThePlus_Ninja_form extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-adapted' );
+		return array( 'plus-forms' );
 	}
 
 	/**
@@ -103,6 +103,15 @@ class L_ThePlus_Ninja_form extends Widget_Base {
 		$help_url = $this->tp_help;
 
 		return esc_url( $help_url );
+	}
+
+	/**
+	 * It is use for widget add in catch or not.
+	 *
+	 * @since 6.0.6
+	 */
+	public function is_dynamic_content(): bool {
+		return false;
 	}
 
 	/**
