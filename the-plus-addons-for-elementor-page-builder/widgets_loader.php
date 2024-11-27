@@ -77,6 +77,7 @@ final class L_Theplus_Element_Load {
 		register_activation_hook( L_THEPLUS_FILE, array( __CLASS__, 'tp_f_activation' ) );
 		register_deactivation_hook( L_THEPLUS_FILE, array( __CLASS__, 'tp_f_deactivation' ) );
 
+		add_action( 'init', array( $this, 'tp_i18n' ) );
 		add_action( 'plugins_loaded', array( $this, 'tp_f_plugin_loaded' ) );
 	}
 
@@ -147,8 +148,6 @@ final class L_Theplus_Element_Load {
 	 */
 	public function tp_f_plugin_loaded() {
 
-		$this->tp_f_load_textdomain();
-
 		// Register class automatically.
 		$this->tp_manage_files();
 
@@ -172,8 +171,8 @@ final class L_Theplus_Element_Load {
 	 *
 	 * @since 5.6.6
 	 */
-	public function tp_f_load_textdomain() {
-		load_plugin_textdomain( 'tpebl', false, L_THEPLUS_PNAME . '/lang' );
+	public function tp_i18n() {
+		load_plugin_textdomain( 'tpebl', false, L_THEPLUS_PNAME . '/languages' );
 	}
 
 	/**
@@ -295,14 +294,14 @@ final class L_Theplus_Element_Load {
 		wp_enqueue_style( 'theplus-ele-admin', L_THEPLUS_ASSETS_URL . 'css/admin/theplus-ele-admin.css', array(), L_THEPLUS_VERSION, false );
 		wp_enqueue_script( 'theplus-admin-js', L_THEPLUS_ASSETS_URL . 'js/admin/theplus-admin.js', array(), L_THEPLUS_VERSION, false );
 
-		$js_inline = 'var theplus_ajax_url = "' . admin_url( 'admin-ajax.php' ) . '";
-		var theplus_ajax_post_url = "' . admin_url( 'admin-post.php' ) . '";
-        var theplus_nonce = "' . wp_create_nonce( 'theplus-addons' ) . '";';
+		$script_handle = 'theplus-inline-script'; // Ensure this handle is unique
+		$js_inline1 = 'var theplus_ajax_url = "' . admin_url("admin-ajax.php") . '";
+		var theplus_ajax_post_url = "' . admin_url("admin-post.php") . '";
+		var theplus_nonce = "' . wp_create_nonce("theplus-addons") . '";';
 
-		if( 'widgets.php' !== $hook ){
-			echo wp_print_inline_script_tag( $js_inline );
-		}
-
+		wp_register_script( $script_handle, '' );
+		wp_enqueue_script( $script_handle );
+		wp_add_inline_script( $script_handle, $js_inline1 );
 	}
 
 	/**
