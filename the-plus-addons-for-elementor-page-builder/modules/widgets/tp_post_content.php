@@ -12,6 +12,7 @@ namespace TheplusAddons\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Utils;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Background;
@@ -25,9 +26,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class L_ThePlus_Post_Content
+ * Class ThePlus_Post_Content
  */
-class L_ThePlus_Post_Content extends Widget_Base {
+class ThePlus_Post_Content extends Widget_Base {
 
 	/**
 	 * Document Link For Need help.
@@ -39,13 +40,6 @@ class L_ThePlus_Post_Content extends Widget_Base {
 	 * @var TpDoc of the class.
 	 */
 	public $tp_doc = L_THEPLUS_TPDOC;
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
 
 	/**
 	 * Get Widget Name.
@@ -99,7 +93,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Protected Content', 'Password Protected Content', 'Content Protection', 'Secure Content', 'Restricted Content' );
+		return array( 'Protected Content', 'Password Protected Content', 'Content Protection', 'Secure Content', 'Restricted Content', 'Post Content', 'Content', 'Blog Post', 'Article Content', 'Page Content', 'Text Content', 'Elementor Post Content' );
 	}
 
 	/**
@@ -110,11 +104,41 @@ class L_ThePlus_Post_Content extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
+		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
+			$help_url = L_THEPLUS_HELP;
+		} else {
+			$help_url = THEPLUS_HELP;
+		}
 
 		return esc_url( $help_url );
 	}
 
+	public function is_dynamic_content(): bool {
+		return true;
+	}
+
+	/**
+	 * It is use for adds.
+	 *
+	 * @since 6.1.0
+	 */
+	public function get_upsale_data() {
+		$val = false;
+
+		if( ! defined( 'THEPLUS_VERSION' ) ) {
+			$val = true;
+		}
+
+		return [
+			'condition' => $val,
+			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
+		];
+	}
+	
 	/**
 	 * Register controls.
 	 *
@@ -194,7 +218,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 					),
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .elementor-widget-container' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} ' => 'display: flex; justify-content: {{VALUE}};',
 				),
 				'separator' => 'before',
 			)
@@ -214,7 +238,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} > .elementor-widget-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} ' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 				'separator'  => 'after',
 			)
@@ -227,7 +251,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 				'global'   => array(
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				),
-				'selector' => '{{WRAPPER}} > .elementor-widget-container',
+				'selector' => '{{WRAPPER}} ',
 			)
 		);
 		$this->start_controls_tabs( 'tabs_excerpts_style' );
@@ -244,7 +268,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => array(
-					'{{WRAPPER}} > .elementor-widget-container' => 'color: {{VALUE}}',
+					'{{WRAPPER}} ' => 'color: {{VALUE}}',
 				),
 			)
 		);
@@ -253,7 +277,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 			array(
 				'name'     => 'boxBg',
 				'types'    => array( 'classic', 'gradient' ),
-				'selector' => '{{WRAPPER}} > .elementor-widget-container',
+				'selector' => '{{WRAPPER}} ',
 			)
 		);
 		$this->add_group_control(
@@ -261,7 +285,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 			array(
 				'name'     => 'boxBorder',
 				'label'    => esc_html__( 'Border', 'tpebl' ),
-				'selector' => '{{WRAPPER}} > .elementor-widget-container',
+				'selector' => '{{WRAPPER}} ',
 			)
 		);
 		$this->add_responsive_control(
@@ -271,7 +295,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} > .elementor-widget-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} ' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -279,7 +303,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			array(
 				'name'     => 'boxBoxShadow',
-				'selector' => '{{WRAPPER}} > .elementor-widget-container',
+				'selector' => '{{WRAPPER}} ',
 			)
 		);
 		$this->end_controls_tab();
@@ -296,7 +320,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => array(
-					'{{WRAPPER}} > .elementor-widget-container:hover:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}}:hover' => 'color: {{VALUE}}',
 				),
 			)
 		);
@@ -305,7 +329,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 			array(
 				'name'     => 'boxBgHover',
 				'types'    => array( 'classic', 'gradient' ),
-				'selector' => '{{WRAPPER}} > .elementor-widget-container:hover:hover',
+				'selector' => '{{WRAPPER}}:hover',
 			)
 		);
 		$this->add_group_control(
@@ -313,7 +337,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 			array(
 				'name'     => 'boxBorderHover',
 				'label'    => esc_html__( 'Border', 'tpebl' ),
-				'selector' => '{{WRAPPER}} > .elementor-widget-container:hover:hover',
+				'selector' => '{{WRAPPER}}:hover',
 			)
 		);
 		$this->add_responsive_control(
@@ -323,7 +347,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} > .elementor-widget-container:hover:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -331,19 +355,23 @@ class L_ThePlus_Post_Content extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			array(
 				'name'     => 'boxBoxShadowHover',
-				'selector' => '{{WRAPPER}} > .elementor-widget-container:hover:hover',
+				'selector' => '{{WRAPPER}}:hover',
 			)
 		);
 		$this->end_controls_tab();
 		$this->end_controls_tabs();
 		$this->end_controls_section();
 
-		include L_THEPLUS_PATH . 'modules/widgets/theplus-needhelp.php';
-		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
+		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
+			include L_THEPLUS_PATH . 'modules/widgets/theplus-needhelp.php';
+			include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
+		} else {
+			include THEPLUS_PATH . 'modules/widgets/theplus-needhelp.php';
+		}
 	}
 
 	/**
-	 * Render Progress Bar
+	 * Render Post Content
 	 *
 	 * Written in PHP and HTML.
 	 *
@@ -351,7 +379,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 	 *
 	 * @version 5.4.2
 	 *
-	 * @param array|bool $wrapper An optional wrapper for the progress bar.
+	 * @param bool $wrapper Whether to wrap the rendered content in a wrapper. Default is false.
 	 */
 	protected function render( $wrapper = false ) {
 		$settings          = $this->get_settings_for_display();
@@ -367,7 +395,8 @@ class L_ThePlus_Post_Content extends Widget_Base {
 				if ( strtolower( 'WordPress' ) === strtolower( $post_content_editor_type ) ) {
 
 					static $views_ids = array();
-					$post_id          = get_the_ID();
+
+					$post_id = get_the_ID();
 					if ( ! isset( $post_id ) ) {
 						return '';
 					}
@@ -412,8 +441,9 @@ class L_ThePlus_Post_Content extends Widget_Base {
 					}
 
 					$posts[ $post->ID ] = true;
-					$editor             = L_Theplus_Element_Load::elementor()->editor;
-					$editmode           = $editor->is_edit_mode();
+
+					$editor   = L_Theplus_Element_Load::elementor()->editor;
+					$editmode = $editor->is_edit_mode();
 
 					if ( L_Theplus_Element_Load::elementor()->preview->is_preview_mode( $post->ID ) ) {
 						$content = L_Theplus_Element_Load::elementor()->preview->builder_wrapper( '' );
@@ -460,7 +490,7 @@ class L_ThePlus_Post_Content extends Widget_Base {
 					}
 					L_Theplus_Element_Load::elementor()->editor->set_edit_mode( $editmode );
 
-					if ( $wrapper ) {
+					if ( ! empty( $wrapper ) ) {
 						echo '<div class="tp-post-content">' . balanceTags( $content, true ) . '</div>';
 					} else {
 						echo $content;

@@ -132,6 +132,9 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 				case 'tpae_wp_option_manage':
 					$response = $this->tpae_wp_option_manage();
 					break;
+				case 'tpae_update_wdk_widget':
+					$response = apply_filters( 'wdk_widget_ajax_call', 'wdk_update_widget' );
+					break;
 				case 'tpae_license_manage':
 					$response = apply_filters( 'tpaep_licence_ajax_call', 'tpaep_license_manage' );
 					break;
@@ -174,11 +177,11 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 					'status'      => '',
 					'plugin_slug' => 'nexter-extension/nexter-extension.php',
 				),
-				array(
-					'name'        => 'envato-elements',
-					'status'      => '',
-					'plugin_slug' => 'envato-elements/envato-elements.php',
-				),
+				// array(
+				// 	'name'        => 'envato-elements',
+				// 	'status'      => '',
+				// 	'plugin_slug' => 'envato-elements/envato-elements.php',
+				// ),
 			);
 
 			$plugin_details = $this->tpae_check_plugins_depends( $plugins );
@@ -191,7 +194,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			$tpae_pro = defined( 'THEPLUS_VERSION' ) ? 1 : 0;
 
 			$get_whats_new      = get_transient( 'tp_dashboard_overview' );
-			$get_active_widgets = $this->tpae_get_elements_status_scan();
+			// $get_active_widgets = $this->tpae_get_elements_status_scan();
 
 			$user_info = array(
 				'user_image'   => $user_image,
@@ -199,7 +202,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 				'user_name'    => $user->display_name,
 				'tpae_pro'     => $tpae_pro,
 				'whatsnew'     => $get_whats_new,
-				'used_widgets' => $get_active_widgets,
+				// 'used_widgets' => $get_active_widgets,
 				'success'      => true,
 			);
 
@@ -208,6 +211,9 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			$get_listing_data  = get_option( 'post_type_options' );
 			$get_custom_css_js = get_option( 'theplus_styling_data' );
 			$get_performance   = get_option( 'theplus_performance' );
+
+			$wdk_widgets = array();
+			$wdk_widgets = apply_filters( 'wdk_widget_ajax_call', 'wdk_get_widget_ajax' );
 
 			$response = array(
 				'success'       => true,
@@ -220,6 +226,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 				'plugin_detail' => $plugin_details,
 				'custom_css_js' => $get_custom_css_js,
 				'performance'   => $get_performance,
+				'wdk_widgets'   => $wdk_widgets,
 			);
 
 			if ( defined( 'THEPLUS_VERSION' ) ) {
@@ -328,6 +335,10 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			global $wpdb;
 
 			$post_ids = $wpdb->get_col( 'SELECT `post_id` FROM `' . $wpdb->postmeta . '`WHERE `meta_key` = \'_elementor_version\';' );
+
+			// New & Optimize Query.
+			// $query = " SELECT MIN(id) AS post_id FROM {$wpdb->posts} WHERE post_type = 'revision' GROUP BY post_title HAVING COUNT(*) > 1 "; 
+			// $post_ids = $wpdb->get_col($query);
 
 			$tp_widgets_list = '';
 

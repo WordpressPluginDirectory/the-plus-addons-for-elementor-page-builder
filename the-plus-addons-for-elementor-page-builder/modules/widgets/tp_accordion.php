@@ -103,6 +103,37 @@ class L_ThePlus_Accordion extends Widget_Base {
 	}
 
 	/**
+	 * It is use for widget add in catch or not.
+	 *
+	 * @since 6.1.0
+	 */
+	public function is_dynamic_content(): bool {
+		return false;
+	}
+
+	/**
+	 * It is use for adds.
+	 *
+	 * @since 6.1.0
+	 */
+	public function get_upsale_data() {
+		$val = false;
+
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
+			$val = true;
+		}
+
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
+		);
+	}
+
+	/**
 	 * Register controls.
 	 *
 	 * @since 1.0.0
@@ -379,7 +410,7 @@ class L_ThePlus_Accordion extends Widget_Base {
 				'label'   => wp_kses_post( "Active Accordion <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => '1',
-				'options' => L_theplus_get_numbers(),
+				'options' => $this->L_theplus_get_numbers(),
 			)
 		);
 		$this->end_controls_section();
@@ -1484,11 +1515,12 @@ class L_ThePlus_Accordion extends Widget_Base {
 
 					</<?php echo l_theplus_validate_html_tag( $title_tag ); ?>>  
 
-					<?php 
+					<?php
 
 					$content_template = isset( $item['content_template'] ) ? intval( $item['content_template'] ) : 0;
-					$backend_preview = !empty( $item['backend_preview_template'] ) ? $item['backend_preview_template'] : '';
-					if ( 'content' === $content_source && ! empty( $tab_content ) || ( 'page_template' === $content_source && ! empty( $content_template ) ) ) { ?>
+					$backend_preview  = ! empty( $item['backend_preview_template'] ) ? $item['backend_preview_template'] : '';
+					if ( 'content' === $content_source && ! empty( $tab_content ) || ( 'page_template' === $content_source && ! empty( $content_template ) ) ) {
+						?>
 						<div <?php echo $this->get_render_attribute_string( $tab_content_setting_key ); ?>>
 							<?php
 
@@ -1499,9 +1531,9 @@ class L_ThePlus_Accordion extends Widget_Base {
 							if ( \Elementor\Plugin::$instance->editor->is_edit_mode() && 'page_template' === $content_source && ! empty( $content_template ) ) {
 								if ( 'yes' === $backend_preview ) {
 									$template_status = get_post_status( $content_template );
-									if( 'publish' === $template_status ){
+									if ( 'publish' === $template_status ) {
 										echo '<div class="plus-content-editor">' . L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( $content_template ) . '</div>';
-									}else{
+									} else {
 										echo '<div class="tab-preview-template-notice"><div class="preview-temp-notice-heading">' . esc_html__( 'Unauthorized Access', 'tpebl' ) . '</b></div><div class="preview-temp-notice-desc"><b>' . esc_html__( 'Note :', 'tpebl' ) . '</b> ' . esc_html__( 'You need to upgrade your permissions to Editor or Administrator level to update this option.', 'tpebl' ) . '</div></div>';
 									}
 								} else {
@@ -1518,9 +1550,9 @@ class L_ThePlus_Accordion extends Widget_Base {
 								}
 							} elseif ( 'page_template' === $content_source ) {
 								$template_status = get_post_status( $content_template );
-								if( 'publish' === $template_status ){
+								if ( 'publish' === $template_status ) {
 									echo '<div class="plus-content-editor">' . L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( $content_template ) . '</div>';
-								}else{
+								} else {
 									echo '<div class="tab-preview-template-notice"><div class="preview-temp-notice-heading">' . esc_html__( 'Unauthorized Access', 'tpebl' ) . '</b></div><div class="preview-temp-notice-desc"><b>' . esc_html__( 'Note :', 'tpebl' ) . '</b> ' . esc_html__( 'You need to upgrade your permissions to Editor or Administrator level to update this option.', 'tpebl' ) . '</div></div>';
 								}
 							}
@@ -1535,5 +1567,22 @@ class L_ThePlus_Accordion extends Widget_Base {
 			<?php } ?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Render Accrordion.
+	 *
+	 * @version 6.1.1
+	 */
+	public function l_theplus_get_numbers() {
+		$options = array();
+
+		$options['all-open'] = 'All Open';
+
+		for ( $i = 0;$i <= 20;$i++ ) {
+			$options[ $i ] = $i;
+		}
+
+		return $options;
 	}
 }
