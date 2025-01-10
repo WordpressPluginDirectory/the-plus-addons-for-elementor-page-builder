@@ -1,11 +1,11 @@
 (function ($) {
     jQuery("document").ready(function () {
-        jQuery(document).on('click', ".tp-preset-editor-raw", function () {
+        jQuery(document).on('click', ".tp-loopbuilder-editor-raw", function () {
             var e;
             if (!e) {
                 window.tp_preser_editor = elementorCommon.dialogsManager.createWidget("lightbox",
                     {
-                        id: "tp-elementor-preset",
+                        id: "tp-elementor-loopbuilder",
                         headerMessage: !1,
                         message: "",
                         hide: {
