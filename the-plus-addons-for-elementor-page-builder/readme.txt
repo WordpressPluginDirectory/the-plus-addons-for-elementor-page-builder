@@ -4,7 +4,7 @@ Tags: elementor, elementor widgets, elementor addons, elementor templates, widge
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 6.2.1
+Stable tag: 6.2.3
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -382,11 +382,29 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 6.2.3 =
+Fix : Countdown : Security Patch ( Low Security )
+Fix : Syntax Highlighter : Security Patch ( Low Security )
+Fix : Page Scroll : Security Patch ( Low Security )
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.2.2 =
+Add : Option to remove database values of the plugin : Check this in The Plus Settings -> Extras in the backend
+Add : Blog Listing : New Date formate support for the Smart Loop Builder
+Add : Blog Listing : Box hover Title color option Added for the Smart Loop Builder
+Add : Navigation Menu Lite : Width option for the Submenu
+Add : Form Widget : Inline Button Option Added
+Fix : Info Box : Style3 Alignment not working in responsive
+Fix : Navigation Menu Lite : Submenu default open in Mobile Menu
+Fix : Number Counter : Hover Digit color not working
+Fix : Testimonial : Column option not working
+Fix : Minor Bug Fixes & Performance Improvements
+
 = 6.2.1 =
 Add : Blog Listing : Date Formate for the Smart Loop Builder
-Add : Blog Listing : Category for the Smart Loop Builder
-Add : Blog Listing : Tag for the Smart Loop Builder
-Add : Blog Listing : Author Link for the Smart Loop Builder
+Add : Blof Listing : Category for the Smart Loop Builder
+Add : Blof Listing : Tag for the Smart Loop Builder
+Add : Blof Listing : Author Link for the Smart Loop Builder
 Fix : Minor Bug Fixes & Performance Improvements
 
 = 6.2.0 =
