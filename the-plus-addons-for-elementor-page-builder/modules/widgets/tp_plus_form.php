@@ -1956,7 +1956,9 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 	 */
 	public function render() {
 		$settings = $this->get_settings_for_display();
-		$tabs     = ! empty( $settings['tabs'] ) ? $settings['tabs'] : array();
+
+		$widget_id = $this->get_id();
+		$tabs      = ! empty( $settings['tabs'] ) ? $settings['tabs'] : array();
 
 		$submit_button = ! empty( $settings['button_submit'] ) ? $settings['button_submit'] : 'Submit';
 		$label_display = ! empty( $settings['label_display'] ) ? $settings['label_display'] : '';
@@ -2026,9 +2028,9 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$form_markup = '<div class="tpae-form-container" ' . $error_message . ' ' . $email_data . ' >';
 
 			if( 'yes' === $inline_button ) {
-				$form_markup .= "<style> .tpae-form-submit-container .tpae-form-button{ width:100%!important } </style>";
+				$form_markup .= "<style> .elementor-element-$widget_id .tpae-form-submit-container .tpae-form-button{ width:100%!important } </style>";
 			} else if ( 'no' === $inline_button ) {
-				$form_markup .= "<style> .tpae-form-submit-container{ width:100%!important } </style>";
+				$form_markup .= "<style> .elementor-element-$widget_id .tpae-form-submit-container{ width:100%!important } </style>";
 			}
 
 			$form_markup .= '<div class="tpae-form-messages"></div>';
@@ -2048,7 +2050,10 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 			$tab_help          = ! empty( $tab['field_help'] ) ? $tab['field_help'] : '';
 			$tab_ad            = ! empty( $tab['field_ad'] ) ? $tab['field_ad'] : '';
 
-			$form_markup .= '<div class="tpae-form-field" style="width: ' . esc_attr( $tab_column ) . '%;">';
+			$tab_column_tablet = ! empty( $tab['column_width_tablet']['size'] ) ? $tab['column_width_tablet']['size'] : '';
+			$tab_column_mobile = ! empty( $tab['column_width_mobile']['size'] ) ? $tab['column_width_mobile']['size'] : '';
+
+			$form_markup .= '<div class="tpae-form-field" data-width="' . esc_attr($tab_column) . '" data-tablet-width="' . esc_attr($tab_column_tablet) . '" data-mobile-width="' . esc_attr($tab_column_mobile) . '"> ';
 
 			if ( 'yes' === $label_display && ! in_array( $tab_field_type, array( 'recaptcha', 'honeypot', 'hidden' ), true ) ) {
 				$form_markup .= '<label for="form_fields[' . esc_attr( $tab_id ) . ']" class="tpae-form-label">';
