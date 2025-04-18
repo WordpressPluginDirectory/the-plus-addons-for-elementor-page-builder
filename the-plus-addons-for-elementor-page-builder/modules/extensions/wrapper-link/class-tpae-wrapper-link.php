@@ -66,6 +66,14 @@ if ( ! class_exists( 'Tpae_Wrapper_Link' ) ) {
 		}
 
 		/**
+		 * Get Doc URL.
+		 *
+		 * @since 6.2.7
+		 * @return void
+		 */
+		public $TpDoc = L_THEPLUS_TPDOC;
+
+		/**
 		 * Initalize integration hooks
 		 *
 		 * @since 6.2.7
@@ -94,7 +102,7 @@ if ( ! class_exists( 'Tpae_Wrapper_Link' ) ) {
 			$element->start_controls_section(
 				'plus_sc_link_section',
 				array(
-					'label' => esc_html__( 'Plus Extras : Wrapper Link', 'tpebl' ),
+					'label' => esc_html__( 'Wrapper Link', 'tpebl' ),
 					'tab'   => Controls_Manager::TAB_ADVANCED,
 				)
 			);
@@ -110,7 +118,7 @@ if ( ! class_exists( 'Tpae_Wrapper_Link' ) ) {
 			$element->add_control(
 				'sc_link',
 				array(
-					'label'       => esc_html__( 'Link', 'tpebl' ),
+					'label'        => wp_kses_post( "Wrapper Link <a class='tp-docs-link' href='" . esc_url($this->TpDoc) . "make-elementor-container-clickable/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>", 'tpebl' ),
 					'type'        => Controls_Manager::URL,
 					'dynamic'     => array(
 						'active' => true,
