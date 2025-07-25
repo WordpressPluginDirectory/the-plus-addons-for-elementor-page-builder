@@ -61,7 +61,7 @@ class ThePlus_Age_Gate extends Widget_Base {
 	 * @since 5.3.5
 	 */
 	public function get_icon() {
-		return 'fas fa-user-shield theplus_backend_icon';
+		return 'theplus-i-age-gate tpae-editor-logo';
 	}
 
 	/**
@@ -152,25 +152,17 @@ class ThePlus_Age_Gate extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'smart-preset-button',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => sprintf(
-					'<div class="tpae-preset-main-raw-main">
-						<a href="%s" class="tp-preset-live-demo" id="tp-preset-live-demo" data-temp_id="16001" target="_blank" rel="noopener noreferrer">%s</a>
-						<a class="tp-preset-editor-raw" id="tp-preset-editor-raw" data-temp_id="16001">%s</a>
-					</div>',
-					esc_url( 'https://theplusaddons.com/widgets/elementor-age-gate/' ),
-					esc_html__( 'Live Demo', 'tpebl' ),
-					esc_html__( 'Import Presets', 'tpebl' )
-				),
-				'label_block' => true,
-			)
-		);
+            'tpae_preset_controller',
+            array(
+                'type'        => 'tpae_preset_button',
+                'temp_id'     => 16001,
+                'label_block' => true,
+            )
+        );
 		$this->add_control(
 			'age_verify_method',
 			array(
-				'label'       => esc_html__( 'Method', 'theplus' ),
+				'label'       => esc_html__( 'Method', 'tpebl' ),
 				'type'        => Controls_Manager::VISUAL_CHOICE,
 				'label_block' => true,
 				'options'     => array(
@@ -235,7 +227,7 @@ class ThePlus_Age_Gate extends Widget_Base {
 		$this->add_responsive_control(
 			'age_gate_align',
 			array(
-				'label'     => esc_html__( 'Title Alignment', 'tpebl' ),
+				'label'     => esc_html__( 'Alignment', 'tpebl' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'default'   => 'center',
 				'options'   => array(
@@ -1494,7 +1486,7 @@ class ThePlus_Age_Gate extends Widget_Base {
 		$this->add_control(
 			'age_tglicon_styling',
 			array(
-				'label'     => esc_html__( 'First Button Icon', 'theplus' ),
+				'label'     => esc_html__( 'First Button Icon', 'tpebl' ),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
 					'icon_action' => 'yes',
@@ -1793,7 +1785,7 @@ class ThePlus_Age_Gate extends Widget_Base {
 		$this->add_control(
 			'icon_fs_options',
 			array(
-				'label'     => esc_html__( 'Second Button Icon', 'theplus' ),
+				'label'     => esc_html__( 'Second Button Icon', 'tpebl' ),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
 					'age_verify_method'  => 'method-3',

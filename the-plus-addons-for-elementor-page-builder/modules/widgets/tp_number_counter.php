@@ -64,7 +64,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_icon() {
-		return 'fa fa-hashtag theplus_backend_icon';
+		return 'theplus-i-number-counter tpae-editor-logo';
 	}
 
 	/**
@@ -144,33 +144,36 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			array(
-				'label' => esc_html__( 'Style Counter', 'tpebl' ),
+				'label' => esc_html__( 'Layout', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			)
 		);
 		$this->add_control(
-			'smart-preset-button',
-			array(
-                'type'=> Controls_Manager::RAW_HTML,
-                'raw' => sprintf(
-					'<div class="tpae-preset-main-raw-main">
-						<a href="%s" class="tp-preset-live-demo" id="tp-preset-live-demo" data-temp_id="12570" target="_blank" rel="noopener noreferrer">%s</a>
-						<a class="tp-preset-editor-raw" id="tp-preset-editor-raw" data-temp_id="12570">%s</a>
-					</div>',
-					esc_url('https://etemplates.wdesignkit.com/theplusaddons/elementor-animated-number-counter-demo'),
-					esc_html__('Live Demo', 'tpebl'),
-					esc_html__('Import Presets', 'tpebl')
-				),
+            'tpae_preset_controller',
+            array(
+                'type'        => 'tpae_preset_button',
+                'temp_id'     => 12570,
                 'label_block' => true,
             )
-		);
+        );
 		$this->add_control(
-			'style',
+		'style',
 			array(
-				'label'   => esc_html__( 'Style', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'style-1',
-				'options' => l_theplus_get_style_list( 2 ),
+				'label'        => esc_html__( 'Style', 'tpebl' ),
+				'label_block'  => true,
+				'type'         => Controls_Manager::VISUAL_CHOICE,
+				'default'      => 'style-1',
+				'options'      => array(
+					'style-1' => array(
+						'title' => esc_html__( 'Style 1', 'tpebl' ),
+						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/number-counter/style-1.svg' ),
+					),
+					'style-2' => array(
+						'title' => esc_html__( 'Style 2', 'tpebl' ),
+						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/number-counter/style-2.svg' ),
+					),
+				),
+				'columns'  => 2,
 			)
 		);
 		$this->add_control(
@@ -178,6 +181,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Title', 'tpebl' ),
 				'type'    => Controls_Manager::TEXT,
+				'ai' => false,
 				'default' => esc_html__( 'Title', 'tpebl' ),
 				'dynamic' => array( 'active' => true ),
 			)
@@ -323,13 +327,20 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 				'dynamic' => array( 'active' => true ),
 			)
 		);
-
+		$this->end_controls_section();
+		$this->start_controls_section(
+			'extra_option_section',
+			array(
+				'label' => esc_html__( 'Extra Option', 'tpebl' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			)
+		);
 		$this->add_control(
 			'symbol',
 			array(
 				'label'     => esc_html__( 'Symbol', 'tpebl' ),
 				'type'      => Controls_Manager::TEXT,
-				'separator' => 'before',
+				'ai' => false,
 			)
 		);
 		$this->add_control(
@@ -406,6 +417,30 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'font_awesome_toggle',
+			array(
+				'label' => esc_html__( 'Font Awesome', 'tpebl' ),
+				'type' => Controls_Manager::POPOVER_TOGGLE,
+				'label_off' => esc_html__( 'Default', 'tpebl' ),
+				'label_on' => esc_html__( 'Custom', 'tpebl' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'condition' => array(
+					'icon_type'       => 'icon',
+					'icon_font_style' => 'font_awesome',
+				),
+			)
+		);
+		$this->start_popover();
+		$this->add_control(
+			'icon_fs_options',
+			array(
+				'label'     => esc_html__( 'Font Awesome', 'tpebl' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'after',
+			)
+		);
+		$this->add_control(
 			'icon_fontawesome',
 			array(
 				'label'     => esc_html__( 'Icon Library', 'tpebl' ),
@@ -417,6 +452,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 				),
 			)
 		);
+		$this->end_popover();
 		$this->add_control(
 			'icons_mind_options',
 			array(
@@ -449,6 +485,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Choose Image', 'tpebl' ),
 				'type'      => Controls_Manager::MEDIA,
+				'ai' => false,
 				'default'   => array(
 					'url' => Utils::get_placeholder_image_src(),
 				),
@@ -507,7 +544,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->start_controls_section(
 			'section_icon_styling',
 			array(
-				'label'     => esc_html__( 'Icon Style', 'tpebl' ),
+				'label'     => esc_html__( 'Icon', 'tpebl' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'icon_type' => 'icon',
@@ -517,7 +554,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->add_control(
 			'icon_style',
 			array(
-				'label'   => esc_html__( 'Icon Styles', 'tpebl' ),
+				'label'   => esc_html__( 'Style', 'tpebl' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'square',
 				'options' => array(
@@ -1025,7 +1062,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->start_controls_section(
 			'section_title_styling',
 			array(
-				'label' => esc_html__( 'Title Style', 'tpebl' ),
+				'label' => esc_html__( 'Title', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);
@@ -1411,7 +1448,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->start_controls_section(
 			'section_digit_option',
 			array(
-				'label' => esc_html__( 'Digit Style', 'tpebl' ),
+				'label' => esc_html__( 'Digit			', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);
@@ -1569,15 +1606,165 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'symbol_gradient_color',
+			array(
+				'label'       => esc_html__( 'Symbol Color', 'theplus' ),
+				'type'        => Controls_Manager::CHOOSE,
+				'options'     => array(
+					'color'    => array(
+						'title' => esc_html__( 'Classic', 'theplus' ),
+						'icon'  => 'eicon-paint-brush',
+					),
+					'gradient' => array(
+						'title' => esc_html__( 'Gradient', 'theplus' ),
+						'icon'  => 'eicon-barcode',
+					),
+				),
+				'separator'   => 'before',
+				'label_block' => false,
+				'default'     => 'color',
+				'condition' => array(
+                    'digit_gradient_color' => 'color',
+                ),
+			)
+		);
+		$this->add_control(
+			'symbol_gradient_color1',
+			array(
+				'label'     => esc_html__( 'Color 1', 'theplus' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => 'orange',
+				'selectors' => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-number .number-counter-symbol' => 'color: {{VALUE}}',
+				),
+				'of_type'   => 'gradient',
+				'condition' => array(
+					'symbol_gradient_color' => 'gradient',
+                    'digit_gradient_color' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_gradient_color1_control',
+			array(
+				'type'        => Controls_Manager::SLIDER,
+				'label'       => esc_html__( 'Color 1 Location', 'theplus' ),
+				'size_units'  => array( '%' ),
+				'default'     => array(
+					'unit' => '%',
+					'size' => 0,
+				),
+				'render_type' => 'ui',
+				'of_type'     => 'gradient',
+				'condition'   => array(
+					'symbol_gradient_color' => 'gradient',
+                    'digit_gradient_color' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_gradient_color2',
+			array(
+				'label'     => esc_html__( 'Color 2', 'theplus' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => 'cyan',
+				'selectors' => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-number .number-counter-symbol' => 'color: {{VALUE}}',
+				),
+				'of_type'   => 'gradient',
+				'condition' => array(
+					'symbol_gradient_color' => 'gradient',
+                    'digit_gradient_color' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_gradient_color2_control',
+			array(
+				'type'        => Controls_Manager::SLIDER,
+				'label'       => esc_html__( 'Color 2 Location', 'theplus' ),
+				'size_units'  => array( '%' ),
+				'default'     => array(
+					'unit' => '%',
+					'size' => 100,
+				),
+				'render_type' => 'ui',
+				'of_type'     => 'gradient',
+				'condition'   => array(
+					'symbol_gradient_color' => 'gradient',
+                    'digit_gradient_color' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_gradient_style',
+			array(
+				'type'      => Controls_Manager::SELECT,
+				'label'     => esc_html__( 'Gradient Style', 'theplus' ),
+				'default'   => 'linear',
+				'options'   => l_theplus_get_gradient_styles(),
+				'condition' => array(
+					'symbol_gradient_color' => 'gradient',
+                    'digit_gradient_color' => 'color',
+				),
+				'of_type'   => 'gradient',
+			)
+		);
+		$this->add_control(
+			'symbol_gradient_angle',
+			array(
+				'type'       => Controls_Manager::SLIDER,
+				'label'      => esc_html__( 'Gradient Angle', 'theplus' ),
+				'size_units' => array( 'deg' ),
+				'default'    => array(
+					'unit' => 'deg',
+					'size' => 180,
+				),
+				'range'      => array(
+					'deg' => array(
+						'step' => 10,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-number .number-counter-symbol' => '-webkit-background-clip:text !important;-webkit-text-fill-color: transparent; background: linear-gradient({{SIZE}}{{UNIT}}, {{symbol_gradient_color1.VALUE}} {{symbol_gradient_color1_control.SIZE}}{{symbol_gradient_color1_control.UNIT}}, {{symbol_gradient_color2.VALUE}} {{symbol_gradient_color2_control.SIZE}}{{symbol_gradient_color2_control.UNIT}})',
+				),
+				'of_type'    => 'gradient',
+				'condition'  => array(
+					'symbol_gradient_color' => 'gradient',
+					'symbol_gradient_style' => array( 'linear' ),
+                    'digit_gradient_color' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_gradient_position',
+			array(
+				'type'      => Controls_Manager::SELECT,
+				'label'     => esc_html__( 'Position', 'theplus' ),
+				'options'   => l_theplus_get_position_options(),
+				'default'   => 'center center',
+				'selectors' => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-number .number-counter-symbol' => 'background-color: transparent;-webkit-background-clip: text;-webkit-text-fill-color: transparent; background-image: radial-gradient(at {{VALUE}}, {{symbol_gradient_color1.VALUE}} {{symbol_gradient_color1_control.SIZE}}{{symbol_gradient_color1_control.UNIT}}, {{symbol_gradient_color2.VALUE}} {{symbol_gradient_color2_control.SIZE}}{{symbol_gradient_color2_control.UNIT}})',
+				),
+				'condition' => array(
+					'symbol_gradient_color' => 'gradient',
+					'symbol_gradient_style' => array( 'radial' ),
+                    'digit_gradient_color' => 'color',
+				),
+				'of_type'   => 'gradient',
+			)
+		);
+		$this->add_control(
 			'symbol_color',
 			array(
-				'label'     => esc_html__( 'Symbol Color', 'tpebl' ),
+				'label'     => esc_html__( 'Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-number .number-counter-symbol' => 'color: {{VALUE}}',
 				),
 				'condition' => array(
 					'digit_gradient_color' => 'color',
+					'symbol_gradient_color' => 'color',
 				),
 			)
 		);
@@ -1591,7 +1778,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->add_control(
 			'gradient_hover_color_option',
 			array(
-				'label'       => esc_html__( 'Gradient Hover Color', 'tpebl' ),
+				'label'       => esc_html__( 'Digit Hover Color', 'tpebl' ),
 				'type'        => Controls_Manager::CHOOSE,
 				'options'     => array(
 					'color'    => array(
@@ -1734,15 +1921,159 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'symbol_hover_gradient_color_option',
+			array(
+				'label'       => esc_html__( 'Symbol Hover Color', 'theplus' ),
+				'type'        => Controls_Manager::CHOOSE,
+				'options'     => array(
+					'color'    => array(
+						'title' => esc_html__( 'Classic', 'theplus' ),
+						'icon'  => 'eicon-paint-brush',
+					),
+					'gradient' => array(
+						'title' => esc_html__( 'Gradient', 'theplus' ),
+						'icon'  => 'eicon-barcode',
+					),
+				),
+				'separator'   => 'before',
+				'label_block' => false,
+				'default'     => 'color',
+				'condition' => array(
+                    'gradient_hover_color_option' => 'color',
+                ),
+			)
+		);
+		$this->add_control(
+			'symbol_hover_gradient_color1',
+			array(
+				'label'     => esc_html__( 'Color 1', 'theplus' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => 'orange',
+				'of_type'   => 'gradient',
+				'condition' => array(
+					'symbol_hover_gradient_color_option' => 'gradient',
+                    'gradient_hover_color_option' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_hover_gradient_color1_control',
+			array(
+				'type'        => Controls_Manager::SLIDER,
+				'label'       => esc_html__( 'Color 1 Location', 'theplus' ),
+				'size_units'  => array( '%' ),
+				'default'     => array(
+					'unit' => '%',
+					'size' => 0,
+				),
+				'render_type' => 'ui',
+				'of_type'     => 'gradient',
+				'condition'   => array(
+					'symbol_hover_gradient_color_option' => 'gradient',
+                    'gradient_hover_color_option' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_hover_gradient_color2',
+			array(
+				'label'     => esc_html__( 'Color 2', 'theplus' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => 'cyan',
+				'of_type'   => 'gradient',
+				'condition' => array(
+					'symbol_hover_gradient_color_option' => 'gradient',
+                    'gradient_hover_color_option' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_hover_gradient_color2_control',
+			array(
+				'type'        => Controls_Manager::SLIDER,
+				'label'       => esc_html__( 'Color 2 Location', 'theplus' ),
+				'size_units'  => array( '%' ),
+				'default'     => array(
+					'unit' => '%',
+					'size' => 100,
+				),
+				'render_type' => 'ui',
+				'of_type'     => 'gradient',
+				'condition'   => array(
+					'symbol_hover_gradient_color_option' => 'gradient',
+                    'gradient_hover_color_option' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_hover_gradient_style',
+			array(
+				'type'      => Controls_Manager::SELECT,
+				'label'     => esc_html__( 'Gradient Style', 'theplus' ),
+				'default'   => 'linear',
+				'options'   => l_theplus_get_gradient_styles(),
+				'of_type'   => 'gradient',
+				'condition' => array(
+					'symbol_hover_gradient_color_option' => 'gradient',
+                    'gradient_hover_color_option' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_hover_gradient_angle',
+			array(
+				'type'       => Controls_Manager::SLIDER,
+				'label'      => esc_html__( 'Gradient Angle', 'theplus' ),
+				'size_units' => array( 'deg' ),
+				'default'    => array(
+					'unit' => 'deg',
+					'size' => 180,
+				),
+				'range'      => array(
+					'deg' => array(
+						'step' => 10,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block:hover .counter-number .number-counter-symbol' => '-webkit-background-clip:text !important;-webkit-text-fill-color: transparent; background: linear-gradient({{SIZE}}{{UNIT}}, {{symbol_hover_gradient_color1.VALUE}} {{symbol_hover_gradient_color1_control.SIZE}}{{symbol_hover_gradient_color1_control.UNIT}}, {{symbol_hover_gradient_color2.VALUE}} {{symbol_hover_gradient_color2_control.SIZE}}{{symbol_hover_gradient_color2_control.UNIT}})',
+				),
+				'of_type'    => 'gradient',
+				'condition'  => array(
+					'symbol_hover_gradient_color_option' => 'gradient',
+					'symbol_hover_gradient_style'        => array( 'linear' ),
+                    'gradient_hover_color_option' => 'color',
+				),
+			)
+		);
+		$this->add_control(
+			'symbol_hover_gradient_position',
+			array(
+				'type'      => Controls_Manager::SELECT,
+				'label'     => esc_html__( 'Position', 'theplus' ),
+				'options'   => l_theplus_get_position_options(),
+				'default'   => 'center center',
+				'selectors' => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block:hover .counter-number .number-counter-symbol' => 'background-color: transparent; background-image: radial-gradient(at {{VALUE}}, {{symbol_hover_gradient_color1.VALUE}} {{symbol_hover_gradient_color1_control.SIZE}}{{hover_gradient_color1_control.UNIT}}, {{symbol_hover_gradient_color2.VALUE}} {{symbol_hover_gradient_color2.SIZE}}{{symbol_hover_gradient_color2.UNIT}})',
+				),
+				'of_type'   => 'gradient',
+				'condition' => array(
+					'symbol_hover_gradient_color_option' => 'gradient',
+					'symbol_hover_gradient_style'        => 'radial',
+                    'gradient_hover_color_option' => 'color',
+				),
+			)
+		);
+		$this->add_control(
             'symbol_hover_color',
             array(
-                'label'     => esc_html__( 'Symbol Hover Color', 'tpebl' ),
+                'label'     => esc_html__( 'Symbol Color', 'tpebl' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => array(
                     '{{WRAPPER}} .plus-number-counter .number-counter-inner-block:hover .counter-number .number-counter-symbol' => 'color: {{VALUE}}',
                 ),
                 'condition' => array(
                     'gradient_hover_color_option' => 'color',
+                    'symbol_hover_gradient_color_option' => 'color',
                 ),
             )
         );
@@ -2007,8 +2338,8 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Vertical Center', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'On', 'tpebl' ),
-				'label_off' => esc_html__( 'Off', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'no',
 				'condition' => array(
 					'style' => array( 'style-2' ),

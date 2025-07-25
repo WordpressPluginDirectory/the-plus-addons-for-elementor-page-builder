@@ -66,7 +66,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_icon() {
-		return 'fa fa-nav-menu theplus_backend_icon';
+		return 'theplus-i-navigation-menu-lite tpae-editor-logo';
 	}
 
 	/**
@@ -2606,8 +2606,8 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 							}
 						} else {
 							$start_Li .= '<div class="tab-preview-template-notice">
-											<div class="preview-temp-notice-heading">' . esc_html__( 'Select Template', 'theplus' ) . '</div>
-											<div class="preview-temp-notice-desc">' . esc_html__( 'Please select a template to display its content.', 'theplus' ) . '</div>
+											<div class="preview-temp-notice-heading">' . esc_html__( 'Select Template', 'tpebl' ) . '</div>
+											<div class="preview-temp-notice-desc">' . esc_html__( 'Please select a template to display its content.', 'tpebl' ) . '</div>
 										</div>';
 						}
 						$start_Li .= '</div>';

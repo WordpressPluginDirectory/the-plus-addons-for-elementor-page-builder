@@ -71,7 +71,7 @@ class L_ThePlus_Tabs_Tours extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_icon() {
-		return 'fa fa-th-list theplus_backend_icon';
+		return 'theplus-i-tabs-tours tpae-editor-logo';
 	}
 
 	/**
@@ -162,19 +162,11 @@ class L_ThePlus_Tabs_Tours extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'smart-preset-button',
+            'tpae_preset_controller',
             array(
-                'type'=> Controls_Manager::RAW_HTML,
-                'raw' => sprintf(
-                    '<div class="tpae-preset-main-raw-main">
-                        <a href="%s" class="tp-preset-live-demo" id="tp-preset-live-demo" data-temp_id="17847" target="_blank" rel="noopener noreferrer">%s</a>
-                        <a class="tp-preset-editor-raw" id="tp-preset-editor-raw" data-temp_id="17847">%s</a>
-                    </div>',
-                    esc_url('https://theplusaddons.com/widgets/elementor-tabs/'),
-                    esc_html__('Live Demo', 'tpebl'),
-                    esc_html__('Import Presets', 'tpebl')
-                ),
-                'label_block'     => true,
+                'type'        => 'tpae_preset_button',
+                'temp_id'     => 17847,
+                'label_block' => true,
             )
         );
 		$this->add_control(
@@ -2417,8 +2409,8 @@ class L_ThePlus_Tabs_Tours extends Widget_Base {
 				}
 			} elseif ( 'page_template' === $item['content_source'] && 'dropdown' === $item['content_template_type'] && ( empty( $content_template ) || '0' === $content_template ) ) {
 				$tab_content .= '<div class="tab-preview-template-notice">
-						<div class="preview-temp-notice-heading">' . esc_html__( 'Select Template', 'theplus' ) . '</div>
-						<div class="preview-temp-notice-desc">' . esc_html__( 'Please select a template to display its content.', 'theplus' ) . '</div>
+						<div class="preview-temp-notice-heading">' . esc_html__( 'Select Template', 'tpebl' ) . '</div>
+						<div class="preview-temp-notice-desc">' . esc_html__( 'Please select a template to display its content.', 'tpebl' ) . '</div>
 					</div>';
 			}
 				$tab_content .= '</div>';

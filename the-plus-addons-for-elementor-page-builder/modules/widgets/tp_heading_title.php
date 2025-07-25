@@ -57,7 +57,7 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 	 * @since 1.0.0
 	 */
 	public function get_icon() {
-		return 'fa fa-header theplus_backend_icon';
+		return 'theplus-i-heading-title tpae-editor-logo';
 	}
 
 	/**
@@ -132,26 +132,18 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 		$this->start_controls_section(
 			'heading_title_layout_section',
 			array(
-				'label' => esc_html__( 'Content', 'tpebl' ),
+				'label' => esc_html__( 'Layout', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			)
 		);
 		$this->add_control(
-			'smart-preset-button',
-			array(
-                'type'=> Controls_Manager::RAW_HTML,
-                'raw' => sprintf(
-					'<div class="tpae-preset-main-raw-main">
-						<a href="%s" class="tp-preset-live-demo" id="tp-preset-live-demo" data-temp_id="12427" target="_blank" rel="noopener noreferrer">%s</a>
-						<a class="tp-preset-editor-raw" id="tp-preset-editor-raw" data-temp_id="12427">%s</a>
-					</div>',
-					esc_url('https://theplusaddons.com/widgets/elementor-heading-titles/'),
-					esc_html__('Live Demo', 'tpebl'),
-					esc_html__('Import Presets', 'tpebl')
-				),
-                'label_block'     => true,
+            'tpae_preset_controller',
+            array(
+                'type'        => 'tpae_preset_button',
+                'temp_id'     => 12427,
+                'label_block' => true,
             )
-		);
+        );
 		$this->add_control(
 			'heading_style',
 			array(
@@ -192,59 +184,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				),
 			)
 		);
-		$this->add_control(
-			'title',
-			array(
-				'type'        => Controls_Manager::TEXT,
-				'label'       => esc_html__( 'Heading Title', 'tpebl' ),
-				'label_block' => true,
-				'default'     => esc_html__( 'Heading', 'tpebl' ),
-				'dynamic'     => array(
-					'active' => true,
-				),
-				'condition'   => array(
-					'select_heading' => 'default',
-				),
-			)
-		);
-		$this->add_control(
-			'sub_title',
-			array(
-				'type'        => Controls_Manager::TEXT,
-				'label'       => esc_html__( 'Sub Title', 'tpebl' ),
-				'label_block' => true,
-				'separator'   => 'before',
-				'default'     => esc_html__( 'Sub Title', 'tpebl' ),
-				'dynamic'     => array(
-					'active' => true,
-				),
-			)
-		);
-		$this->add_control(
-			'title_s',
-			array(
-				'type'        => Controls_Manager::TEXT,
-				'label'       => esc_html__( 'Extra Title', 'tpebl' ),
-				'label_block' => true,
-				'separator'   => 'before',
-				'default'     => esc_html__( 'Title', 'tpebl' ),
-				'dynamic'     => array(
-					'active' => true,
-				),
-			)
-		);
-		$this->add_control(
-			'heading_s_style',
-			array(
-				'type'    => Controls_Manager::SELECT,
-				'label'   => esc_html__( 'Extra Title Position', 'tpebl' ),
-				'default' => 'text_after',
-				'options' => array(
-					'text_after'  => esc_html__( 'Prefix', 'tpebl' ),
-					'text_before' => esc_html__( 'Postfix', 'tpebl' ),
-				),
-			)
-		);
 		$this->add_responsive_control(
 			'sub_title_align',
 			array(
@@ -274,29 +213,110 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				'separator'    => 'before',
 			)
 		);
+		$this->end_controls_section();
+		$this->start_controls_section(
+			'heading_title_content_section',
+			array(
+				'label' => esc_html__( 'Content', 'tpebl' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			)
+		);
+		$this->add_control(
+			'title',
+			array(
+				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Heading Title', 'tpebl' ),
+				'ai'  => false,
+				'default'     => esc_html__( 'Heading', 'tpebl' ),
+				'dynamic'     => array(
+					'active' => true,
+				),
+				'condition'   => array(
+					'select_heading' => 'default',
+				),
+			)
+		);
+		$this->add_control(
+			'sub_title',
+			array(
+				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Sub Title', 'tpebl' ),
+				'ai'  => false,
+				'default'     => esc_html__( 'Sub Title', 'tpebl' ),
+				'dynamic'     => array(
+					'active' => true,
+				),
+			)
+		);
+		$this->add_control(
+			'title_s',
+			array(
+				'type'        => Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Extra Title', 'tpebl' ),
+				'ai'  => false,
+				'default'     => esc_html__( 'Title', 'tpebl' ),
+				'dynamic'     => array(
+					'active' => true,
+				),
+				'condition'   => array(
+					'heading_style' => 'style_1',
+				),
+			)
+		);
+		$this->add_control(
+			'heading_s_style',
+			array(
+				'type'    => Controls_Manager::SELECT,
+				'label'   => esc_html__( 'Extra Title Position', 'tpebl' ),
+				'default' => 'text_after',
+				'options' => array(
+					'text_after'  => esc_html__( 'Prefix', 'tpebl' ),
+					'text_before' => esc_html__( 'Postfix', 'tpebl' ),
+				),
+				'condition'   => array(
+					'heading_style' => 'style_1',
+				),
+			)
+		);
+		$this->end_controls_section();
+		$this->start_controls_section(
+			'heading_title_extra_section',
+			array(
+				'label' => esc_html__( 'Extra Option', 'tpebl' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			)
+		);
 		$this->add_control(
 			'heading_title_subtitle_limit',
 			array(
-				'label'     => wp_kses_post( "Heading Title & Sub Title Limit <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "limit-word-count-in-heading-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post( "Heading & Sub Title Limit <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "limit-word-count-in-heading-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
 				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Enable', 'tpebl' ),
-				'label_off' => esc_html__( 'Disable', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'no',
-				'separator' => 'before',
 			)
 		);
 		$this->add_control(
 			'display_heading_title_limit',
 			array(
-				'label'     => esc_html__( 'Heading Title Limit', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Heading Title Limit', 'tpebl' ),
+				'type' => Controls_Manager::POPOVER_TOGGLE,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'no',
-				'separator' => 'before',
+				'return_value' => 'yes',
+				'default' => 'no',
 				'condition' => array(
 					'heading_title_subtitle_limit' => 'yes',
 				),
+			)
+		);
+		$this->start_popover();
+		$this->add_control(
+			'heading_title_limit_heading',
+			array(
+				'label'     => esc_html__( 'Heading Title Limit', 'tpebl' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'after',
 			)
 		);
 		$this->add_control(
@@ -343,19 +363,28 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				),
 			)
 		);
-
+		$this->end_popover();
 		$this->add_control(
 			'display_sub_title_limit',
 			array(
-				'label'     => esc_html__( 'Sub Title Limit', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Sub Title Limit', 'tpebl' ),
+				'type' => Controls_Manager::POPOVER_TOGGLE,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'no',
-				'separator' => 'before',
+				'return_value' => 'yes',
+				'default' => 'no',
 				'condition' => array(
 					'heading_title_subtitle_limit' => 'yes',
 				),
+			)
+		);
+		$this->start_popover();
+		$this->add_control(
+			'sub_title_limit_heading',
+			array(
+				'label'     => esc_html__( 'Sub Title Limit', 'tpebl' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'after',
 			)
 		);
 		$this->add_control(
@@ -402,6 +431,7 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				),
 			)
 		);
+		$this->end_popover();
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_styling',
@@ -410,6 +440,20 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'heading_style!' => array( 'style_1', 'style_2', 'style_8' ),
+				),
+			)
+		);
+		$this->add_control(
+			'sep_img',
+			array(
+				'label'     => esc_html__( 'Separator With Image', 'tpebl' ),
+				'ai' => false,
+				'type'      => Controls_Manager::MEDIA,
+				'default'   => array(
+					'url' => '',
+				),
+				'condition' => array(
+					'heading_style' => 'style_4',
 				),
 			)
 		);
@@ -474,19 +518,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 					'{{WRAPPER}} .heading.style-5 .heading-title:after' => 'height: {{VALUE}}px;',
 				),
 
-			)
-		);
-		$this->add_control(
-			'sep_img',
-			array(
-				'label'     => esc_html__( 'Separator With Image', 'tpebl' ),
-				'type'      => Controls_Manager::MEDIA,
-				'default'   => array(
-					'url' => '',
-				),
-				'condition' => array(
-					'heading_style' => 'style_4',
-				),
 			)
 		);
 		$this->add_control(
@@ -619,6 +650,20 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				),
 			)
 		);
+		$this->add_responsive_control(
+			's_maintitle_pg',
+			array(
+				'label'      => esc_html__( 'Padding', 'tpebl' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .heading_style .heading-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+				'condition'  => array(
+					'heading_style' => array( 'style_1', 'style_2' ),
+				),
+			)
+		);
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -639,7 +684,7 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 					),
 					'gradient' => array(
 						'title' => esc_html__( 'Gradient', 'tpebl' ),
-						'icon'  => 'fa fa-barcode',
+						'icon'  => 'eicon-barcode',
 					),
 				),
 				'label_block' => false,
@@ -782,20 +827,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				'separator' => 'before',
 			)
 		);
-		$this->add_responsive_control(
-			's_maintitle_pg',
-			array(
-				'label'      => esc_html__( 'Padding', 'tpebl' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .heading_style .heading-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-				'condition'  => array(
-					'heading_style' => array( 'style_1', 'style_2' ),
-				),
-			)
-		);
 		$this->add_control(
 			'special_effect',
 			array(
@@ -842,7 +873,20 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				'options' => l_theplus_get_tags_options(),
 			)
 		);
-
+		$this->add_responsive_control(
+			's_subtitle_pg',
+			array(
+				'label'      => esc_html__( 'Padding', 'tpebl' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .heading_style .heading-sub-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+				'condition'  => array(
+					'heading_style' => array( 'style_1', 'style_2' ),
+				),
+			)
+		);
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -863,7 +907,7 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 					),
 					'gradient' => array(
 						'title' => esc_html__( 'Gradient', 'tpebl' ),
-						'icon'  => 'fa fa-barcode',
+						'icon'  => 'eicon-barcode',
 					),
 				),
 				'label_block' => false,
@@ -998,20 +1042,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				'of_type'   => 'gradient',
 			)
 		);
-		$this->add_responsive_control(
-			's_subtitle_pg',
-			array(
-				'label'      => esc_html__( 'Padding', 'tpebl' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .heading_style .heading-sub-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-				'condition'  => array(
-					'heading_style' => array( 'style_1', 'style_2' ),
-				),
-			)
-		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_extra_title_styling',
@@ -1044,7 +1074,7 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 					),
 					'gradient' => array(
 						'title' => esc_html__( 'Gradient', 'tpebl' ),
-						'icon'  => 'fa fa-barcode',
+						'icon'  => 'eicon-barcode',
 					),
 				),
 				'label_block' => false,
@@ -1206,6 +1236,8 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				'type'    => Controls_Manager::SWITCHER,
 				'label'   => esc_html__( 'Center Alignment In Mobile', 'tpebl' ),
 				'default' => 'no',
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 			)
 		);
 		$this->end_controls_section();
