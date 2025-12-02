@@ -69,7 +69,7 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-creatives' );
+		return array( 'plus-creative' );
 	}
 
 	/**
@@ -178,18 +178,16 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 			) 
 		);
 		$this->add_control(
-			'plus_pro_info_box_layout_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'plus_pro_info_box_layout_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition'   => array(
 					'info_box_layout' => 'carousel_layout',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'flip_style',
 			array(
@@ -293,19 +291,17 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'plus_pro_image_icon_svg_options',
-			array(
-				'label'       => __( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'plus_pro_image_icon_svg_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition'   => array(
 					'info_box_layout' => 'single_layout',
 					'image_icon'      => 'svg',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'select_image',
 			array(
@@ -459,20 +455,18 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 		);
 		$this->end_popover();
 		$this->add_control(
-			'iconmind_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'iconmind_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition' => array(
 					'info_box_layout' => 'single_layout',
 					'image_icon'      => 'icon',
 					'icon_font_style' => 'icon_mind',
 				),
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'back_content_section',
@@ -529,20 +523,18 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'button_pro_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'button_pro_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition'   => array(
 					'info_box_layout' => 'single_layout',
 					'display_button'  => 'yes',
 					'button_style!'   => 'style-8',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'button_text',
 			array(
@@ -685,21 +677,19 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 		);
 		$this->end_popover();
 		$this->add_control(
-			'icon_mind_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'icon_mind_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition'   => array(
 					'info_box_layout'        => 'single_layout',
 					'display_button'         => 'yes',
 					'button_style!'          => array( 'style-7', 'style-9' ),
 					'button_icon_font_style' => 'icon_mind',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'before_after',
 			array(
@@ -760,15 +750,13 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'section_svg_styling_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'section_svg_styling_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2181,18 +2169,16 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'plus_pro_carousel_options_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'plus_pro_carousel_options_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition'   => array(
 					'info_box_layout' => 'carousel_layout',
 				),
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 
 		$this->start_controls_section(

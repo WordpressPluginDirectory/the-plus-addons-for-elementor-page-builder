@@ -76,7 +76,7 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-listing' );
+		return array( 'plus-essential', 'plus-archive' );
 	}
 
 	/**
@@ -212,18 +212,15 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'layout_pro_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'layout_pro_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'layout' => 'carousel',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'post_taxonomies',
 			array(
@@ -685,6 +682,29 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
+		$get_whitelabel = get_option( 'theplus_white_label' );
+		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
+
+		if( !empty( $help_link ) && 'on'!== $help_link ) {
+			$this->start_controls_section(
+				'tpae_theme_builder_sec',
+				array(
+					'label' => esc_html__( 'Use with Theme Builder', 'tpebl' ),
+					'tab'   => Controls_Manager::TAB_CONTENT,
+				)
+			);
+			$this->add_control(
+				'tpae_theme_builder',
+				array(
+					'type'   => 'tpae_theme_builder',
+					'notice' => 'We recommend using this widget in the Post Archive Template to display categories or tags dynamically.',
+					'button_text' => esc_html__( 'Create Archive Page', 'tpebl' ),
+					'page_type'   => 'tp_archives'
+				)
+			);
+			$this->end_controls_section();
+		}
 
 		$this->start_controls_section(
 			'section_title_style',
@@ -2371,18 +2391,15 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'overflow_pro_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'overflow_pro_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'overflow_hidden_opt' => 'visible',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'plus_mouse_move_parallax',
 			array(
@@ -2402,18 +2419,15 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'plus_mouse_pro_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'plus_mouse_pro_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'plus_mouse_move_parallax' => 'yes',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'messy_column',
 			array(
@@ -2426,18 +2440,15 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'messy_pro_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'messy_pro_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'messy_column' => 'yes',
 				),
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';

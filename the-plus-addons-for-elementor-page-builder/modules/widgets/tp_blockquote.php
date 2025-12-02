@@ -27,6 +27,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class ThePlus_Block_Quote extends Widget_Base {
 
+	/**
+	 * Document Link For Need help.
+	 *
+	 * @since 5.3.3
+	 *
+	 * @var tp_doc of the class.
+	 */
 	public $tp_doc = L_THEPLUS_TPDOC;
 
 	/**
@@ -325,7 +332,13 @@ class ThePlus_Block_Quote extends Widget_Base {
 		$this->add_control(
 			'quote_tweet',
 			array(
-				'label'     => wp_kses_post( "Tweet <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "click-to-tweet-text-box-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'        => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Tweet', 'tpebl' ),
+						esc_url( $this->tp_doc . 'click-to-tweet-text-box-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type' => Controls_Manager::POPOVER_TOGGLE,
 				'default' => 'no',
 				'label_off' => esc_html__( 'Default', 'tpebl' ),
@@ -378,9 +391,11 @@ class ThePlus_Block_Quote extends Widget_Base {
 			'tweet_Note',
 			array(
 				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => sprintf(
-					'<p class="tp-controller-notice"><i>%s</i></p>',
-					esc_html__( 'Note : If disabled, it will tweet content of blockquote instead of current page URL.', 'tpebl' )
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-notice"><i>%s</i></p>',
+						esc_html__( 'Note : If disabled, it will tweet content of blockquote instead of current page URL.', 'tpebl' )
+					)
 				),
 				'label_block' => true,
 			)

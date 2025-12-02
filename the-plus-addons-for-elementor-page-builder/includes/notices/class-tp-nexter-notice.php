@@ -78,7 +78,18 @@ if ( ! class_exists( 'Tp_Nexter_Notice' ) ) {
 		 * @since 6.3.11
 		 */
 		public function __construct() {
-			add_action( 'admin_notices', array( $this, 'theplus_blocks_promo_install_plugin' ) );
+
+			$saved_time = get_option( 'tpae_install_time' );
+
+			$saved_timestamp   = strtotime( $saved_time );
+    		$current_timestamp = current_time( 'timestamp' );
+
+			$days_passed = floor( ( $current_timestamp - $saved_timestamp ) / DAY_IN_SECONDS );
+
+			if ( $days_passed >= 2 ) {
+				add_action( 'admin_notices', array( $this, 'theplus_blocks_promo_install_plugin' ) );
+			}
+
 			add_action( 'wp_ajax_theplus_blocks_dismiss_promo', array( $this, 'theplus_blocks_dismiss_promo' ) );
 		}
 
@@ -95,7 +106,16 @@ if ( ! class_exists( 'Tp_Nexter_Notice' ) ) {
 			$nonce       = wp_create_nonce( 'theplus-addons-tpag-blocks' );
 			$pt_exclude  = ! empty( $screen->post_type ) && in_array( $screen->post_type, array( 'elementor_library', 'product', 'update' ), true );
 
-			$parent_base = ! empty( $screen->parent_base ) && in_array( $screen->parent_base, array( 'index', 'elementor', 'themes', 'edit', 'plugins', 'theplus_welcome_page'  ), true );
+			$et_plugin_status = apply_filters( 'tpae_get_plugin_status','template-kit-import/template-kit-import.php' );
+
+			$allowed_parents = array( 'index', 'elementor', 'themes', 'edit', 'plugins' );
+
+			if ( get_option( 'tpae_onbording_end' ) || 'not_installed' !== $et_plugin_status ) {
+				$allowed_parents[] = 'theplus_welcome_page';
+			}
+
+			$parent_base = ! empty( $screen->parent_base ) && in_array( $screen->parent_base, $allowed_parents, true );
+
 			$get_action  = ! empty( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : '';
 
 			if ( ! $parent_base || $pt_exclude ) {

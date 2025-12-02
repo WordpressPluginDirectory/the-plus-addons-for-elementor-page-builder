@@ -30,6 +30,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class ThePlus_Syntax_Highlighter extends Widget_Base {
 
+	/**
+	 * Document Link For Need help.
+	 *
+	 * @var tp_doc of the class.
+	 */
 	public $tp_doc = L_THEPLUS_TPDOC;
 
 	/**
@@ -345,11 +350,13 @@ class ThePlus_Syntax_Highlighter extends Widget_Base {
 		$this->add_control(
 			'lineNumber',
 			array(
-				'label'     => wp_kses_post( sprintf(
-					"%s <a class='tp-docs-link' href='%s' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>",
-					esc_html__( 'Line Number', 'tpebl' ),
-					esc_url( $this->tp_doc . "highlight-any-specific-line-in-syntax-highlight-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" )
-				) ),
+				'label'     => wp_kses_post(
+					sprintf(
+						"%s <a class='tp-docs-link' href='%s' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>",
+						esc_html__( 'Line Number', 'tpebl' ),
+						esc_url( $this->tp_doc . "highlight-any-specific-line-in-syntax-highlight-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
@@ -372,11 +379,13 @@ class ThePlus_Syntax_Highlighter extends Widget_Base {
 		$this->add_control(
 			'dnloadBtn',
 			array(
-				'label'     => wp_kses_post( sprintf(
-					"%s <a class='tp-docs-link' href='%s' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>",
-					esc_html__( 'Download Button', 'tpebl' ),
-					esc_url( $this->tp_doc . "add-download-button-in-code-highlighter-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" )
-				) ),
+				'label'     => wp_kses_post(
+					sprintf(
+						"%s <a class='tp-docs-link' href='%s' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>",
+						esc_html__( 'Download Button', 'tpebl' ),
+						esc_url( $this->tp_doc . "add-download-button-in-code-highlighter-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),

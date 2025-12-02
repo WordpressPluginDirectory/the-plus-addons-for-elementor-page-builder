@@ -76,7 +76,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-header' );
+		return array( 'plus-advanced', 'plus-header' );
 	}
 
 	/**
@@ -166,23 +166,62 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 		$this->add_control(
 			'navbar_menu_type',
 			array(
-				'label'   => __( 'Menu Direction', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'horizontal',
-				'options' => array(
-					'horizontal' => __( 'Horizontal Menu', 'tpebl' ),
-					'vertical'   => __( 'Vertical Menu', 'tpebl' ),
+				'label'       => esc_html__( 'Menu Direction', 'tpebl' ),
+				'label_block' => true,
+				'type'        => Controls_Manager::VISUAL_CHOICE,
+				'default'     => 'horizontal',
+				'options'     => array(
+					'horizontal'     => array(
+						'title' => esc_html__( 'Horizontal Menu', 'tpebl' ),
+						'image' => L_THEPLUS_ASSETS_URL . 'images/widget-style/nav-menu-lite/horizontal-menu.svg',
+					),
+					'vertical'  => array(
+						'title' => esc_html__( 'Vertical Menu', 'tpebl' ),
+						'image' => L_THEPLUS_ASSETS_URL . 'images/widget-style/nav-menu-lite/vertical-menu.svg',
+					),
 				),
+				'columns'     => 2,
+				'classes'     => 'tpae-visual_choice',
 			)
 		);
 		$this->add_control(
 			'how_it_works_vertical',
 			array(
-				'label'     => wp_kses_post( "<a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "create-a-vertical-navigation-menu-in-elementor-for-free/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> How it works <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s <i class="eicon-help-o"></i></a>',
+						esc_url( $this->tp_doc . 'create-a-vertical-navigation-menu-in-elementor-for-free/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
+						esc_html__( 'How it works', 'tpebl' ),
+					)
+				),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
 					'navbar_menu_type' => array( 'vertical' ),
 				),
+			)
+		);
+		$this->add_control(
+			'nav_alignment',
+			array(
+				'label'       => __( 'Alignment', 'tpebl' ),
+				'type'        => Controls_Manager::CHOOSE,
+				'options'     => array(
+					'text-left'   => array(
+						'title' => __( 'Left', 'tpebl' ),
+						'icon'  => 'eicon-text-align-left',
+					),
+					'text-center' => array(
+						'title' => __( 'Center', 'tpebl' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'text-right'  => array(
+						'title' => __( 'Right', 'tpebl' ),
+						'icon'  => 'eicon-text-align-right',
+					),
+				),
+				'default'     => 'text-center',
+				'toggle'      => true,
+				'label_block' => false,
 			)
 		);
 		$repeater = new \Elementor\Repeater();
@@ -266,13 +305,14 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Menu Text', 'tpebl' ),
 				'type'        => Controls_Manager::TEXT,
+				'ai'          => false,
 				'default'     => '',
 				'dynamic'     => array(
 					'active' => true,
 				),
 				'label_block' => true,
 				'conditions'  => array(
-					'relation' => 'or',
+					'relation' => 'or',										
 					'terms'    => array(
 						array(
 							'terms' => array(
@@ -308,10 +348,39 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '0',
 				'options'     => L_theplus_get_templates(),
+				'classes'    => 'tp-template-create-btn',
 				'label_block' => 'true',
 				'condition'   => array(
 					'depth'     => '1',
 					'SmenuType' => 'mega-menu',
+				),
+			)
+		);
+		$repeater->add_control(
+			'liveeditor',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => '<a class="tp-live-editor" id="tp-live-editor-button">Edit Template</a>',
+				'content_classes' => 'tp-live-editor-btn',
+				'label_block'     => true,
+				'condition'       => array(
+					'depth'      => '1',
+					'SmenuType'  => 'mega-menu',
+					'blockTemp!' => '0',
+				),
+			)
+		);
+		$repeater->add_control(
+			'create',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => '<a class="tp-live-create" id="tp-live-create-button">Create Template</a>',
+				'content_classes' => 'tp-live-create-btn',
+				'label_block'     => true,
+				'condition'       => array(
+					'depth'     => '1',
+					'SmenuType' => 'mega-menu',
+					'blockTemp' => '0',
 				),
 			)
 		);
@@ -355,7 +424,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 					'size' => '',
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .plus-navigation-wrap .plus-navigation-inner .navbar-nav li.plus-dropdown-default ul.dropdown-menu' => 'max-width: {{SIZE}}{{UNIT}};min-width: {{SIZE}}{{UNIT}};right: auto;',
+					'{{WRAPPER}} .plus-navigation-wrap .plus-navigation-inner .navbar-nav li.plus-dropdown-default ul.dropdown-menu' => 'max-width: {{SIZE}}{{UNIT}};min-width: {{SIZE}}{{UNIT}};',
 				),
 				'condition'  => array(
 					'megaMType' => 'default',
@@ -382,9 +451,10 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Moblie Mega Menu Link', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
+				'ai'        => false,
 				'default'   => 'no',
-				'label_on'  => esc_html__( 'Yes', 'tpebl' ),
-				'label_off' => esc_html__( 'No', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 			)
 		);
 		$repeater->add_control(
@@ -410,6 +480,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Menu Text', 'tpebl' ),
 				'type'        => Controls_Manager::TEXT,
+				'ai'          => false,
 				'default'     => '',
 				'dynamic'     => array(
 					'active' => true,
@@ -452,8 +523,8 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'label'     => esc_html__( 'Label', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'default'   => 'no',
-				'label_on'  => esc_html__( 'Yes', 'tpebl' ),
-				'label_off' => esc_html__( 'No', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 			)
 		);
 		$repeater->add_control(
@@ -461,6 +532,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Title', 'tpebl' ),
 				'type'        => Controls_Manager::TEXT,
+				'ai'          => false,  
 				'default'     => esc_html__( 'New', 'tpebl' ),
 				'dynamic'     => array(
 					'active' => true,
@@ -529,7 +601,8 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Upload Icon Image', 'tpebl' ),
 				'type'      => Controls_Manager::MEDIA,
-				'default'   => array(
+				'ai'        => false,
+   				'default'   => array(
 					'url' => Utils::get_placeholder_image_src(),
 				),
 				'dynamic'   => array( 'active' => true ),
@@ -716,6 +789,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Description', 'tpebl' ),
 				'type'        => Controls_Manager::TEXTAREA,
+				'ai'          => false, 
 				'rows'        => 3,
 				'default'     => '',
 				'placeholder' => esc_html__( 'Enter Description', 'tpebl' ),
@@ -729,6 +803,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Custom Class', 'tpebl' ),
 				'type'        => Controls_Manager::TEXT,
+				'ai'          => false,
 				'default'     => '',
 				'placeholder' => esc_html__( 'Enter Class Name', 'tpebl' ),
 				'dynamic'     => array(
@@ -759,42 +834,10 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'     => __( 'Select Menu', 'tpebl' ),
 				'type'      => Controls_Manager::SELECT,
-				'default'   => '',
+				'default'   => '0',
 				'options'   => l_theplus_navigation_menulist(),
 				'condition' => array(
 					'TypeMenu' => 'standard',
-				),
-			)
-		);
-		$this->add_control(
-			'menu_hover_click',
-			array(
-				'label'   => __( 'Menu Hover/Click', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'hover',
-				'options' => array(
-					'hover' => __( 'Hover Sub-Menu', 'tpebl' ),
-					'click' => __( 'Click Sub-Menu', 'tpebl' ),
-				),
-			)
-		);
-		$this->add_control(
-			'how_it_works_hovermenu',
-			array(
-				'label'     => wp_kses_post( "<a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "open-elementor-submenu-dropdown-on-hover-for-free/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> How it works <i class='eicon-help-o'></i> </a>" ),
-				'type'      => Controls_Manager::HEADING,
-				'condition' => array(
-					'menu_hover_click' => array( 'hover' ),
-				),
-			)
-		);
-		$this->add_control(
-			'how_it_works_clickmenu',
-			array(
-				'label'     => wp_kses_post( "<a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "open-elementor-submenu-dropdown-on-click-for-free/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> How it works <i class='eicon-help-o'></i> </a>" ),
-				'type'      => Controls_Manager::HEADING,
-				'condition' => array(
-					'menu_hover_click' => array( 'click' ),
 				),
 			)
 		);
@@ -819,30 +862,48 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			)
 		);
-
 		$this->add_control(
-			'nav_alignment',
+			'menu_hover_click',
 			array(
-				'label'       => __( 'Alignment', 'tpebl' ),
-				'type'        => Controls_Manager::CHOOSE,
-				'options'     => array(
-					'text-left'   => array(
-						'title' => __( 'Left', 'tpebl' ),
-						'icon'  => 'eicon-text-align-left',
-					),
-					'text-center' => array(
-						'title' => __( 'Center', 'tpebl' ),
-						'icon'  => 'eicon-text-align-center',
-					),
-					'text-right'  => array(
-						'title' => __( 'Right', 'tpebl' ),
-						'icon'  => 'eicon-text-align-right',
-					),
+				'label'   => __( 'Menu Hover/Click', 'tpebl' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'hover',
+				'options' => array(
+					'hover' => __( 'Hover Sub-Menu', 'tpebl' ),
+					'click' => __( 'Click Sub-Menu', 'tpebl' ),
 				),
-				'separator'   => 'before',
-				'default'     => 'text-center',
-				'toggle'      => true,
-				'label_block' => false,
+			)
+		);
+		$this->add_control(
+			'how_it_works_hovermenu',
+			array(
+				'label'     => wp_kses_post(
+					sprintf(
+						'<a class="tp-docs-link" href="%s"> %s <i class="eicon-help-o"></i></a>',
+						esc_url( $this->tp_doc . 'open-elementor-submenu-dropdown-on-hover-for-free/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" target="_blank" rel="noopener noreferrer' ),
+						esc_html__( 'How it works ', 'tpebl' ),
+					)
+				),
+				'type'      => Controls_Manager::HEADING,
+				'condition' => array(
+					'menu_hover_click' => array( 'hover' ),
+				),
+			)
+		);
+		$this->add_control(
+			'how_it_works_clickmenu',
+			array(
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'How it works', 'tpebl' ),
+						esc_url( $this->tp_doc . 'open-elementor-submenu-dropdown-on-click-for-free/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
+					)
+				),
+				'type'      => Controls_Manager::HEADING,
+				'condition' => array(
+					'menu_hover_click' => array( 'click' ),
+				),
 			)
 		);
 		$this->end_controls_section();
@@ -856,7 +917,13 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 		$this->add_control(
 			'show_mobile_menu',
 			array(
-				'label'     => wp_kses_post( "Responsive Mobile Menu <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "create-an-elementor-hamburger-toggle-menu-for-mobile-for-free/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Responsive Mobile Menu', 'tpebl' ),
+						esc_url( $this->tp_doc . 'create-an-elementor-hamburger-toggle-menu-for-mobile-for-free/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => __( 'Show', 'tpebl' ),
 				'label_off' => __( 'Hide', 'tpebl' ),
@@ -981,7 +1048,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'     => __( 'Select Menu', 'tpebl' ),
 				'type'      => Controls_Manager::SELECT,
-				'default'   => '',
+				'default'   => '0',
 				'options'   => l_theplus_navigation_menulist(),
 				'condition' => array(
 					'show_mobile_menu'    => 'yes',
@@ -996,6 +1063,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '0',
 				'options'     => L_theplus_get_templates(),
+				'classes'    => 'tp-template-create-btn',
 				'label_block' => 'true',
 				'condition'   => array(
 					'show_mobile_menu' => 'yes',
@@ -1003,6 +1071,34 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'condition'   => array(
 					'show_mobile_menu'    => 'yes',
 					'mobile_menu_content' => 'template-menu',
+				),
+			)
+		);
+		$this->add_control(
+			'liveeditor1',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => '<a class="tp-live-editor" id="tp-live-editor-button">Edit Template</a>',
+				'content_classes' => 'tp-live-editor-btn',
+				'label_block'     => true,
+				'condition'       => array(
+					'show_mobile_menu'        => 'yes',
+					'mobile_menu_content'     => 'template-menu',
+					'mobile_navbar_template!' => '0',
+				),
+			)
+		);
+		$this->add_control(
+			'create1',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => '<a class="tp-live-create" id="tp-live-create-button">Create Template</a>',
+				'content_classes' => 'tp-live-create-btn',
+				'label_block'     => true,
+				'condition'       => array(
+					'show_mobile_menu'       => 'yes',
+					'mobile_menu_content'    => 'template-menu',
+					'mobile_navbar_template' => '0',
 				),
 			)
 		);
@@ -1032,6 +1128,30 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
+		$get_whitelabel = get_option( 'theplus_white_label' );
+		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
+
+		if( !empty( $help_link ) && 'on'!== $help_link ) {
+			$this->start_controls_section(
+				'tpae_theme_builder_sec',
+				array(
+					'label' => esc_html__( 'Use with Theme Builder', 'tpebl' ),
+					'tab'   => Controls_Manager::TAB_CONTENT,
+				)
+			);
+			$this->add_control(
+				'tpae_theme_builder',
+				array(
+					'type'   => 'tpae_theme_builder',
+					'notice' => 'We recommend using this widget in the Header Template to display your site menu across all pages.',
+					'button_text' => esc_html__( 'Create Header Template', 'tpebl' ),
+					'page_type'   => 'tp_header'
+				)
+			);
+			$this->end_controls_section();
+		}
+
 		$this->start_controls_section(
 			'main_menu_styling',
 			array(
@@ -1039,12 +1159,17 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_control(
+			'main_menu_indicator_style',
 			array(
-				'name'     => 'main_menu_typography',
-				'label'    => __( 'Typography', 'tpebl' ),
-				'selector' => '{{WRAPPER}} .plus-navigation-menu .navbar-nav>li>a',
+				'label'     => __( 'Main Menu Indicator Style', 'tpebl' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'none',
+				'options'   => array(
+					'none'    => __( 'None', 'tpebl' ),
+					'style-1' => __( 'Style 1', 'tpebl' ),
+				),
+				'separator' => 'after',
 			)
 		);
 		$this->add_responsive_control(
@@ -1063,7 +1188,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .plus-navigation-menu .navbar-nav>li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-				'separator'  => 'after',
 			)
 		);
 		$this->add_responsive_control(
@@ -1085,17 +1209,12 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 			)
 		);
-		$this->add_control(
-			'main_menu_indicator_style',
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
 			array(
-				'label'     => __( 'Main Menu Indicator Style', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'none',
-				'options'   => array(
-					'none'    => __( 'None', 'tpebl' ),
-					'style-1' => __( 'Style 1', 'tpebl' ),
-				),
-				'separator' => 'after',
+				'name'     => 'main_menu_typography',
+				'label'    => __( 'Typography', 'tpebl' ),
+				'selector' => '{{WRAPPER}} .plus-navigation-menu .navbar-nav>li>a',
 			)
 		);
 		$this->start_controls_tabs( 'tabs_main_menu_style' );
@@ -1128,6 +1247,15 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'condition' => array(
 					'main_menu_indicator_style!' => 'none',
 				),
+			)
+		);
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			array(
+				'name'     => 'main_menu_normal_bg_color',
+				'types'    => array( 'classic', 'gradient' ),
+				'selector' => '{{WRAPPER}} .plus-navigation-menu .navbar-nav>li>a',
+
 			)
 		);
 		$this->add_control(
@@ -1206,31 +1334,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 			)
 		);
-		$this->add_control(
-			'main_menu_normal_bg_options',
-			array(
-				'label'     => __( 'Normal Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-			)
-		);
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			array(
-				'name'     => 'main_menu_normal_bg_color',
-				'types'    => array( 'classic', 'gradient' ),
-				'selector' => '{{WRAPPER}} .plus-navigation-menu .navbar-nav>li>a',
-
-			)
-		);
-		$this->add_control(
-			'main_menu_normal_shadow_options',
-			array(
-				'label'     => __( 'Shadow Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-			)
-		);
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			array(
@@ -1295,14 +1398,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 			)
 		);
-		$this->add_control(
-			'main_menu_hover_bg_options',
-			array(
-				'label'     => __( 'Hover Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-			)
-		);
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -1310,14 +1405,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'types'    => array( 'classic', 'gradient' ),
 				'selector' => '{{WRAPPER}} .plus-navigation-menu .navbar-nav > li:hover > a',
 
-			)
-		);
-		$this->add_control(
-			'main_menu_hover_shadow_options',
-			array(
-				'label'     => __( 'Hover Shadow Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
 			)
 		);
 		$this->add_group_control(
@@ -1384,14 +1471,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 			)
 		);
-		$this->add_control(
-			'main_menu_active_bg_options',
-			array(
-				'label'     => __( 'Active Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-			)
-		);
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -1399,14 +1478,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'types'    => array( 'classic', 'gradient' ),
 				'selector' => '{{WRAPPER}} .plus-navigation-menu .navbar-nav > li.active > a,{{WRAPPER}} .plus-navigation-menu .navbar-nav > li:focus > a,{{WRAPPER}} .plus-navigation-menu .navbar-nav > li.current_page_item > a',
 
-			)
-		);
-		$this->add_control(
-			'main_menu_active_shadow_options',
-			array(
-				'label'     => __( 'Active Shadow Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
 			)
 		);
 		$this->add_group_control(
@@ -1582,6 +1653,20 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'separator' => 'before',
 			)
 		);
+		$this->add_control(
+			'sub_menu_indicator_style',
+			array(
+				'label'     => __( 'Sub Menu Indicator Style', 'tpebl' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'none',
+				'options'   => array(
+					'none'    => __( 'None', 'tpebl' ),
+					'style-1' => __( 'Style 1', 'tpebl' ),
+					'style-2' => __( 'Style 2', 'tpebl' ),
+				),
+				'separator' => 'after',
+			)
+		);
 		$this->add_responsive_control(
 			'sub_menu_inner_padding',
 			array(
@@ -1598,20 +1683,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .plus-navigation-menu:not(.menu-vertical) .nav li.dropdown .dropdown-menu > li,{{WRAPPER}} .plus-navigation-menu.menu-vertical .nav li.dropdown .dropdown-menu > li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}  !important;',
 				),
-			)
-		);
-		$this->add_control(
-			'sub_menu_indicator_style',
-			array(
-				'label'     => __( 'Sub Menu Indicator Style', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'none',
-				'options'   => array(
-					'none'    => __( 'None', 'tpebl' ),
-					'style-1' => __( 'Style 1', 'tpebl' ),
-					'style-2' => __( 'Style 2', 'tpebl' ),
-				),
-				'separator' => 'after',
 			)
 		);
 		$this->start_controls_tabs( 'tabs_sub_menu_style' );
@@ -1646,14 +1717,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'condition' => array(
 					'sub_menu_indicator_style!' => 'none',
 				),
-			)
-		);
-		$this->add_control(
-			'sub_menu_normal_bg_options',
-			array(
-				'label'     => __( 'Normal Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
 			)
 		);
 		$this->add_group_control(
@@ -1699,14 +1762,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 			)
 		);
-		$this->add_control(
-			'sub_menu_hover_bg_options',
-			array(
-				'label'     => __( 'Hover Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-			)
-		);
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -1750,14 +1805,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 			)
 		);
-		$this->add_control(
-			'sub_menu_active_bg_options',
-			array(
-				'label'     => __( 'Active Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-			)
-		);
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -1774,7 +1821,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 		$this->start_controls_section(
 			'mobile_nav_options_styling',
 			array(
-				'label'     => __( 'Mobile Menu Style', 'tpebl' ),
+				'label'     => __( 'Mobile Menu', 'tpebl' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'show_mobile_menu' => 'yes',
@@ -1786,13 +1833,12 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'     => __( 'Toggle Navigation Style', 'tpebl' ),
 				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
 			)
 		);
 		$this->add_control(
 			'mobile_nav_toggle_height',
 			array(
-				'label'      => __( 'Toggle Height', 'tpebl' ),
+				'label'      => __( 'Toggle Height', 'tpebl' ),	
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array(
@@ -1898,14 +1944,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'separator' => 'before',
 			)
 		);
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			array(
-				'name'     => 'mobile_main_menu_typography',
-				'label'    => __( 'Typography', 'tpebl' ),
-				'selector' => '{{WRAPPER}} .plus-mobile-menu .navbar-nav>li>a',
-			)
-		);
 		$this->add_responsive_control(
 			'mobile_main_menu_margin',
 			array(
@@ -1935,6 +1973,14 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 			)
 		);
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'mobile_main_menu_typography',
+				'label'    => __( 'Typography', 'tpebl' ),
+				'selector' => '{{WRAPPER}} .plus-mobile-menu .navbar-nav>li>a',
+			)
+		);
 		$this->start_controls_tabs( 'tabs_mobile_main_menu_style' );
 		$this->start_controls_tab(
 			'tab_mobile_main_menu_normal',
@@ -1945,7 +1991,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 		$this->add_control(
 			'mobile_main_menu_normal_color',
 			array(
-				'label'     => __( 'Normal Color', 'tpebl' ),
+				'label'     => __( 'Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#313131',
 				'selectors' => array(
@@ -1962,14 +2008,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .navbar-nav > li.dropdown > a:after' => 'color: {{VALUE}}',
 				),
-			)
-		);
-		$this->add_control(
-			'mobile_main_menu_normal_bg_options',
-			array(
-				'label'     => __( 'Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
 			)
 		);
 		$this->add_group_control(
@@ -1991,7 +2029,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 		$this->add_control(
 			'mobile_main_menu_active_color',
 			array(
-				'label'     => __( 'Active Color', 'tpebl' ),
+				'label'     => __( 'Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#ff5a6e',
 				'selectors' => array(
@@ -2008,14 +2046,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .navbar-nav > li.dropdown.active > a:after,{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .navbar-nav > li.dropdown:focus > a:after,{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .navbar-nav > li.dropdown.current_page_item > a:after' => 'color: {{VALUE}}',
 				),
-			)
-		);
-		$this->add_control(
-			'mobile_main_menu_active_bg_options',
-			array(
-				'label'     => __( 'Active Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
 			)
 		);
 		$this->add_group_control(
@@ -2049,14 +2079,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'separator' => 'before',
 			)
 		);
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			array(
-				'name'     => 'mobile_sub_menu_typography',
-				'label'    => __( 'Typography', 'tpebl' ),
-				'selector' => '{{WRAPPER}} .plus-mobile-menu .nav li.dropdown .dropdown-menu > li > a',
-			)
-		);
 		$this->add_responsive_control(
 			'mobile_sub_menu_margin',
 			array(
@@ -2086,6 +2108,14 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 			)
 		);
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'mobile_sub_menu_typography',
+				'label'    => __( 'Typography', 'tpebl' ),
+				'selector' => '{{WRAPPER}} .plus-mobile-menu .nav li.dropdown .dropdown-menu > li > a',
+			)
+		);
 		$this->start_controls_tabs( 'tabs_mobile_sub_menu_style' );
 		$this->start_controls_tab(
 			'tab__mobile_sub_menu_normal',
@@ -2096,7 +2126,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 		$this->add_control(
 			'mobile_sub_menu_normal_color',
 			array(
-				'label'     => __( 'Normal Color', 'tpebl' ),
+				'label'     => __( 'Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#313131',
 				'selectors' => array(
@@ -2113,14 +2143,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .nav li.dropdown .dropdown-menu > li > a:after' => 'color: {{VALUE}}',
 				),
-			)
-		);
-		$this->add_control(
-			'mobile_sub_menu_normal_bg_options',
-			array(
-				'label'     => __( 'Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
 			)
 		);
 		$this->add_group_control(
@@ -2142,7 +2164,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 		$this->add_control(
 			'mobile_sub_menu_active_color',
 			array(
-				'label'     => __( 'Active Color', 'tpebl' ),
+				'label'     => __( 'Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#ff5a6e',
 				'selectors' => array(
@@ -2159,14 +2181,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .navbar-nav ul.dropdown-menu > li.dropdown-submenu.active > a:after,{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .navbar-nav ul.dropdown-menu > li.dropdown-submenu:focus > a:after,{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .navbar-nav ul.dropdown-menu > li.dropdown-submenu.current_page_item > a:after' => 'color: {{VALUE}}',
 				),
-			)
-		);
-		$this->add_control(
-			'mobile_sub_menu_active_bg_options',
-			array(
-				'label'     => __( 'Active Background Options', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
 			)
 		);
 		$this->add_group_control(
@@ -2591,21 +2605,22 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 
 							// Desktop
 							if ( isset( $NextMenu['megaMwid']['size'] ) && ! empty( $NextMenu['megaMwid']['size'] ) ) {
-								$stylecss .= '@media (min-width: 1024px) { .plus-navigation-wrap .plus-navigation-inner .navbar-nav>li.elementor-repeater-item-' . $item['_id'] . '.plus-dropdown-default>ul.dropdown-menu{ max-width: ' . $NextMenu['megaMwid']['size'] . $unit . ' !important; min-width: ' . $NextMenu['megaMwid']['size'] . $unit . '!important; ' . ( isset( $NextMenu['megaMAlign'] ) && $NextMenu['megaMAlign'] == 'default' ? 'right: auto;' : '' ) . '} } ';
+								$stylecss .= '@media (min-width: 1024px) { .plus-navigation-wrap .plus-navigation-inner .navbar-nav>li.elementor-repeater-item-' . $item['_id'] . '.plus-dropdown-default:not(.plus-dropdown-center)>ul.dropdown-menu{ max-width: ' . $NextMenu['megaMwid']['size'] . $unit . ' !important; min-width: ' . $NextMenu['megaMwid']['size'] . $unit . '!important; ' . ( isset( $NextMenu['megaMAlign'] ) && $NextMenu['megaMAlign'] == 'default' ? 'right: auto;' : '' ) . '} } ';
 							}
 							// Tablet
 							if ( isset( $NextMenu['megaMwid_tablet']['size'] ) && ! empty( $NextMenu['megaMwid_tablet']['size'] ) ) {
-								$stylecss .= '@media (max-width: 1024px) and (min-width:768px){ .plus-navigation-wrap .plus-navigation-inner .navbar-nav>li.elementor-repeater-item-' . $item['_id'] . '.plus-dropdown-default>ul.dropdown-menu{ max-width: ' . $NextMenu['megaMwid_tablet']['size'] . $unit . ' !important; min-width: ' . $NextMenu['megaMwid_tablet']['size'] . $unit . ' !important; ' . ( isset( $NextMenu['megaMAlign'] ) && $NextMenu['megaMAlign'] == 'default' ? 'right: auto;' : '' ) . '} } ';
+								$stylecss .= '@media (max-width: 1024px) and (min-width:768px){ .plus-navigation-wrap .plus-navigation-inner .navbar-nav>li.elementor-repeater-item-' . $item['_id'] . '.plus-dropdown-default:not(.plus-dropdown-center)>ul.dropdown-menu{ max-width: ' . $NextMenu['megaMwid_tablet']['size'] . $unit . ' !important; min-width: ' . $NextMenu['megaMwid_tablet']['size'] . $unit . ' !important; ' . ( isset( $NextMenu['megaMAlign'] ) && $NextMenu['megaMAlign'] == 'default' ? 'right: auto;' : '' ) . '} } ';
 							}
 							// Mobile
 							if ( isset( $NextMenu['megaMwid_mobile']['size'] ) && ! empty( $NextMenu['megaMwid_mobile']['size'] ) ) {
-								$stylecss .= '@media (max-width: 767px) { .plus-navigation-wrap .plus-navigation-inner .navbar-nav>li.elementor-repeater-item-' . $item['_id'] . '.plus-dropdown-default>ul.dropdown-menu{ max-width: ' . $NextMenu['megaMwid_mobile']['size'] . $unit . ' !important; min-width: ' . $NextMenu['megaMwid_mobile']['size'] . $unit . ' !important; ' . ( isset( $NextMenu['megaMAlign'] ) && $NextMenu['megaMAlign'] == 'default' ? 'right: auto;' : '' ) . '} } ';
+								$stylecss .= '@media (max-width: 767px) { .plus-navigation-wrap .plus-navigation-inner .navbar-nav>li.elementor-repeater-item-' . $item['_id'] . '.plus-dropdown-default:not(.plus-dropdown-center)>ul.dropdown-menu{ max-width: ' . $NextMenu['megaMwid_mobile']['size'] . $unit . ' !important; min-width: ' . $NextMenu['megaMwid_mobile']['size'] . $unit . ' !important; ' . ( isset( $NextMenu['megaMAlign'] ) && $NextMenu['megaMAlign'] == 'default' ? 'right: auto;' : '' ) . '} } ';
 							}
 						}
 					}
 					if ( $NextMenu != '' && $NextMenu['megaMType'] == 'default' && isset( $NextMenu['megaMAlign'] ) && $NextMenu['megaMAlign'] == 'center' ) {
 						$MegaMenuClass .= ' plus-dropdown-' . esc_attr( $NextMenu['megaMAlign'] );
 					}
+
 				}
 				$start_Li = "<li class='menu-item depth-" . esc_attr( $depth ) . ' ' . esc_attr( $dropdownClass ) . ' ' . esc_attr( $MegaMenuClass ) . ' ' . ( ! empty( $item['classTxt'] ) ? $item['classTxt'] : '' ) . ' elementor-repeater-item-' . esc_attr( $item['_id'] ) . $current_active . "' >";
 

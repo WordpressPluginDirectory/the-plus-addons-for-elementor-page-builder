@@ -122,6 +122,7 @@ class L_Plus_Library {
 			$merge[] = 'plus-listing-metro';
 			$merge[] = 'tp-blog-listout';
 			$merge[] = 'tp-bloglistout-style-1';
+			$merge[] = 'tp-bloglistout-style-5';
 		}
 
 		if ( in_array( 'tp-breadcrumbs-bar', $elements ) ) {

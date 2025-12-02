@@ -66,7 +66,7 @@ class ThePlus_Smooth_Scroll extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-creatives' );
+		return array( 'plus-creative' );
 	}
 
 	/**
@@ -417,11 +417,47 @@ class ThePlus_Smooth_Scroll extends Widget_Base {
 		);
 		$this->end_controls_section();
 
+		$this->start_controls_section(
+			'tpebl_section_needhelp',
+			array(
+				'label' => esc_html__( 'Need Help?', 'tpebl' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			)
+		);
+		$this->add_control(
+			'tpebl_help_control',
+			array(
+				'label'   => __( 'Need Help', 'tpebl' ),
+				'type'    => 'tpae_need_help',
+			)
+		);
+		$this->end_controls_section();
+
+		$get_whitelabel = get_option( 'theplus_white_label' );
+		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
+
+		if( !empty( $help_link ) && 'on'!== $help_link ) {
+			$this->start_controls_section(
+				'tpae_theme_builder_sec',
+				array(
+					'label' => esc_html__( 'Use with Theme Builder', 'tpebl' ),
+					'tab'   => Controls_Manager::TAB_CONTENT,
+				)
+			);
+			$this->add_control(
+				'tpae_theme_builder',
+				array(
+					'type'   => 'tpae_theme_builder',
+					'notice' => 'We recommend using this widget in the Single Template to load it globally on all pages.',
+					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
+					'page_type'   => 'tp_singular_page'
+				)
+			);
+			$this->end_controls_section();
+		}
+
 		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			include L_THEPLUS_PATH . 'modules/widgets/theplus-needhelp.php';
 			include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
-		} else {
-			include THEPLUS_PATH . 'modules/widgets/theplus-needhelp.php';
 		}
 	}
 

@@ -552,14 +552,3 @@ function l_theplus_get_image_size_options() {
 		'contain' => esc_html__( 'Contain', 'tpebl' ),
 	);
 }
-
-function theplus_pro_ver_notice() {
-	return '<div class="theplus-pro-features-wrapper">
-		<div class="tp-pf-icon-text"><i class="fa fa-lock" aria-hidden="true"></i> Pro Feature</div>
-		<div class="tp-pf-info">Go with our pro version to use all our widgets & features with It\'s fullest potential. Pro version will improve your elementor work flow drastically.</div>
-		<div class="tp-pf-links">
-			<a class="tp-pf-links-buy" href="https://theplusaddons.com/pricing/" target="_blank">Buy Pro</a>
-			<a class="tp-pf-links-compare" href="https://theplusaddons.com/free-vs-pro" target="_blank">Free VS Pro</a>
-		</div>	
-	</div>';
-}

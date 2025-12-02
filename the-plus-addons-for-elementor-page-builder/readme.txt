@@ -1,14 +1,14 @@
-=== The Plus Addons for Elementor - Elementor Addons, Page Templates, Widgets, Mega Menu, WooCommerce ===
+=== The Plus Addons for Elementor - Addons for Elementor, Page Templates, Widgets, Mega Menu, WooCommerce ===
 Contributors: posimyththemes, nirmalkavaiya, devangvachheta, sagarpatel124
 Tags: elementor, elementor widgets, elementor addons, elementor templates, widgets for elementor
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.3.15
+Stable tag: 6.4.3
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
-Best Elementor Addons with 120+ Elementor FREE & Pro Widgets & 1000+ Elementor Templates with Mega Menu, Post Grid, Header Footer Builder, WooCommerce
+Best Addons for Elementor with 120+ Elementor FREE & Pro Widgets & 1000+ Elementor Templates with Mega Menu, Post Grid, Header Footer Builder, WooCommerce
 
 == Description ==
 The Plus Addons for Elementor is the powerful extension for [Elementor Website Builder](https://wordpress.org/plugins/elementor/) with <strong>120+ Powerful Widgets & Extension, 1000+ Elementor Templates</strong>.
@@ -333,7 +333,7 @@ https://nexterwp.com/nexter-extension?utm_source=wordpress&utm_medium=readmepage
 4. You may enable/disable widgets & features from The Plus Settings from Dashboard.
 5. Congratulation, Now your site is ⚡ SUPERCHARGED, Get ready to build amazing websites
 
-<em> For Gutenberg Block Editor, check <a href="https://wordpress.org/plugins/the-plus-addons-for-block-editor/">The Plus Addons for Gutenberg</a></em>
+<em> For Gutenberg Block Editor, check <a href="https://wordpress.org/plugins/the-plus-addons-for-block-editor/">Nexter Blocks</a></em>
 
 == Frequently Asked Questions ==
 
@@ -385,8 +385,123 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 6.4.3 =
+Improvement : Heading Animation : Language Compatibility
+Improvement : Preset Option : File Structure Improvement
+Improvement : Smart Loop Builder Option : File Structure Improvement
+Fix : Button : Style8 – Icon issue while enabling Full Width option
+Fix : Compatibility with WordPress Version 6.9
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.2 =
+Add : Button : Add a none option for the Icon
+Add : Button : Add Icon circle size option for the Style-2
+Add : Heading Title : Add Separator Width/Height option for the Vertical Border Style
+Add : Heading Title : Add Spacing option between title & separator for the Classic Style
+Add : Heading Title : Add Spacing option between sub-title & separator for the Classic Style
+Improvement : Blog Listing : Add labels for the options
+Improvement : Clients Listing : Add labels for the options
+Improvement : Form Widget : Add labels for the options
+Improvement : Gallery Listing : Add labels for the options
+Improvement : Social Embed : Add labels for the options
+Improvement : Social Icon : Add labels for the options
+Improvement : Team Member Listing : Add labels for the options
+Improvement : Testimonial : Add labels for the options
+Improvement : Accordion : Add option to create or edit Template
+Improvement : Carousel Anything : Add option to create or edit Template
+Improvement : Navigation Menu Lite : Add option to create or edit Template
+Improvement : Page Scroll : Add option to create or edit Template
+Improvement : Switcher : Add option to create or edit Template
+Improvement : Tabs/Tours : Add option to create or edit Template
+Improvement : Equal Height : Language Compatibility
+Improvement : Dashboard : Design Improvements
+Improvement : Dashboard : Language Compatibility
+Fix : Accordion : Remove unnecessary bottom spacing
+Fix : Breadcrumbs Bar : Separator Global Background color not applying to the Arrow (Style-2)
+Fix : Post Comment : Remove unnecessary bottom & top spacing
+Fix : Post Comment : Reply text not working
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.1 =
+Add : Blog listing : % option added for the content box for the style-5
+Add : Pricing Table : Support Font Awesome 5
+Add : Pricing Table : Image styling option
+Improvement : Accordion : Add labels for the options
+Improvement : Carousel Anything : Add labels for the options
+Improvement : Tabs/Tours : Add labels for the options
+Improvement : Accordion : Language Compatibility
+Improvement : Adv Text Block : Language Compatibility
+Improvement : Age Gate : Language Compatibility
+Improvement : Blockquote : Language Compatibility
+Improvement : Blog Listing : Language Compatibility
+Improvement : Clients Listing : Language Compatibility
+Improvement : Countdown : Language Compatibility
+Improvement : Dark Mode : Language Compatibility
+Improvement : Form widget : Language Compatibility
+Improvement : Gallery Listing : Language Compatibility
+Improvement : Header Meta Content : Language Compatibility
+Improvement : Heading Title : Language Compatibility
+Improvement : Hovercard : Language Compatibility
+Improvement : Info box : Language Compatibility
+Improvement : Meeting Scheduler : Language Compatibility
+Improvement : Message Box : Language Compatibility
+Improvement : Navigation Menu lite : Language Compatibility
+Improvement : Number Counter : Language Compatibility
+Improvement : Pricing Table : Language Compatibility
+Improvement : Progress Bar : Language Compatibility
+Improvement : Social Icon : Language Compatibility
+Improvement : Stylish list : Language Compatibility
+Improvement : Switcher : Language Compatibility
+Improvement : Syntax Highlighter : Language Compatibility
+Improvement : Tabs/Tours : Language Compatibility
+Improvement : Team Member listing : Language Compatibility
+Fix : Form widget : Icon spacing not working
+Fix : Navigation Menu lite : Repeater - Mega menu alignment not working
+Fix : Testimonial : Style-4 layout breaking
+Fix : Testimonial : Carousel Column not working in the responsive
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.0 =
+New : Revamped Onboarding 
+Add : Blog Listing : Add Preset Option for the Ready design
+Add : Client Listing : Add Preset Option for the Ready design
+Add : Gallery Listing : Add Preset Option for the Ready design
+Add : Form Widget : Add Preset Option for the Ready design
+Add : Team Member Listout : Add Preset Option for the Ready design
+Add : Testimonial : Add Preset Option for the Ready design
+Add : Blog Listing : Style 5 Option
+Add : Blog Listing : Title limit option
+Add : Blog Listing : Content limit option
+Improvement : Adv Text Block : UI Improvements
+Improvement : Client Listing : UI Improvements
+Improvement : Gallery Listing : UI Improvements
+Improvement : Header Meta Content : UI Improvements
+Improvement : Navigation Menu Lite : UI Improvements
+Improvement : Post Author : UI Improvements
+Improvement : Post Meta : UI Improvements
+Improvement : Pricing Table : UI Improvements
+Improvement : Team Member Listing : UI Improvements
+Improvement : Testimonial : UI Improvements
+Improvement : Countdown : Language Compatibility
+Improvement : Table : Added labels for the options
+Improvement : Dashboard : Design Improvements
+Improvement : Dashboard : Language Compatibility
+Fix : Blog Listing : Author Image tag in the Smart Loop builder option
+Fix : Buttton : Style 8 Alignment Issue
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.3.16 =
+Fix : SVG Upload : Security Patch (Low Security)
+Fix : Minor Bug Fixes & Performance Improvements
+
 = 6.3.15 =
-Improvement : WdesignKit 2.0 Compatibility
+Improvement : Client Listing : UI Improvements
+Improvement : Gallery Listing : UI Improvements
+Improvement : Pricing Table : UI Improvements
+Improvement : Team Member Listing : UI Improvements
+Improvement : Testimonial : UI Improvements
+Fix : Blog Listing : Author Image tag in the Smart Loop builder option
+Improvement : Dashboard : Design Improvements
 Fix : Minor Bug Fixes & Performance Improvements
 
 = 6.3.14 =

@@ -25,7 +25,7 @@ class Wdk_Widget_Api {
 	 *
 	 * @var staring $wdk_site
 	 */
-	public $wdk_site = 'https://wdesignkit.com/api/wp/';
+	public $wdk_site = 'https://api.wdesignkit.com/api/wp/';
 
 	/**
 	 * Member Variable

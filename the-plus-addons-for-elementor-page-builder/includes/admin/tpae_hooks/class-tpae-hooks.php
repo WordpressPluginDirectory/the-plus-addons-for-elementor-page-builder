@@ -194,6 +194,7 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 		 * Define the core functionality of the plugin.
 		 *
 		 * @since 6.0.0
+		 * @version 6.3.17
 		 */
 		public function __construct() {
 			add_action( 'tpae_db_default', array( $this, 'tpae_db_default' ), 10 );
@@ -202,6 +203,8 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 			add_filter( 'tpae_remove_backend_files', array( $this, 'tpae_remove_backend_files' ), 10, 1 );
 			add_filter( 'tpae_enable_selected_widgets', array( $this, 'tpae_enable_selected_widgets' ), 10, 2 );
 			add_filter( 'tpae_elementor_disable_widgets', array( $this, 'tpae_elementor_disable_widgets' ), 10, 0 );
+			add_filter( 'tpae_get_plugin_status', array( $this, 'tpae_get_plugin_status' ), 10, 1 );
+			add_filter( 'tpae_plugin_install', array( $this, 'tpae_plugin_install' ), 10, 2 );
 		}
 
 		/**
@@ -288,7 +291,7 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 					'theplus_custom_field_video_switch'  => 'on',
 					'theplus_woo_recently_viewed_switch' => 'on',
 					'theplus_woo_countdown_switch'       => 'on',
-					'theplus_woo_thank_you_page_select'  => '2',
+					'theplus_woo_thank_you_page_select'  => '',
 					'bodymovin_load_js_check'            => 'on',
 				);
 
@@ -495,6 +498,99 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 
 			return $filteredarray;
 		}
+
+		/**
+		 * Get Plugin Status
+		 * 
+		 * @since 6.3.17
+		 */
+		public function tpae_get_plugin_status ($plugin_slug) {
+
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+
+			$all_plugins = get_plugins();
+
+			if ( isset( $all_plugins[ $plugin_slug ] ) ) {
+				if ( is_plugin_active( $plugin_slug ) ) {
+					return 'active';
+				} else {
+					return 'inactive';
+				}
+			}
+
+			return 'not_installed';
+		}
+
+		/**
+		 * Plugin Install 
+		 * 
+		 * @since 6.4.1
+		 */
+		public function tpae_plugin_install ($args){
+
+			$tp_slug            = !empty ( $args['tp_slug'] ) ? $args['tp_slug'] : '';
+			$tp_plugin_basename = !empty ( $args['tp_plugin_basename'] ) ? $args['tp_plugin_basename'] : '';
+
+
+			$installed_plugins = get_plugins();
+
+			include_once ABSPATH . 'wp-admin/includes/file.php';
+			include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+			include_once ABSPATH . 'wp-admin/includes/class-automatic-upgrader-skin.php';
+			include_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
+
+			$result   = array();
+			$response = wp_remote_post(
+				'http://api.wordpress.org/plugins/info/1.0/',
+				array(
+					'body' => array(
+						'action'  => 'plugin_information',
+						'request' => serialize(
+							(object) array(
+								'slug'   => $tp_slug,
+								'fields' => array(
+									'version' => false,
+								),
+							)
+						),
+					),
+				)
+			);
+
+			$plugin_info = unserialize( wp_remote_retrieve_body( $response ) );
+
+			if ( ! $plugin_info ) {
+				wp_send_json_error( array( 'content' => __( 'Failed to retrieve plugin information.', 'tpebl' ) ) );
+			}
+
+			$skin     = new \Automatic_Upgrader_Skin();
+			$upgrader = new \Plugin_Upgrader( $skin );
+
+			if ( ! isset( $installed_plugins[ $tp_plugin_basename ] ) && empty( $installed_plugins[ $tp_plugin_basename ] ) ) {
+
+				$installed         = $upgrader->install( $plugin_info->download_link );
+				$activation_result = activate_plugin( $tp_plugin_basename );
+				// $this->tpae_wdkit_hook();
+
+				$success = null === $activation_result;
+				$result  = $this->tpae_set_response( $success,'', '' );
+
+			} elseif ( isset( $installed_plugins[ $tp_plugin_basename ] ) ) {
+
+				$activation_result = activate_plugin( $tp_plugin_basename );
+				// $this->tpae_wdkit_hook();
+
+				$success = null === $activation_result;
+				$result  = $this->tpae_set_response( $success,'', '' );
+
+			}
+
+			return $this->tpae_set_response( $result);
+		}
+
+
 
 		/**
 		 * Set the response data.

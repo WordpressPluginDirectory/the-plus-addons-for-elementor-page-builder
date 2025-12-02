@@ -74,7 +74,7 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-creatives' );
+		return array( 'plus-creative' );
 	}
 
 	/**
@@ -521,18 +521,16 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 		);
 		$repeater->end_popover();
 		$repeater->add_control(
-			'icons_mind_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'icons_mind_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition'   => array(
 					'loop_icon_style' => 'icon_mind',
 				),
-			)
-		);
+            )
+        );
 		$repeater->add_control(
 			'loop_select_text',
 			array(
@@ -654,18 +652,16 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'carousel_pro_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'carousel_pro_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition'   => array(
 					'connection_switch' => 'yes',
 				),
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2033,15 +2029,13 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'animation_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'animation_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';

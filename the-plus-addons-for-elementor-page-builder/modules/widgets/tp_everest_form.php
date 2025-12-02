@@ -190,6 +190,7 @@ class ThePlus_Everest_form extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'section_s_label',
 			array(

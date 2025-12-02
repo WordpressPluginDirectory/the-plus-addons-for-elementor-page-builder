@@ -73,7 +73,7 @@ class ThePlus_Post_Navigation extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-builder' );
+		return array( 'plus-essential', 'plus-single' );
 	}
 
 	/**
@@ -246,6 +246,7 @@ class ThePlus_Post_Navigation extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'tpebl_section_needhelp',
 			array(
@@ -271,6 +272,30 @@ class ThePlus_Post_Navigation extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
+		$get_whitelabel = get_option( 'theplus_white_label' );
+		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
+
+		if( !empty( $help_link ) && 'on'!== $help_link ) {
+			$this->start_controls_section(
+				'tpae_theme_builder_sec',
+				array(
+					'label' => esc_html__( 'Use with Theme Builder', 'tpebl' ),
+					'tab'   => Controls_Manager::TAB_CONTENT,
+				)
+			);
+			$this->add_control(
+				'tpae_theme_builder',
+				array(
+					'type'   => 'tpae_theme_builder',
+					'notice' => 'We recommend using this widget in the Post Single Page Template to allow users to move between posts.',
+					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
+					'page_type'   => 'tp_singular_page'
+				)
+			);
+			$this->end_controls_section();
+		}
+
 		$this->start_controls_section(
 			'section_np_icon_style',
 			array(

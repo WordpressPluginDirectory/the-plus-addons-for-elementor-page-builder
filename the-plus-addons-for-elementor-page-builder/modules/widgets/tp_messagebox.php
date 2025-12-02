@@ -31,6 +31,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class ThePlus_MessageBox extends Widget_Base {
 
+	/**
+	 * Document Link For Need help.
+	 *
+	 * @since 5.3.3
+	 *
+	 * @var tp_doc of the class.
+	 */
 	public $tp_doc = L_THEPLUS_TPDOC;
 
 	/**
@@ -235,7 +242,13 @@ class ThePlus_MessageBox extends Widget_Base {
 		$this->add_control(
 			'dismiss',
 			array(
-				'label'     => wp_kses_post( "Close Button <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "add-close-button-in-alert-box-message-box-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Close Button', 'tpebl' ),
+						esc_url( $this->tp_doc . 'add-close-button-in-alert-box-message-box-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type' => Controls_Manager::POPOVER_TOGGLE,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),

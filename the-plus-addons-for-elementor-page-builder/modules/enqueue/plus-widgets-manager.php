@@ -298,6 +298,11 @@ class Plus_Widgets_Manager {
 				$this->transient_widgets[] = 'tp-bloglistout-' . $blog_style;
 				$this->transient_widgets[] = 'tp-blog-listout';
 
+				if ( ! empty( $options['display_button'] ) && 'yes' === $options['display_button'] ) {
+					$button_style = ! empty( $options['button_style'] ) ? $options['button_style'] : 'style-7';
+					$this->tp_button_style( $button_style );
+				}
+
 				$this->transient_widgets[] = $this->tpebl_layout_listing( $options );
 			}
 

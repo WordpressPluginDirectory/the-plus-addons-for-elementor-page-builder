@@ -29,7 +29,7 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 	 *
 	 * @since 5.3.3
 	 *
-	 * @var TpDoc of the class.
+	 * @var tp_doc of the class.
 	 */
 	public $tp_doc = L_THEPLUS_TPDOC;
 
@@ -159,8 +159,15 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 		$this->add_control(
 			'content_description',
 			array(
-				'label'       => wp_kses_post( "Description <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "advanced-text-block-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'       => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Description', 'tpebl' ),
+						esc_url( $this->tp_doc . 'advanced-text-block-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'        => Controls_Manager::WYSIWYG,
+				'ai'          => false,
 				'default'     => esc_html__( 'I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'tpebl' ),
 				'placeholder' => esc_html__( 'Type your description here', 'tpebl' ),
 				'dynamic'     => array(
@@ -198,7 +205,13 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 		$this->add_control(
 			'display_count',
 			array(
-				'label'     => wp_kses_post( "Description Limit <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "limit-wordcount-text-widget-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Description Limit', 'tpebl' ),
+						esc_url( $this->tp_doc ) . 'limit-wordcount-text-widget-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget'
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
@@ -278,19 +291,8 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 		$this->start_controls_section(
 			'section_styling',
 			array(
-				'label' => esc_html__( 'Typography', 'tpebl' ),
+				'label' => esc_html__( 'Text Style', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-		$this->add_control(
-			'content_color',
-			array(
-				'label'     => esc_html__( 'Text Color', 'tpebl' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#888',
-				'selectors' => array(
-					'{{WRAPPER}} .pt_plus_adv_text_block .text-content-block p,{{WRAPPER}} .pt_plus_adv_text_block .text-content-block' => 'color:{{VALUE}};',
-				),
 			)
 		);
 		$this->add_group_control(
@@ -304,7 +306,17 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 				'selector' => '{{WRAPPER}} .pt_plus_adv_text_block .text-content-block,{{WRAPPER}} .pt_plus_adv_text_block .text-content-block p',
 			)
 		);
-
+		$this->add_control(
+			'content_color',
+			array(
+				'label'     => esc_html__( 'Text Color', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#888',
+				'selectors' => array(
+					'{{WRAPPER}} .pt_plus_adv_text_block .text-content-block p,{{WRAPPER}} .pt_plus_adv_text_block .text-content-block' => 'color:{{VALUE}};',
+				),
+			)
+		);
 		$this->end_controls_section();
 
 		if ( defined( 'THEPLUS_VERSION' ) ) {

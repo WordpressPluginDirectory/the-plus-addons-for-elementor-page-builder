@@ -60,7 +60,7 @@ class ThePlus_Heading_Animation extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-creatives' );
+		return array( 'plus-creative' );
 	}
 
 	/**
@@ -206,7 +206,12 @@ class ThePlus_Heading_Animation extends Widget_Base {
 			'prefix_note',
 			array(
 				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => '<p class="tp-controller-notice"><i>Enter Text, Which will be visible before the Animated Text.</i></p>',
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Enter Text, Which will be visible before the Animated Text.', 'tpebl' ),
+					)
+				),
 				'label_block' => true,
 			)
 		);
@@ -228,7 +233,12 @@ class ThePlus_Heading_Animation extends Widget_Base {
 			'title_note',
 			array(
 				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => '<p class="tp-controller-notice"><i>You need to add Multiple line by ctrl + Enter Or Shift + Enter for animated text.</i></p>',
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'You need to add Multiple line by ctrl + Enter Or Shift + Enter for animated text.', 'tpebl' ),
+					)
+				),
 				'label_block' => true,
 			)
 		);
@@ -259,7 +269,12 @@ class ThePlus_Heading_Animation extends Widget_Base {
 			'postfix_note',
 			array(
 				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => '<p class="tp-controller-notice"><i>Enter Text, Which will be visible After the Animated Text.</i></p>',
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Enter Text, Which will be visible After the Animated Text.', 'tpebl' ),
+					)
+				),
 				'label_block' => true,
 			)
 		);

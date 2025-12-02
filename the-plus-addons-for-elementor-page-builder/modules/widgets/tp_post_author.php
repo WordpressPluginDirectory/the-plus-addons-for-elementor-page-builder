@@ -74,7 +74,7 @@ class ThePlus_Post_Author extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-builder' );
+		return array( 'plus-essential', 'plus-single' );
 	}
 
 	/**
@@ -152,13 +152,22 @@ class ThePlus_Post_Author extends Widget_Base {
 		$this->add_control(
 			'style',
 			array(
-				'label'   => esc_html__( 'Style', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'style-1',
-				'options' => array(
-					'style-1' => esc_html__( 'Style 1', 'tpebl' ),
-					'style-2' => esc_html__( 'Style 2', 'tpebl' ),
+				'label'     => esc_html__( 'Style', 'tpebl' ),
+				'label_block'  => true,
+				'type'         => Controls_Manager::VISUAL_CHOICE,
+				'default'   => 'style-1',
+				'options'   => array(
+					'style-1' => array(
+						'title' => esc_html__( 'Style 1', 'tpebl' ),
+						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/post-author/style-1.svg' ),
+					),
+					'style-2' => array(
+						'title' => esc_html__( 'Style 2', 'tpebl' ),
+						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/post-author/style-2.svg' ),
+					),
 				),
+				'columns'      => 2,
+				'classes'      => 'tpae-visual_choice',
 			)
 		);
 		$this->add_responsive_control(
@@ -241,6 +250,7 @@ class ThePlus_Post_Author extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+		
 		$this->start_controls_section(
 			'tpebl_section_needhelp',
 			array(
@@ -266,6 +276,30 @@ class ThePlus_Post_Author extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
+		$get_whitelabel = get_option( 'theplus_white_label' );
+		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
+
+		if( !empty( $help_link ) && 'on'!== $help_link ) {
+			$this->start_controls_section(
+				'tpae_theme_builder_sec',
+				array(
+					'label' => esc_html__( 'Use with Theme Builder', 'tpebl' ),
+					'tab'   => Controls_Manager::TAB_CONTENT,
+				)
+			);
+			$this->add_control(
+				'tpae_theme_builder',
+				array(
+					'type'   => 'tpae_theme_builder',
+					'notice' => 'We recommend adding this widget in the Post Single Page to show author info under each blog post',
+					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
+					'page_type'   => 'tp_singular_page'
+				)
+			);
+			$this->end_controls_section();
+		}
+
 		$this->start_controls_section(
 			'section_author_name_style',
 			array(
@@ -278,8 +312,8 @@ class ThePlus_Post_Author extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Show Author Name', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Enable', 'tpebl' ),
-				'label_off' => esc_html__( 'Disable', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'yes',
 			)
 		);
@@ -361,8 +395,8 @@ class ThePlus_Post_Author extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Show Author Role', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Enable', 'tpebl' ),
-				'label_off' => esc_html__( 'Disable', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'yes',
 			)
 		);
@@ -371,6 +405,7 @@ class ThePlus_Post_Author extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Label', 'tpebl' ),
 				'type'        => Controls_Manager::TEXT,
+				'ai'          => false,
 				'dynamic'     => array( 'active' => true ),
 				'default'     => esc_html__( 'Role : ', 'tpebl' ),
 				'placeholder' => esc_html__( 'Enter Label', 'tpebl' ),
@@ -457,8 +492,8 @@ class ThePlus_Post_Author extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Show Bio', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Enable', 'tpebl' ),
-				'label_off' => esc_html__( 'Disable', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'yes',
 			)
 		);
@@ -554,8 +589,8 @@ class ThePlus_Post_Author extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Show Avatar', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Enable', 'tpebl' ),
-				'label_off' => esc_html__( 'Disable', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'yes',
 			)
 		);
@@ -620,8 +655,8 @@ class ThePlus_Post_Author extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Show Social', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Enable', 'tpebl' ),
-				'label_off' => esc_html__( 'Disable', 'tpebl' ),
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'yes',
 			)
 		);

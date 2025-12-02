@@ -180,7 +180,13 @@ class ThePlus_Progress_Bar extends Widget_Base {
 		$this->add_control(
 			'how_it_works_piechart',
 			array(
-				'label'     => wp_kses_post( "<a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "create-circle-progress-bars-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> Learn How it works  <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s <i class="eicon-help-o"></i></a>',
+						esc_url( $this->tp_doc . 'create-circle-progress-bars-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
+						esc_html__( 'Learn How it works', 'tpebl' )
+					)
+				),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
 					'main_style' => 'pie_chart',

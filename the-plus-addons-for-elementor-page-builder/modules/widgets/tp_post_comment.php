@@ -64,7 +64,7 @@ class ThePlus_Post_Comment extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-builder' );
+		return array( 'plus-essential', 'plus-single' );
 	}
 
 	/**
@@ -198,6 +198,7 @@ class ThePlus_Post_Comment extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+		
 		$this->start_controls_section(
 			'tpebl_section_needhelp',
 			array(
@@ -223,6 +224,7 @@ class ThePlus_Post_Comment extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'content_section',
 			array(
@@ -1356,13 +1358,24 @@ class ThePlus_Post_Comment extends Widget_Base {
 
 		$user_identity = $user->exists() ? $user->display_name : '';
 
+		$parent_id = isset( $_GET['replytocom'] ) ? intval( $_GET['replytocom'] ) : 0;
+		$parent_author = '';
+
+		if ( $parent_id ) {
+			$parent_comment = get_comment( $parent_id );
+			if ( $parent_comment ) {
+				$parent_author = $parent_comment->comment_author;
+			}
+		}
+
 		$args = array(
 			'id_form'              => 'commentform',
 			'class_form'           => 'comment-form',
 			'id_submit'            => 'submit',
 			'title_reply'          => esc_html( $post_title ),
 			// Translators: %s is replaced with the title of the post being replied to.
-            'title_reply_to' => esc_html( $leave_txt ) . sprintf( esc_html__( 'Reply to %s', 'tpebl' ), esc_html( $post_title ) ),
+            // 'title_reply_to'       => esc_html( $leave_txt ) . sprintf( esc_html__( 'Reply to %s', 'tpebl' ), esc_html( $post_title ) ),
+            'title_reply_to'       => $parent_id ? sprintf( esc_html__( '%s %s', 'tpebl' ), esc_html( $leave_txt ), esc_html( $parent_author ) ) : esc_html__( $leave_txt, 'tpebl' ),
 			'cancel_reply_link'    => esc_html( $cancel_txt ),
 			'label_submit'         => esc_html( $btn_title ),
 			'comment_field'        => '<div class="tp-row"><div class="tp-col-md-12 tp-col"><label><textarea id="comment" name="comment" cols="45" rows="6" placeholder="' . esc_html( $placeholder_txt ) . '" aria-required="true"></textarea></label></div></div>',

@@ -90,6 +90,17 @@ function l_theplus_excerpt( $limit ) {
 	return $excerpt;
 }
 
+/**
+ * Blog listing limit content
+ * 
+ * @since v6.3.15
+ * 
+ */
+function l_limit_words($string, $word_limit){
+	$words = explode(" ",$string);
+	return implode(" ",array_splice($words,0,$word_limit));
+}	
+
 function l_theplus_loading_image_grid( $postid = '', $type = '' ) {
 	global $post;
 	$content_image = '';
@@ -310,6 +321,13 @@ function l_registered_widgets(){
 			'dependency' => array(
 				'css' => array(
 					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/css/main/blog-list/plus-bloglist-style-1.css',
+				),
+			),
+		),
+		'tp-bloglistout-style-5' => array(
+			'dependency' => array(
+				'css' => array(
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/css/main/blog-list/plus-bloglist-style-5.css',
 				),
 			),
 		),
@@ -1449,6 +1467,7 @@ function l_registered_widgets(){
 			'dependency' => array(
 				'css' => array(
 					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/css/main/testimonial/plus-ts4.css',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/css/extra/tp-bootstrap-grid.css',
 				),
 			),
 		),

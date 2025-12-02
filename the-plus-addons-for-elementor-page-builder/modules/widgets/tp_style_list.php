@@ -272,22 +272,25 @@ class L_ThePlus_Style_List extends Widget_Base {
 		);
 		$repeater->end_popover();
 		$repeater->add_control(
-			'icons_mind_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'icons_mind_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'icon_style' => 'icon_mind',
 				),
-			)
-		);
+            )
+        );
 		$repeater->add_control(
 			'link',
 			array(
-				'label'   => wp_kses_post( "Link <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "custom-link-to-each-elementor-icon-list/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'       => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Link', 'tpebl' ),
+						esc_url( $this->tp_doc . 'custom-link-to-each-elementor-icon-list/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'        => Controls_Manager::URL,
 				'label_block' => true,
 				'placeholder' => esc_html__( 'https://your-link.com', 'tpebl' ),
@@ -297,7 +300,13 @@ class L_ThePlus_Style_List extends Widget_Base {
 		$repeater->add_control(
 			'show_pin_hint',
 			array(
-				'label'   => wp_kses_post( "Pin Hint <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "add-label-tab-to-elementor-stylish-list/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Pin Hint', 'tpebl' ),
+						esc_url( $this->tp_doc . 'add-label-tab-to-elementor-stylish-list/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
@@ -399,7 +408,13 @@ class L_ThePlus_Style_List extends Widget_Base {
 		$repeater->add_control(
 			'show_background_style',
 			array(
-				'label'   => wp_kses_post( "Interactive Hover Bg Style <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "change-elementor-list-item-background-on-hover/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Interactive Hover Bg Style', 'tpebl' ),
+						esc_url( $this->tp_doc . 'change-elementor-list-item-background-on-hover/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
@@ -430,18 +445,15 @@ class L_ThePlus_Style_List extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
-			'show_tooltip_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'show_tooltip_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'show_tooltips' => 'yes',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'icon_list',
 			array(
@@ -476,7 +488,13 @@ class L_ThePlus_Style_List extends Widget_Base {
 		$this->add_control(
 			'read_more_toggle',
 			array(
-				'label'   => wp_kses_post( "Read More Toggle <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "add-read-more-button-to-elementor-icon-list/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'       => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Read More Toggle', 'tpebl' ),
+						esc_url( $this->tp_doc . 'add-read-more-button-to-elementor-icon-list/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'        => Controls_Manager::SWITCHER,
 				'label_on'    => esc_html__( 'Show', 'tpebl' ),
 				'label_off'   => esc_html__( 'Hide', 'tpebl' ),
@@ -763,7 +781,13 @@ class L_ThePlus_Style_List extends Widget_Base {
 		$this->add_control(
 			'sl_display_counter',
 			array(
-				'label'   => wp_kses_post( "Display Counter <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "create-numbered-list-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Display Counter', 'tpebl' ),
+						esc_url( $this->tp_doc . 'create-numbered-list-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
@@ -1682,7 +1706,13 @@ class L_ThePlus_Style_List extends Widget_Base {
 		$this->add_control(
 			'hover_inverse_effect',
 			array(
-				'label'   => wp_kses_post( "On Hover Inverse Effect <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "create-interactive-footer-hover-links-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'On Hover Inverse Effect', 'tpebl' ),
+						esc_url( $this->tp_doc . 'create-interactive-footer-hover-links-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),

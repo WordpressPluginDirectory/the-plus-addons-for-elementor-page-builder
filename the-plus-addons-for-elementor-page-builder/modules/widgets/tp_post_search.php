@@ -145,7 +145,7 @@ class L_ThePlus_Post_Search extends Widget_Base {
 				'type'        => \Elementor\Controls_Manager::DEPRECATED_NOTICE,
 				'widget'      => 'Posts Search',
 				'since'       => '5.4.3',
-				'last'        => '6.0.0',
+				'last'        => '6.5.0',
 				'plugin'      => 'in',
 				'replacement' => 'WP Search Bar',
 			)
@@ -254,18 +254,15 @@ class L_ThePlus_Post_Search extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'button_icons_mind_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'button_icons_mind_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'button_icon_style' => 'icon_mind',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'icon_align',
 			array(

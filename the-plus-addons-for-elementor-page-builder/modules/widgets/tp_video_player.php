@@ -632,6 +632,7 @@ class ThePlus_Video_Player extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'tpebl_section_needhelp',
 			array(
@@ -657,6 +658,7 @@ class ThePlus_Video_Player extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'section_styling',
 			array(

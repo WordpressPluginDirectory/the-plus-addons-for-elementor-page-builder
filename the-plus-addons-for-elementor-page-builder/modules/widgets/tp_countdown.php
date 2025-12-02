@@ -167,7 +167,13 @@ class L_ThePlus_Countdown extends Widget_Base {
 		$this->add_control(
 			'how_it_works_normal',
 			array(
-				'label'     => wp_kses_post( "<a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "create-a-sticky-countdown-timer-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> How it works <i class='eicon-help-o'></i> </a>" ),
+				'label' => wp_kses_post(
+					sprintf(
+						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s <i class="eicon-help-o"></i></a>',
+						esc_url( $this->tp_doc ) . 'create-a-sticky-countdown-timer-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
+						esc_html__( 'How it works', 'tpebl' )
+					)
+				),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
 					'CDType' => array( 'normal' ),
@@ -175,18 +181,15 @@ class L_ThePlus_Countdown extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'tab_content_options1',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'tab_content_options1',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'CDType' => array( 'scarcity', 'numbers' ),
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'CDstyle',
 			array(
@@ -231,7 +234,12 @@ class L_ThePlus_Countdown extends Widget_Base {
 			'count_note',
 			array(
 				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => sprintf( esc_html__( 'Date set according to your timezone: %s.', 'tpebl' ), Utils::get_timezone_string() ),
+				'raw'         => wp_kses_post(
+					sprintf(
+						esc_html__( 'Date set according to your timezone: %s.', 'tpebl' ),
+						esc_html( Utils::get_timezone_string() )
+					)
+				),
 				'content_classes' => 'tp-controller-notice',
 				// 'label_block' => true,
 				'condition'   => array(
@@ -253,7 +261,13 @@ class L_ThePlus_Countdown extends Widget_Base {
 		$this->add_control(
 			'inline_style',
 			array(
-				'label'     => wp_kses_post( "Inline Style <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "style-elementor-countdown-timer-in-block-or-inline-style/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Inline Style', 'tpebl' ),
+						esc_url( $this->tp_doc . "style-elementor-countdown-timer-in-block-or-inline-style/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'On', 'tpebl' ),
 				'label_off' => esc_html__( 'Off', 'tpebl' ),
@@ -277,7 +291,13 @@ class L_ThePlus_Countdown extends Widget_Base {
 		$this->add_control(
 			'days_labels',
 			array(
-				'label'     => wp_kses_post( "Days <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "hide-countdown-days-hours-mins-seconds-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Days', 'tpebl' ),
+						esc_url( $this->tp_doc . "hide-countdown-days-hours-mins-seconds-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" )
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
@@ -391,10 +411,10 @@ class L_ThePlus_Countdown extends Widget_Base {
 		$this->start_controls_section(
 			'specialoption_downcount',
 			array(
-				'label'     => esc_html__( 'Special Option', 'tpebl' ),
 				'label' => wp_kses_post(
 					sprintf(
-						'Special Option <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
+						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
+						esc_html__( 'Special Option', 'tpebl' ),
 						esc_url( L_THEPLUS_URL . 'assets/images/pro-features/pro-tag.svg' )
 					)
 				),
@@ -426,18 +446,15 @@ class L_ThePlus_Countdown extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'expirytype_pro',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'expirytype_pro',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'expirytype' => 'yes',
 				),
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'extraoption_downcount',
@@ -476,18 +493,15 @@ class L_ThePlus_Countdown extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'style_extra',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'style_extra',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'fliptheme!' => 'dark',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'countdownExpiry',
 			array(
@@ -518,25 +532,24 @@ class L_ThePlus_Countdown extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'countdownExpiry_pro',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'countdownExpiry_pro',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'countdownExpiry!' => 'none',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'cd_classbased',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
-						'Class Based Section Visibility <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" /> <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						'%s <img class="pro-badge-img" src="%s" alt="%s" style="width:32px; vertical-align:middle;" /> <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Class Based Section Visibility', 'tpebl' ),
 						esc_url( L_THEPLUS_URL . 'assets/images/pro-features/pro-tag.svg' ),
+						esc_attr__( 'PRO', 'tpebl' ),
 						esc_url( $this->tp_doc . 'change-website-content-when-countdown-timer-ends/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
 					)
 				),
@@ -552,18 +565,15 @@ class L_ThePlus_Countdown extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'cd_classbasedPro',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'cd_classbasedPro',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'cd_classbased' => 'yes',
 				),
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'tpebl_section_needhelp',

@@ -86,7 +86,7 @@ if ( ! class_exists( 'Tp_Wdkit_Preset' ) ) {
 		 */
 		public function tpae_elementor_editor_script() {
 
-			wp_enqueue_script( 'tpae-wdkit-preview-popup', L_THEPLUS_URL . 'assets/js/wdesignkit/tp-preset-btn.js', array( 'jquery', 'wp-i18n' ), L_THEPLUS_VERSION, true );
+			wp_enqueue_script( 'tpae-wdkit-preview-popup', L_THEPLUS_URL . 'includes/preset/tp-preset-popup.js', array( 'jquery', 'wp-i18n' ), L_THEPLUS_VERSION, true );
 
 			wp_localize_script(
 				'tpae-wdkit-preview-popup',
@@ -106,7 +106,7 @@ if ( ! class_exists( 'Tp_Wdkit_Preset' ) ) {
 		 * @since 6.5.6
 		 */
 		public function tpae_elementor_editor_style() {
-			wp_enqueue_style( 'tp-wdkit-elementor-popup-preset', L_THEPLUS_URL . 'assets/css/wdesignkit/tp-wdkit-install-popup.css', array(), L_THEPLUS_VERSION );
+			wp_enqueue_style( 'tp-wdkit-elementor-popup-preset', L_THEPLUS_URL . 'includes/preset/tp-preset-popup.css', array(), L_THEPLUS_VERSION );
 		}
 
 		/**
@@ -165,6 +165,7 @@ if ( ! class_exists( 'Tp_Wdkit_Preset' ) ) {
 
 				$installed         = $upgrader->install( $plugin_info->download_link );
 				$activation_result = activate_plugin( $plugin_basename );
+				$this->tpae_wdkit_hook();
 
 				$success = null === $activation_result;
 				$result  = $this->tpae_response( 'Success Install WDesignKit', 'Success Install WDesignKit', $success, '' );
@@ -172,6 +173,7 @@ if ( ! class_exists( 'Tp_Wdkit_Preset' ) ) {
 			} elseif ( isset( $installed_plugins[ $plugin_basename ] ) ) {
 
 				$activation_result = activate_plugin( $plugin_basename );
+				$this->tpae_wdkit_hook();
 
 				$success = null === $activation_result;
 				$result  = $this->tpae_response( 'Success Install WDesignKit', 'Success Install WDesignKit', $success, '' );
@@ -204,6 +206,21 @@ if ( ! class_exists( 'Tp_Wdkit_Preset' ) ) {
 			);
 
 			wp_send_json( $return );
+		}
+
+		/**
+		 * Tpae Side Wdkit Hook Call after install
+		 *
+		 * @since 6.4.0
+		 */
+		public function tpae_wdkit_hook (){
+			$my_array = array(
+                'elementor_builder' => true,
+                'elementor_template' => true,
+			);
+
+			$builder = array( 'nexter-blocks' );
+            do_action( 'wdkit_active_settings', $my_array, $builder );
 		}
 
 		/**

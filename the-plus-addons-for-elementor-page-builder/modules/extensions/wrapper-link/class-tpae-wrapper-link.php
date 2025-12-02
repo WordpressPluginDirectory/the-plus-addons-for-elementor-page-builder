@@ -118,7 +118,13 @@ if ( ! class_exists( 'Tpae_Wrapper_Link' ) ) {
 			$element->add_control(
 				'sc_link',
 				array(
-					'label'        => wp_kses_post( "Wrapper Link <a class='tp-docs-link' href='" . esc_url($this->TpDoc) . "make-elementor-container-clickable/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>", 'tpebl' ),
+					'label'        => wp_kses_post(
+						sprintf(
+							'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+							esc_html__( 'Wrapper Link', 'tpebl' ),
+							esc_url( $this->TpDoc . 'make-elementor-container-clickable/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+						)
+					),
 					'type'        => Controls_Manager::URL,
 					'dynamic'     => array(
 						'active' => true,

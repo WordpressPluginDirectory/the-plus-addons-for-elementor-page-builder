@@ -82,7 +82,7 @@ class L_ThePlus_Switcher extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_categories() {
-		return array( 'plus-tabbed' );
+		return array( 'plus-creative' );
 	}
 
 	/**
@@ -224,14 +224,49 @@ class L_ThePlus_Switcher extends Widget_Base {
 		$this->add_control(
 			'content_a_template',
 			array(
-				'label'       => wp_kses_post( "Elementor Templates <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "pricing-table-in-elementor-switcher/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'       => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Elementor Templates', 'tpebl' ),
+						esc_url( $this->tp_doc . 'pricing-table-in-elementor-switcher/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '0',
 				'options'     => L_theplus_get_templates(),
+				'classes'    => 'tp-template-create-btn',
 				'label_block' => 'true',
 				'condition'   => array(
 					'content_a_source'      => 'template',
 					'content_template_type' => 'dropdown',
+				),
+			)
+		);
+		$this->add_control(
+			'liveeditor',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => '<a class="tp-live-editor" id="tp-live-editor-button">Edit Template</a>',
+				'content_classes' => 'tp-live-editor-btn',
+				'label_block'     => true,
+				'condition'       => array(
+					'content_a_source'      => 'template',
+					'content_template_type' => 'dropdown',
+					'content_a_template!'   => '0',
+				),
+			)
+		);
+		$this->add_control(
+			'create',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => '<a class="tp-live-create" id="tp-live-create-button">Create Template</a>',
+				'content_classes' => 'tp-live-create-btn',
+				'label_block'     => true,
+				'condition'       => array(
+					'content_a_source'      => 'template',
+					'content_template_type' => 'dropdown',
+					'content_a_template'    => '0',
 				),
 			)
 		);
@@ -262,7 +297,13 @@ class L_ThePlus_Switcher extends Widget_Base {
 		$this->add_control(
 			'con1_hashid',
 			array(
-				'label'       => wp_kses_post( "Unique ID<a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "anchor-link-to-elementor-switcher-template/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'       => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Unique ID', 'tpebl' ),
+						esc_url( $this->tp_doc . 'anchor-link-to-elementor-switcher-template/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'        => Controls_Manager::TEXT,
 				'ai'          => false,
 				'default'     => '',
@@ -350,10 +391,39 @@ class L_ThePlus_Switcher extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '0',
 				'options'     => L_theplus_get_templates(),
+				'classes'    => 'tp-template-create-btn',
 				'label_block' => 'true',
 				'condition'   => array(
 					'content_b_source'        => 'template',
 					'content_b_template_type' => 'dropdown',
+				),
+			)
+		);
+		$this->add_control(
+			'liveeditor1',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => '<a class="tp-live-editor" id="tp-live-editor-button">Edit Template</a>',
+				'content_classes' => 'tp-live-editor-btn',
+				'label_block'     => true,
+				'condition'       => array(
+					'content_b_source'        => 'template',
+					'content_b_template_type' => 'dropdown',
+					'content_b_template!'     => '0',
+				),
+			)
+		);
+		$this->add_control(
+			'create1',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => '<a class="tp-live-create" id="tp-live-create-button">Create Template</a>',
+				'content_classes' => 'tp-live-create-btn',
+				'label_block'     => true,
+				'condition'       => array(
+					'content_b_source'        => 'template',
+					'content_b_template_type' => 'dropdown',
+					'content_b_template'      => '0',
 				),
 			)
 		);
@@ -416,10 +486,16 @@ class L_ThePlus_Switcher extends Widget_Base {
 		$this->add_control(
 			'switcher_unique_id',
 			array(
-				'label'       => wp_kses_post( "Unique Switcher ID <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "connect-carousel-remote-with-elementor-switcher/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
-				'type'        => Controls_Manager::TEXT,
-				'ai'          => false,
-				'default'     => '',
+				'label'   => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Unique Switcher ID', 'tpebl' ),
+						esc_url( $this->tp_doc . 'connect-carousel-remote-with-elementor-switcher/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
+				'type'    => Controls_Manager::TEXT,
+				'ai'      => false,
+				'default' => '',
 			)
 		);
 		$this->add_control(
@@ -468,18 +544,16 @@ class L_ThePlus_Switcher extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'layout_pro_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'layout_pro_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
 				'condition'   => array(
 					'switcher_style' => array( 'style-3', 'style-4' ),
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'show_tooltip',
 			array(
@@ -1637,15 +1711,13 @@ class L_ThePlus_Switcher extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'animation_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
+            'animation_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
-			)
-		);
+            )
+        );
 		$this->end_controls_section();
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';

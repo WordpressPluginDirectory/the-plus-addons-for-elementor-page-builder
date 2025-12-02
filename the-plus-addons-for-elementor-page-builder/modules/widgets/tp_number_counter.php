@@ -251,7 +251,13 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->add_control(
 			'max_number',
 			array(
-				'label'   => wp_kses_post( "Number Value <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "animated-number-counter-for-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'   => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Number Value', 'tpebl' ),
+						esc_url( $this->tp_doc . 'animated-number-counter-for-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'    => Controls_Manager::NUMBER,
 				'default' => esc_html__( '1000', 'tpebl' ),
 				'dynamic' => array( 'active' => true ),
@@ -471,32 +477,26 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		);
 		$this->end_popover();
 		$this->add_control(
-			'icons_mind_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'icons_mind_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'icon_type'       => 'icon',
 					'icon_font_style' => 'icon_mind',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
-			'svg_pro_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
+            'svg_pro_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
 				'condition'   => array(
 					'icon_type' => 'svg',
 				),
-			)
-		);
+            )
+        );
 		$this->add_control(
 			'icon_image',
 			array(
@@ -573,15 +573,12 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			)
 		);
 		$this->add_control(
-			'section_svg_styling_options',
-			array(
-				'label'       => esc_html__( 'Unlock more possibilities', 'tpebl' ),
-				'type'        => Controls_Manager::TEXT,
-				'default'     => '',
-				'description' => theplus_pro_ver_notice(),
-				'classes'     => 'plus-pro-version',
-			)
-		);
+            'section_svg_styling_options',
+            array(
+                'type'        => 'tpae_pro_feature',
+                'label_block' => true,
+            )
+        );
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_icon_styling',
@@ -2399,6 +2396,16 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 				'separator' => 'before',
 			)
 		);
+		$this->add_control(
+			'box_hover_effects_pro',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
+				'condition'   => array(
+					'box_hover_effects' => array( 'grow', 'bounce-in', 'float', 'wobble_horizontal', 'wobble_vertical', 'float_shadow', 'grow_shadow', 'shadow_radial' ),
+				),
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2443,6 +2450,8 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Animation Duration', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'no',
 				'condition' => array(
 					'animation_effects!' => 'no-animation',
@@ -2511,6 +2520,8 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Out Animation Duration', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
+				'label_on'  => esc_html__( 'Show', 'tpebl' ),
+				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'no',
 				'condition' => array(
 					'animation_effects!'     => 'no-animation',

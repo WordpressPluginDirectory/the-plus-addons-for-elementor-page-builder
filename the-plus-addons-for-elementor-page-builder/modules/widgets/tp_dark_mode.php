@@ -28,6 +28,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class ThePlus_Dark_Mode extends Widget_Base {
 
+	/**
+	 * Document Link For Need help.
+	 *
+	 * @since 5.3.3
+	 *
+	 * @var tp_doc of the class.
+	 */
 	public $tp_doc = L_THEPLUS_TPDOC;
 
 	/**
@@ -63,7 +70,7 @@ class ThePlus_Dark_Mode extends Widget_Base {
 	 * @since 1.0.0
 	 */
 	public function get_categories() {
-		return array( 'plus-essential' );
+		return array( 'plus-essential', 'plus-header' );
 	}
 
 	/**
@@ -162,7 +169,13 @@ class ThePlus_Dark_Mode extends Widget_Base {
 		$this->add_control(
 			'how_it_works_mixblend',
 			array(
-				'label'     => wp_kses_post( "<a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "mix-blend-dark-mode-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> How it works <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s <i class="eicon-help-o"></i></a>',
+						esc_url( $this->tp_doc . 'mix-blend-dark-mode-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
+						esc_html__( 'How it works', 'tpebl' )
+					)
+				),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
 					'dm_type' => array( 'dm_type_mb' ),
@@ -448,7 +461,13 @@ class ThePlus_Dark_Mode extends Widget_Base {
 		$this->add_control(
 			'dm_ignore_class',
 			array(
-				'label'     => wp_kses_post( "Ignore Dark Mode <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "exclude-elements-from-dark-mode-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'     => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Ignore Dark Mode ', 'tpebl' ),
+						esc_url( $this->tp_doc . 'exclude-elements-from-dark-mode-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
+					)
+				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Yes', 'tpebl' ),
 				'label_off' => esc_html__( 'No', 'tpebl' ),
@@ -519,6 +538,29 @@ class ThePlus_Dark_Mode extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
+		$get_whitelabel = get_option( 'theplus_white_label' );
+		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
+
+		if( !empty( $help_link ) && 'on'!== $help_link ) {
+			$this->start_controls_section(
+				'tpae_theme_builder_sec',
+				array(
+					'label' => esc_html__( 'Use with Theme Builder', 'tpebl' ),
+					'tab'   => Controls_Manager::TAB_CONTENT,
+				)
+			);
+			$this->add_control(
+				'tpae_theme_builder',
+				array(
+					'type'   => 'tpae_theme_builder',
+					'notice' => 'We recommend using this widget to the Header or Footer Template to load dark mode toggle on all pages.',
+					'button_text' => esc_html__( 'Create Header Template', 'tpebl' ),
+					'page_type'   => 'tp_header'
+				)
+			);
+			$this->end_controls_section();
+		}
 
 		$this->start_controls_section(
 			'section_switcher_st2_styling',

@@ -145,6 +145,7 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	protected function register_controls() {
+
 		$this->start_controls_section(
 			'content_section',
 			array(
@@ -155,7 +156,13 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 		$this->add_control(
 			'scheduler_select',
 			array(
-				'label'   => wp_kses_post( "Select <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "meeting-scheduler-widget-settings-overview?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'   => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'Select', 'tpebl' ),
+						esc_url( $this->tp_doc . 'meeting-scheduler-widget-settings-overview?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'calendly',
 				'options' => array(
@@ -170,7 +177,13 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 		$this->add_control(
 			'calendly_username',
 			array(
-				'label'       => wp_kses_post( "User Name <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "embed-calendly-meeting-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'       => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'User Name', 'tpebl' ),
+						esc_url( $this->tp_doc . 'embed-calendly-meeting-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '',
 				'ai'          => false,
@@ -254,7 +267,13 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 		$this->add_control(
 			'freebusy_url',
 			array(
-				'label'       => wp_kses_post( "URL <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "embed-freebusy-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'       => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'URL', 'tpebl' ),
+						esc_url( $this->tp_doc . 'embed-freebusy-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'        => Controls_Manager::TEXT,
 				'ai'          => false,
 				'default'     => '',
@@ -386,7 +405,13 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 		$this->add_control(
 			'vyte_url',
 			array(
-				'label'       => wp_kses_post( "URL <a class='tp-docs-link' href='" . esc_url( $this->tp_doc ) . "embed-vyte-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>" ),
+				'label'       => wp_kses_post(
+					sprintf(
+						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
+						esc_html__( 'URL', 'tpebl' ),
+						esc_url( $this->tp_doc . 'embed-vyte-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
+				),
 				'type'        => Controls_Manager::TEXT,
 				'ai'          => false,
 				'default'     => '',
