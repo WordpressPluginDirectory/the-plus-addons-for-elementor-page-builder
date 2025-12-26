@@ -196,7 +196,7 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 				$check_license = $license_data ? $license_data['expires'] : '';
 
 				if ( ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) || ( defined( 'THEPLUS_VERSION' ) && ( empty( $check_license ) || 'lifetime' !== $check_license ) ) ) {
-					include L_THEPLUS_PATH . 'includes/notices/class-tp-cm-banner.php';
+					include L_THEPLUS_PATH . 'includes/notices/class-tp-ws-banner.php';
 				}
 
 				if ( ! empty( $ele_pro_details[0]['status'] ) && 'unavailable' == $ele_pro_details[0]['status'] ) {

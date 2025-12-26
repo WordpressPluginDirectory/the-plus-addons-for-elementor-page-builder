@@ -944,6 +944,28 @@ class L_ThePlus_Style_List extends Widget_Base {
 				),
 			)
 		);
+		$this->add_control(
+			'icon_fill_color',
+			array(
+				'label'     => esc_html__( 'Fill', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .plus-icon-list-icon svg path' => 'fill: {{VALUE}} !important;; ',
+					'{{WRAPPER}} .plus-icon-list-icon svg' => 'fill: {{VALUE}} !important;',
+				),
+			)
+		);
+		$this->add_control(
+			'icon_stroke_color',
+			array(
+				'label'     => esc_html__( 'Stroke', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .plus-icon-list-icon svg path' => 'stroke: {{VALUE}} !important;; ',
+					'{{WRAPPER}} .plus-icon-list-icon svg' => 'stroke: {{VALUE}} !important;',
+				),
+			)
+		);
 		$this->end_controls_tab();
 		$this->start_controls_tab(
 			'icon_style_hover',
@@ -960,6 +982,28 @@ class L_ThePlus_Style_List extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .plus-icon-list-item:hover .plus-icon-list-icon i' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .plus-icon-list-item:hover .plus-icon-list-icon svg' => 'fill: {{VALUE}};',
+				),
+			)
+		);
+		$this->add_control(
+			'hicon_fill_color',
+			array(
+				'label'     => esc_html__( 'Fill', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .plus-icon-list-icon:hover svg path' => 'fill: {{VALUE}} !important;; ',
+					'{{WRAPPER}} .plus-icon-list-icon:hover svg' => 'fill: {{VALUE}} !important;',
+				),
+			)
+		);
+		$this->add_control(
+			'hicon_stroke_color',
+			array(
+				'label'     => esc_html__( 'Stroke', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .plus-icon-list-icon svg path' => 'stroke: {{VALUE}} !important;; ',
+					'{{WRAPPER}} .plus-icon-list-icon svg' => 'stroke: {{VALUE}} !important;',
 				),
 			)
 		);

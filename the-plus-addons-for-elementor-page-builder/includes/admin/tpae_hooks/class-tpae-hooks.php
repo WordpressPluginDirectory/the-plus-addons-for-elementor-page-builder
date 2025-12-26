@@ -392,6 +392,7 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 		 */
 		public function tpae_enable_selected_widgets( $type ) {
 			$w_list = ! empty( $type['widgets'] ) ? $type['widgets'] : array();
+			$e_list = ! empty( $type['extensions'] ) ? $type['extensions'] : array();
 
 			if ( empty( $w_list ) ) {
 				return $this->tpae_set_response( true, 'Widget Name Not Found.', 'Widget Name Not Found.' );
@@ -421,7 +422,78 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 				update_option( 'theplus_options', $theplus_options );
 			}
 
+			$enebal_extensions_list = array();
+
+			if ( is_array( $e_list ) && ! empty( $theplus_options ) ) {
+				foreach ( $e_list as $extensions ) {
+
+					$enebal_extensions = str_replace( '-', '_', $extensions );
+
+					if ( in_array( $enebal_extensions, $this->extensions ) ) {
+						if ( ! in_array( $enebal_extensions, $theplus_options['extras_elements'] ) ) {
+							$enebal_extensions_list[] = $enebal_extensions;
+						}
+					}
+				}
+			}
+
+			if ( ! empty( $enebal_extensions_list ) ) {
+				$extension_list = array_merge( $theplus_options['extras_elements'], $enebal_extensions_list );
+
+				$theplus_options['extras_elements'] = array_values( $extension_list );
+				update_option( 'theplus_options', $theplus_options );
+			}
+
+			/** For the Caching file create*/
+			$plus_widget_settings = l_theplus_library()->get_plus_widget_settings();
+			if ( has_filter( 'plus_widget_setting' ) ) {
+				$plus_widget_settings = apply_filters( 'plus_widget_setting', $plus_widget_settings );
+			}
+
+			l_theplus_generator()->plus_generate_scripts( $plus_widget_settings );
+
+			if ( l_theplus_generator()->check_cache_files() ) {
+				$css_file = L_THEPLUS_ASSET_URL . '/theplus.min.css';
+				$js_file  = L_THEPLUS_ASSET_URL . '/theplus.min.js';
+			} else {
+				$tp_url = L_THEPLUS_URL;
+				if ( defined( 'THEPLUS_VERSION' ) ) {
+					$tp_url = THEPLUS_URL;
+				}
+				$css_file = $tp_url . '/assets/css/main/general/theplus.min.css';
+				$js_file  = $tp_url . '/assets/js/main/general/theplus.min.js';
+			}
+
+			$tpae_backend_cache = get_option( 'tpae_backend_cache' );
+			if ( false === $tpae_backend_cache ) {
+				update_option( 'tpae_backend_cache', time() );
+			}
+
+			wp_enqueue_style(
+				'plus-wdkit-editor-css',
+				$this->pathurl_security( $css_file ),
+				false,
+				time()
+			);
+
+			wp_enqueue_script(
+				'plus-wdkit-editor-js',
+				$this->pathurl_security( $js_file ),
+				array( 'jquery' ),
+				time(),
+				true
+			);
+
+			// l_theplus_generator()->load_inline_script();
+
+			do_action( 'theplus/after_enqueue_scripts', l_theplus_generator()->check_cache_files() );
+			/** For the Caching file create*/
+
 			return $this->tpae_set_response( true, 'success.', 'success.' );
+		}
+
+		public function pathurl_security( $url ) {
+			return preg_replace( array( '/^http:/', '/^https:/', '/(?!^)\/\//' ), array( '', '', '/' ), $url );
 		}
 
 		/**
