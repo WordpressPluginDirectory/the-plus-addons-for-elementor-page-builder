@@ -76,6 +76,15 @@ class ThePlus_Icon extends Widget_Base {
 	}
 
 	/**
+	 * Get Widget keywords.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_keywords() {
+		return array( 'Social Sharing', 'Share Buttons', 'Social Media Sharing', 'Social Icons', 'Social Share', 'Social Share Buttons', 'Share Widget', 'Share Icons', 'Share Buttons Widget' );
+	}
+
+	/**
 	 * Disable default inner wrapper.
 	 *
 	 * @since 6.3.11

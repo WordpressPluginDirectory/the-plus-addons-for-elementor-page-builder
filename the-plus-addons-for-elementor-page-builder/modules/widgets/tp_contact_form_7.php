@@ -83,7 +83,7 @@ class ThePlus_Contact_Form_7 extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Contact Form 7', 'form', 'contact form', 'form builder', 'form plugin', 'form creator', 'form generator' );
+		return array( 'Form Style', 'Contact Form 7 Style', 'WPForms Style', 'Ninja Forms Design', 'Gravity Forms Style', 'Everest Forms Design', 'Form Design', 'Form Customization' );
 	}
 
 	/**

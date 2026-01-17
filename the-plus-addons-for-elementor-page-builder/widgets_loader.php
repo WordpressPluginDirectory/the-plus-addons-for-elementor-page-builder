@@ -342,9 +342,14 @@ final class L_Theplus_Element_Load {
 		// Include some backend files.
 		add_action( 'admin_enqueue_scripts', array( $this, 'theplus_elementor_admin_css' ) );
 
-		add_action( 'admin_footer', array( $this, 'tpae_add_notificetion' ) );
-		add_option( 'tpae_menu_notification', '1' );
-		add_option( 'tpae_whats_new_notification', '1' );
+		$get_notification = get_option( 'tpae_menu_notification' );
+
+		if ( $get_notification !== TPAE_MENU_NOTIFICETIONS ) {
+			add_action( 'admin_footer', array( $this, 'tpae_add_notificetion' ) );
+		}
+
+		add_option( 'tpae_menu_notification', '2' );
+		add_option( 'tpae_whats_new_notification', '2' );
 	}
 
 	/**
@@ -551,10 +556,15 @@ final class L_Theplus_Element_Load {
 		if ( $post_id ) {
 			$post_type = get_post_type( $post_id );
 
+			/** For check header of the nexter extension */
 			if ( in_array( $post_type, [ 'nxt_builder', 'nxt_template' ], true ) ) {
 				$template_type = get_post_meta( $post_id, 'template_type', true );
 			}
 		}
+
+		// if ( 'loop-item' === $template_type ) {
+		// 	$template_type = $source_type;
+		// }
 
 		if ( in_array( $template_type, [ 'header' ] ) ) {
         	$all_categories = $elementor->elements_manager->get_categories();
@@ -679,9 +689,7 @@ final class L_Theplus_Element_Load {
 	 */
 	public function tpae_add_notificetion() {
 
-		$get_notification = get_option( 'tpae_menu_notification' );
-
-		if ( $get_notification !== TPAE_MENU_NOTIFICETIONS ) { ?>
+		?>
 			<script type="text/javascript">
 				document.addEventListener('DOMContentLoaded', function() {
 					var menuItem = document.querySelector('#toplevel_page_theplus_welcome_page');
@@ -690,8 +698,7 @@ final class L_Theplus_Element_Load {
 					}
 				});
 			</script>
-			<?php
-		}
+		<?php
 	}
 }
 

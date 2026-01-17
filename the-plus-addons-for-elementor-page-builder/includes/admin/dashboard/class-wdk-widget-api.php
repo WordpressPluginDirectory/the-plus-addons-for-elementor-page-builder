@@ -59,11 +59,11 @@ class Wdk_Widget_Api {
 	public function tp_wdkit_widget_ajax_call( $type ) {
 
 		if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'content' => __( 'Insufficient permissions.', 'wdesignkit' ) ) );
+			wp_send_json_error( array( 'content' => __( 'Insufficient permissions.', 'tpebl' ) ) );
 		}
 
 		if ( ! $type ) {
-			$this->wdkit_error_msg( __( 'Something went wrong.', 'wdesignkit' ) );
+			$this->wdkit_error_msg( __( 'Something went wrong.', 'tpebl' ) );
 		}
 
 		switch ( $type ) {
@@ -104,7 +104,7 @@ class Wdk_Widget_Api {
 			$error_message = $response->get_error_message();
 
 			/* Translators: %s is a placeholder for the error message */
-			$error_message = printf( esc_html__( 'API request error: %s', 'wdesignkit' ), esc_html( $error_message ) );
+			$error_message = sprintf(esc_html__( 'API request error: %s', 'tpebl' ),esc_html( $error_message ));
 
 			return array(
 				'massage' => $error_message,
@@ -117,13 +117,13 @@ class Wdk_Widget_Api {
 
 			return array(
 				'data'    => json_decode( wp_remote_retrieve_body( $response ), true ),
-				'massage' => esc_html__( 'Success', 'wdesignkit' ),
+				'massage' => esc_html__( 'Success', 'tpebl' ),
 				'status'  => $status_code,
 				'success' => true,
 			);
 		}
 
-			$error_message = printf( 'Server error: %d', esc_html( $status_code ) );
+		$error_message = sprintf(esc_html__( 'Server error: %d', 'tpebl' ),absint( $status_code ));
 
 		if ( isset( $error_data->message ) ) {
 			$error_message .= ' (' . $error_data->message . ')';
@@ -278,8 +278,8 @@ class Wdk_Widget_Api {
 			$wp_filesystem->put_contents( $tmp_file, json_encode($json_data) );
 
 			$responce = array(
-				'message'     => esc_html__( 'Update Saved Successfully', 'wdesignkit' ),
-				'description' => esc_html__( 'Success! Update Saved', 'wdesignkit' ),
+				'message'     => esc_html__( 'Update Saved Successfully', 'tpebl' ),
+				'description' => esc_html__( 'Success! Update Saved', 'tpebl' ),
 				'success'     => true,
 			);
 

@@ -3,7 +3,7 @@
  * Plugin Name: The Plus Addons for Elementor
  * Plugin URI: https://theplusaddons.com/
  * Description: Highly Customisable 120+ Advanced Elementor Widgets & Extensions for Performance Driven Website.
- * Version: 6.4.5
+ * Version: 6.4.6
  * Author: POSIMYTH
  * Author URI: https://posimyth.com/
  * Text Domain: tpebl
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'L_THEPLUS_VERSION', '6.4.5' );
+define( 'L_THEPLUS_VERSION', '6.4.6' );
 define( 'L_THEPLUS_FILE', __FILE__ );
 define( 'L_THEPLUS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'L_THEPLUS_PBNAME', plugin_basename( __FILE__ ) );
@@ -34,7 +34,7 @@ define( 'L_THEPLUS_WSTYLES', L_THEPLUS_PATH . 'modules/widgets-styles/' );
 define( 'L_THEPLUS_TPDOC', 'https://theplusaddons.com/docs/' );
 define( 'L_THEPLUS_WDKIT_URL', 'https://wdesignkit.com/' );
 define( 'L_THEPLUS_HELP', 'https://wordpress.org/support/plugin/the-plus-addons-for-elementor-page-builder/#new-topic-0' );
-define( 'TPAE_MENU_NOTIFICETIONS', '2' );
-define( 'TPAE_WHATS_NEW_NOTIFICETIONS', '2' );
+define( 'TPAE_MENU_NOTIFICETIONS', '3' );
+define( 'TPAE_WHATS_NEW_NOTIFICETIONS', '3' );
 
 require L_THEPLUS_PATH . 'widgets_loader.php';

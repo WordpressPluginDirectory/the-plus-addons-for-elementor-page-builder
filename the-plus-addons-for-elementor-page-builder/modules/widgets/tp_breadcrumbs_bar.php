@@ -82,7 +82,7 @@ class L_ThePlus_Breadcrumbs_Bar extends Widget_Base {
 	 * @since 6.1.0
 	 */
 	public function get_keywords() {
-		return array( 'Breadcrumb', 'Navigation', 'Trail', 'Path', 'Links', 'Navigational Links', 'Navigation Bar' );
+		return array( 'Breadcrumb', 'Breadcrumb Navigation', 'Breadcrumb Trail', 'SEO Breadcrumb', 'Full-Width Breadcrumb', 'Home Icon Breadcrumb', 'Responsive Breadcrumb', 'Navigation Path' );
 	}
 
     /**
@@ -687,10 +687,8 @@ class L_ThePlus_Breadcrumbs_Bar extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
-		$get_whitelabel = get_option( 'theplus_white_label' );
-		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
 
-		if( !empty( $help_link ) && 'on'!== $help_link ) {
+		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
 				'tpae_theme_builder_sec',
 				array(

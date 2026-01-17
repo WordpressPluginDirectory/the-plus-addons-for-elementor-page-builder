@@ -84,7 +84,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Info Box', 'Information Box', 'Content Box', 'Text Box', 'Feature Box', 'Icon Box', 'Callout Box', 'Highlight Box', 'Notification Box', 'Alert Box', 'Message Box', 'Card Box', 'Box Widget', 'Box Element', 'Box Container' );
+		return array( 'Info Box', 'Infobox Layout', 'Info Box Carousel', 'Info Box Listing', 'Animated Info Box', 'Lottie Info Box', 'SVG Info Box', 'Linked Info Box', 'Icon Info Box', 'Image Info Box' );
 	}
 
 	/**

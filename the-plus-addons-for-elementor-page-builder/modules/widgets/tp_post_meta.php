@@ -81,7 +81,7 @@ class ThePlus_Post_Meta extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Post Meta', 'Custom Fields', 'Post Data', 'Meta Data', 'Advanced Fields' );
+		return array( 'Post Content', 'Blog Content', 'Dynamic Post Content', 'Post Excerpt' );
 	}
 
 	/**
@@ -336,10 +336,7 @@ class ThePlus_Post_Meta extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$get_whitelabel = get_option( 'theplus_white_label' );
-		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
-
-		if( !empty( $help_link ) && 'on'!== $help_link ) {
+		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
 				'tpae_theme_builder_sec',
 				array(
@@ -1764,7 +1761,9 @@ class ThePlus_Post_Meta extends Widget_Base {
 							$iconauthor = '<i class="' . esc_attr( $author_icon ) . '"></i>';
 						}
 
-						$output .= '<span class="tp-meta-author" ><span class="tp-meta-author-label tp-meta-label" >' . esc_html( $author_prefix ) . '</span><a class="tp-meta-value" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '" rel="' . esc_attr__( 'author', 'tpebl' ) . '">' . $iconauthor . get_the_author_meta( 'display_name', $author_id ) . '</a></span>';
+						$post        = get_queried_object();
+						$author_page_url = get_author_posts_url( $post->post_author );
+						$output .= '<span class="tp-meta-author" ><span class="tp-meta-author-label tp-meta-label" >' . esc_html( $author_prefix ) . '</span><a class="tp-meta-value" href="' . esc_url($author_page_url) . '" rel="' . esc_attr__( 'author', 'tpebl' ) . '">' . $iconauthor . get_the_author_meta( 'display_name', $author_id ) . '</a></span>';
 					}
 				}
 

@@ -85,7 +85,7 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 	 * @since 1.0.0
 	 */
 	public function get_keywords() {
-		return array( 'blog list', 'listing', 'bloglisting', 'Elementor blog' );
+		return array( 'Blog Listing', 'Post Listing', 'Post Grid', 'Masonry Blog', 'Metro Blog Layout', 'Post Carousel', 'Post Filter', 'Load More Posts', 'Post Pagination', 'Lazy Load Posts', 'Smart Loop Post', 'Order Posts' );
 	}
 
 	/**
@@ -1536,10 +1536,7 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$get_whitelabel = get_option( 'theplus_white_label' );
-		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
-
-        if( !empty( $help_link ) && 'on'!== $help_link ) {
+		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
 			'tpae_theme_builder_sec',
 				array(

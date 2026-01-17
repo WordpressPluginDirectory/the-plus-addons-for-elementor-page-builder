@@ -81,7 +81,7 @@ class L_ThePlus_Scroll_Navigation extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Scroll Navigation', 'Scroll Menu', ' Sticky Navigation', 'Sticky Menu', 'Fixed Navigation', 'Fixed Menu', 'Anchor Menu', ' Anchor Navigation', 'Smooth Scroll', 'One Page Navigation' );
+		return array( 'Scroll Animation', 'Scroll Sequence', 'Image Gallery Animation', 'Dynamic Scroll Effects', 'Interactive Image Sequences', 'Image Sequence Animation', 'Sequence Scrolling' );
 	}
 
 	/**

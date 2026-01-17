@@ -86,7 +86,7 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Dynamic Category', 'Category', 'Category Widget', 'Dynamic Category Widget', 'Elementor Dynamic Category', 'Elementor Category Widget', 'Elementor Dynamic Category Widget', 'Dynamic Category Elementor Addon', 'Category Elementor Addon', 'Dynamic Category Plus Addons', 'Category Plus Addons', 'Dynamic Category The Plus Addons', 'Category The Plus Addons' );
+		return array( 'Dynamic Categories', 'Category Listing', 'Taxonomy Listing', 'Taxonomy Grid', 'Category Carousel', 'Taxonomy Carousel', 'Category Masonry Layout', 'Category Metro Layout' );
 	}
 
 	/**
@@ -683,10 +683,7 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$get_whitelabel = get_option( 'theplus_white_label' );
-		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
-
-		if( !empty( $help_link ) && 'on'!== $help_link ) {
+		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
 				'tpae_theme_builder_sec',
 				array(

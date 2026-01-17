@@ -77,7 +77,7 @@ class ThePlus_Smooth_Scroll extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Smooth Scroll', 'Scroll Widget', 'Elementor Scroll', 'Scroll Animation', 'Smooth Scrolling', 'Scroll Effect', 'Elementor Smooth Scroll', 'Scroll Widget for Elementor', 'Scroll Animation for Elementor', 'Smooth Scrolling for Elementor', 'Elementor Scroll Effect' );
+		return array( 'Smooth Scroll Effect', 'Smooth Scrolling', 'Keyboard Smooth Scrolling', 'Touchpad Smooth Scroll', 'Page Smooth Scroll', 'Scroll Navigation', 'Infinite Scroll', 'Scrolling Effects', 'Scrolling Animation' );
 	}
 
 	/**
@@ -433,10 +433,7 @@ class ThePlus_Smooth_Scroll extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$get_whitelabel = get_option( 'theplus_white_label' );
-		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
-
-		if( !empty( $help_link ) && 'on'!== $help_link ) {
+		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
 				'tpae_theme_builder_sec',
 				array(

@@ -84,7 +84,7 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Process', 'Steps', 'Procedure', 'Method', 'Workflow', 'Sequence', 'Order', 'Stages', 'Phases', 'Actions', 'Tasks', 'Activities', 'Operation', 'Protocol', 'Technique', 'Approach', 'System', 'Plan', 'Strategy', 'Path', 'Route', 'Formula', 'Algorithm', 'Blueprint', 'Roadmap' );
+		return array( 'Process Steps', 'Step-by-Step Flow', 'Horizontal Steps', 'Vertical Steps', 'Numbered Steps', 'Icon Steps', 'Image Steps', 'Lottie Steps', 'Interactive Process Steps', 'Custom Process Steps' );
 	}
 
 	/**

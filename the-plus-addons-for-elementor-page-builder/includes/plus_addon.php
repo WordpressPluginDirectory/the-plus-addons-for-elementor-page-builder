@@ -234,7 +234,25 @@ function l_registered_widgets(){
 	return apply_filters('theplus/l_registered_widgets', [
 		
 		'tp-adv-text-block' => [
-			'dependency' => [],
+			'dependency' => [
+				'css' => [
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR .'assets/css/main/text-block/tp-text-block.css',
+				],
+			],
+		],
+		'tp-text-block-animation' => [
+			'dependency' => [
+				'js' => [
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/main/text-block/tp-text-block.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/main/text-animation/tp-text-animation.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/gsap.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/ScrollToPlugin.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/ScrollTrigger.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/ScrambleText.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/SplitText.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/TextPlugin.min.js',
+				],
+			],
 		],
 		'tp-accordion' => [
 			'dependency' => [
@@ -805,6 +823,20 @@ function l_registered_widgets(){
 				],
 				'js' => [
 					L_THEPLUS_PATH . DIRECTORY_SEPARATOR .'assets/js/main/header-extras/plus-header-extras.min.js',
+				],
+			],
+		],
+		'tp-gsap-heading-animation' => [
+			'dependency' => [
+				'js' => [
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR .'assets/js/main/heading-title/tp-heading-title.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/main/text-animation/tp-text-animation.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/gsap.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/ScrollToPlugin.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/ScrollTrigger.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/ScrambleText.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/SplitText.min.js',
+					L_THEPLUS_PATH . DIRECTORY_SEPARATOR . 'assets/js/extra/gsap/TextPlugin.min.js',
 				],
 			],
 		],

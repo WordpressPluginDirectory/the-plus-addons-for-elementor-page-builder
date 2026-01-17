@@ -84,7 +84,7 @@ class ThePlus_Post_Author extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Post Author', 'Author', 'Author Box', 'Post Author Box', 'Author Details', 'Author Bio' );
+		return array( 'Post Author Box', 'Author Bio', 'Author Information', 'Post Author Profile', 'Blog Author Details', 'Author Image', 'Author Name', 'Author Social Links', 'Customized Author Box', 'Author Info', 'Blog Post Author', 'Author Box' );
 	}
 
 	/**
@@ -277,10 +277,7 @@ class ThePlus_Post_Author extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$get_whitelabel = get_option( 'theplus_white_label' );
-		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
-
-		if( !empty( $help_link ) && 'on'!== $help_link ) {
+		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
 				'tpae_theme_builder_sec',
 				array(

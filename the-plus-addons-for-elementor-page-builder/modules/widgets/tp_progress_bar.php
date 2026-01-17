@@ -99,7 +99,7 @@ class ThePlus_Progress_Bar extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'pie chart', 'chart', 'Graph', 'Data Visualization', 'Circular Chart', 'Percentage Chart', 'Statistics Chart', 'Progress Bar', 'Progress Indicator', 'Progress Tracker', 'Progress Meter', 'Progress Graph', 'Progress Chart', 'Progress Status' );
+		return array( 'Progress Bar', 'Circle Progress Bar', 'Linear Progress Bar', 'Animated Progress Bar', 'Lottie Progress Bar', 'Percentage Counter', 'Progress Indicator', 'Skill Meter', 'Percentage Progress Indicator', 'Goal Tracker Bar', 'Pie Progress', 'Bar Chart Progress' );
 	}
 
 	/**

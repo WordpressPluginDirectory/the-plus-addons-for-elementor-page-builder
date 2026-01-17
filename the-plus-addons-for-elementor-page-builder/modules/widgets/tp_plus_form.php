@@ -84,7 +84,7 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 	 * @since 6.0.4
 	 */
 	public function get_keywords() {
-		return array( 'Forms' );
+		return array( 'Form Builder', 'Contact Form', 'Free Form', 'CAPTCHA Form', 'Google reCAPTCHA Form', 'Cloudflare Turnstile Form', 'Email Notification Form', 'Database Entry Form', 'Redirect Form', 'Brevo Form', 'Mailchimp Form', 'GetResponse Form', 'ConvertKit Form', 'Slack Form', 'Discord Form', 'WebHook Form', 'Drip Form' );
 	}
 
 	/**
@@ -1748,7 +1748,11 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 			array(
 				'name'     => 'form_text_field_typography',
 				'label'    => esc_html__( 'Typography', 'tpebl' ),
-				'selector' => '{{WRAPPER}} .tpae-form input::placeholder, {{WRAPPER}} .tpae-form select, {{WRAPPER}} .tpae-form textarea::placeholder',
+				'selector' => '{{WRAPPER}} .tpae-form input,
+				               {{WRAPPER}} .tpae-form select,
+							   {{WRAPPER}} .tpae-form textarea,
+							   {{WRAPPER}} .tpae-form input::placeholder,
+							   {{WRAPPER}} .tpae-form textarea::placeholder',
 			)
 		);
 

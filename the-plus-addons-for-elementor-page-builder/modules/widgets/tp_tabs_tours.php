@@ -103,7 +103,7 @@ class L_ThePlus_Tabs_Tours extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'tabs', 'tours', 'Tabs widget', 'Tours widget', 'Elementor Tabs', 'Elementor Tours', ' Elementor Tabs widget', 'Elementor Tours widget', 'Tabs addon', 'Tours addon', 'Elementor Tabs addon', 'Elementor Tours addon' );
+		return array( 'Tabs Tours', 'Content Tabs', 'Tab Navigation', 'Tab Layout', 'Vertical Tab', 'Horizontal Tab', 'Swipe Tab', 'Autoplay Tabs', 'Hover Tabs', 'Carousel Tab' );
 	}
 
 	/**

@@ -105,7 +105,7 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'carousel', 'slider', 'slideshow', 'image carousel', 'image slider', 'image slideshow', 'carousel widget', 'slider widget', 'slideshow widget' );
+		return array( 'Carousel Anything', 'Template Carousel', 'Vertical Carousel', 'Infinite Loop Slider', 'Multi-Column Carousel', 'Autoplay Carousel', 'Draggable Slider', 'Horizontal Carousel', 'Slider', 'Autoplay Slideshow', 'Slideshow', 'Mousewheel Slider' );
 	}
 
 	/**

@@ -74,7 +74,7 @@ class ThePlus_Post_Comment extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Post Comment', 'Comment', 'Comment Box', 'Comment Section', 'Feedback', 'User Feedback', 'User Comment', 'Add Comment', 'Leave Comment', 'Submit Comment', 'Comment Form', 'Comment Widget', 'Comment Element', 'Elementor Comment', 'Elementor Comment Box', 'Elementor Comment Section', 'Elementor Feedback', 'Elementor User Feedback', 'Elementor User Comment', 'Elementor Add Comment', 'Elementor Leave Comment', 'Elementor Submit Comment', 'Elementor Comment Form' );
+		return array( 'Post Comment', 'Comment Section', 'Blog Comments', 'User Feedback', 'Comment Form' );
 	}
 
 	/**
@@ -1375,7 +1375,7 @@ class ThePlus_Post_Comment extends Widget_Base {
 			'title_reply'          => esc_html( $post_title ),
 			// Translators: %s is replaced with the title of the post being replied to.
             // 'title_reply_to'       => esc_html( $leave_txt ) . sprintf( esc_html__( 'Reply to %s', 'tpebl' ), esc_html( $post_title ) ),
-            'title_reply_to'       => $parent_id ? sprintf( esc_html__( '%s %s', 'tpebl' ), esc_html( $leave_txt ), esc_html( $parent_author ) ) : esc_html__( $leave_txt, 'tpebl' ),
+            'title_reply_to'       => $parent_id ? sprintf( esc_html( '%s %s', 'tpebl' ), esc_html( $leave_txt ), esc_html( $parent_author ) ) : esc_html( $leave_txt, 'tpebl' ),
 			'cancel_reply_link'    => esc_html( $cancel_txt ),
 			'label_submit'         => esc_html( $btn_title ),
 			'comment_field'        => '<div class="tp-row"><div class="tp-col-md-12 tp-col"><label><textarea id="comment" name="comment" cols="45" rows="6" placeholder="' . esc_html( $placeholder_txt ) . '" aria-required="true"></textarea></label></div></div>',

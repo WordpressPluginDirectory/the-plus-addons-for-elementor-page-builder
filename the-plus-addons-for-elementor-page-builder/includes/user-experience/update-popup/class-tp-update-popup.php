@@ -139,6 +139,8 @@ if ( ! class_exists( 'Tpae_Update_Popup' ) ) {
 			// update_option( 'tp_update_popup_dismiss', true );
 			update_option( 'tpae_menu_notification', TPAE_MENU_NOTIFICETIONS );
 
+			update_option( 'tpae_whats_new_notification', TPAE_WHATS_NEW_NOTIFICETIONS );
+
 			wp_send_json_success();
 		}
 	}

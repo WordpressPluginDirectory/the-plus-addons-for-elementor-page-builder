@@ -84,7 +84,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( '' );
+		return array( 'Number Counter', 'Animated Counter', 'Milestone Counter', 'Counter Widget', 'Number Animation', 'Statistics Counter', 'Counter Animation', 'Count-Up Widget', 'KPI Counter', 'Live Counter' );
 	}
 
 	public function get_custom_help_url() {
@@ -691,7 +691,6 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 				'condition' => array(
 					'icon_color_option' => 'solid',
 				),
-				'separator' => 'after',
 			)
 		);
 		$this->add_control(
@@ -808,6 +807,34 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 				'of_type'   => 'gradient',
 				'separator' => 'after',
 
+			)
+		);
+		$this->add_control(
+			'icon_fill_color',
+			array(
+				'label'     => esc_html__( 'Fill', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .counter-icon svg path' => 'fill: {{VALUE}} !important;; ',
+					'{{WRAPPER}} .counter-icon svg' => 'fill: {{VALUE}} !important;',
+				),
+				'condition' => array(
+					'icon_font_style' => 'font_awesome_5',
+				),
+			)
+		);
+		$this->add_control(
+			'icon_stroke_color',
+			array(
+				'label'     => esc_html__( 'Stroke', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .counter-icon svg path' => 'stroke: {{VALUE}} !important;; ',
+					'{{WRAPPER}} .counter-icon svg' => 'stroke: {{VALUE}} !important;',
+				),
+				'condition' => array(
+					'icon_font_style' => 'font_awesome_5',
+				),
 			)
 		);
 		$this->add_group_control(
@@ -1012,6 +1039,34 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 				),
 				'of_type'   => 'gradient',
 				'separator' => 'after',
+			)
+		);
+		$this->add_control(
+			'icon_fill_color_hover',
+			array(
+				'label'     => esc_html__( 'Fill', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .counter-icon:hover svg path' => 'fill: {{VALUE}} !important;; ',
+					'{{WRAPPER}} .counter-icon:hover svg' => 'fill: {{VALUE}} !important;',
+				),
+				'condition' => array(
+					'icon_font_style' => 'font_awesome_5',
+				),
+			)
+		);
+		$this->add_control(
+			'icon_stroke_color_hover',
+			array(
+				'label'     => esc_html__( 'Stroke', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .counter-icon:hover svg path' => 'stroke: {{VALUE}} !important;; ',
+					'{{WRAPPER}} .counter-icon:hover svg' => 'stroke: {{VALUE}} !important;',
+				),
+				'condition' => array(
+					'icon_font_style' => 'font_awesome_5',
+				),
 			)
 		);
 		$this->add_group_control(

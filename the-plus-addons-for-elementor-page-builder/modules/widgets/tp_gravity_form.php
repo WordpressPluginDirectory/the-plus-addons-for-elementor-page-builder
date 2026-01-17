@@ -82,7 +82,7 @@ class ThePlus_Gravity_Form extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Gravity Forms', 'Form Builder', 'Contact Form', 'WordPress Forms', 'Elementor Forms' );
+		return array( 'Form Style', 'Contact Form 7 Style', 'WPForms Style', 'Ninja Forms Design', 'Gravity Forms Style', 'Everest Forms Design', 'Form Design', 'Form Customization' );
 	}
 
 	/**

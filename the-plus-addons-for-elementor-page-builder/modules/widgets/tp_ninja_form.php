@@ -83,7 +83,7 @@ class ThePlus_Ninja_form extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Ninja Forms', 'form builder', 'form plugin', 'contact forms', 'form creator', 'form designer', 'form generator', 'form maker', 'form widget', 'form element', 'form addon', 'form extension' );
+		return array( 'Form Style', 'Contact Form 7 Style', 'WPForms Style', 'Ninja Forms Design', 'Gravity Forms Style', 'Everest Forms Design', 'Form Design', 'Form Customization' );
 	}
 
 	/**

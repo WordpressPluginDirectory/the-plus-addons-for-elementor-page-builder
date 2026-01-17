@@ -4,11 +4,11 @@ Tags: elementor, elementor widgets, elementor addons, elementor templates, widge
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 6.4.5
+Stable tag: 6.4.6
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
-Best Addons for Elementor with 120+ Elementor FREE & Pro Widgets & 1000+ Elementor Templates with Mega Menu, Post Grid, Header Footer Builder, WooCommerce
+Best Addons for Elementor with 120+ Elementor FREE & Pro Widgets & 1000+ Elementor Templates with Mega Menu, Post Grid, Header Footer, WooCommerce
 
 == Description ==
 The Plus Addons for Elementor is the powerful extension for [Elementor Website Builder](https://wordpress.org/plugins/elementor/) with <strong>120+ Powerful Widgets & Extension, 1000+ Elementor Templates</strong>.
@@ -101,7 +101,7 @@ https://www.youtube.com/watch?v=yG_oyhz-oAY
 
 * <strong>[FREE Full Page for Elementor 🔥](https://theplusaddons.com/widgets/best-page-scrolling-options-for-elementor/#full-piling?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
 
-* <strong>[FREE Caldera Forms Styler for Elementor *(Depreciated)* ](https://theplusaddons.com/widgets/caldera-forms/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong>
+* <strong>[FREEMIUM Form Builder for Elementor](https://theplusaddons.com/elementor-builder/form-builder/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong>
 
 * <strong>[FREE Contact form 7 Styler for Elementor](https://theplusaddons.com/widgets/contact-form-7/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
 
@@ -112,6 +112,8 @@ https://www.youtube.com/watch?v=yG_oyhz-oAY
 * <strong>[FREE Ninja Forms Styler Widget for Elementor](https://theplusaddons.com/widgets/ninja-forms/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong>
 
 * <strong>[FREE WP Forms Styler Widget for Elementor](https://theplusaddons.com/widgets/wpforms/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
+
+* <strong>[Custom Icon Widget for Elementor](https://theplusaddons.com/elementor-widget/custom-icons/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
 
 * <strong>[FREE Blog Posts Listing for Elementor](https://theplusaddons.com/elementor-listing/blog-post/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong>
 [Grid Post Layout](https://theplusaddons.com/plus-blogs/grid-blogs/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) | [Masonry Post Layout](https://theplusaddons.com/plus-blogs/masonry-blogs/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) | [Metro Post Layout](https://theplusaddons.com/plus-blogs/metro-blogs/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) | [Post Carousel Slider ](https://theplusaddons.com/plus-blogs/carousel-blogs/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) |[Stagger Load Layout](https://theplusaddons.com/plus-blogs/blog-stagger-load/) 
@@ -149,6 +151,9 @@ https://www.youtube.com/watch?v=yG_oyhz-oAY
 
 * <strong>[Blog Builder: Post Navigation & Post Search](https://theplusaddons.com/blog-builder/#blog-single?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
 
+* <strong>[FREEMIUM Dynamic Tags for Elementor](https://theplusaddons.com/elementor-extras/dynamic-tags/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
+
+
 ### 🏆 75+ PREMIUM ELEMENTOR Widgets
 
 * <strong>[Horizontal Scroll for Elementor](https://theplusaddons.com/widgets/elementor-horizontal-scroll/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
@@ -158,6 +163,8 @@ https://www.youtube.com/watch?v=yG_oyhz-oAY
 * <strong>[Mp3 Audio Player for Elementor](https://theplusaddons.com/elementor-widget/audio-player/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
 
 * <strong>[Login, Signup & Registration Elementor Form & Password Reset Form for Elementor](https://theplusaddons.com/widgets/login-signup-password/)</strong> 
+
+* <strong>[RSS Feed Widget for Elementor](https://theplusaddons.com/elementor-widget/rss-feed/)</strong> 
 
 * <strong>[WooCommerce Store Builder for Elementor](https://theplusaddons.com/woo-builder/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
 [My Account Page]( https://theplusaddons.com/plus-builder/woocommerce-builder/my-account-page/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) | [Order Track Page ](https://theplusaddons.com/plus-builder/woocommerce-builder/order-tracking-page/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) | [Cart Page](https://theplusaddons.com/plus-builder/woocommerce-builder/cart-page/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)  | [Checkout Page](https://theplusaddons.com/plus-builder/woocommerce-builder/checkout-page/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)  | [Single Product Page](https://theplusaddons.com/plus-builder/woocommerce-builder/product-single-page/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) | | [Thank You Page](https://theplusaddons.com/plus-builder/woocommerce-builder/thank-you-page/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) | [Search Filters](https://theplusaddons.com/plus-builder/woocommerce-builder/ajax-filters/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks) 
@@ -306,7 +313,7 @@ https://www.youtube.com/watch?v=yG_oyhz-oAY
 
 * <strong>[Row Section Scroll Animation  for Elementor](https://theplusaddons.com/plus-extras/row-section-full-scroll-animation/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks/)</strong> 
 
-* <strong>[Custom CSS(Section & Column) for Elementor](https://theplusaddons.com/elementor-extras/custom-css/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks/)</strong>
+* <strong>[Custom CSS for Elementor](https://theplusaddons.com/elementor-extras/custom-css/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks/)</strong>
 
 
 ###🔍 OUR PRODUCTS
@@ -384,6 +391,26 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 12. Unique 22+ Elementor Extensions
 
 == Changelog ==
+
+= 6.4.6 =
+Add : New Extension : Dynamic Tag (Post, Site)
+Add : New Extension : GSAP Scroll Interactions - Basic and Global (Beta)
+Add : New Extension : GSAP Global Text Animation (Beta)
+Add : Text Block : Add GSAP Animation Option (Beta)
+Add : Heading Title : Add GSAP Animation Option (Beta)
+Add : Number Counter : Add Fill/Stroke color option for the Font Awesome 5 Icons
+Add : Stylish List : Add Fill/Stroke color option for the Font Awesome 5 Icons
+Add : Video Player : Icon option Added for the only icon image option
+Improvement : Advanced Shadow : UI Improvements
+Improvement : Equal Height : UI Improvements
+Improvement : Glass Morphism : UI Improvements
+Improvement : Wrapper Link : UI Improvements
+Improvement : White Label Condition Improvement 
+Fix : Post Author : Author link not working in multisite
+Fix : Post Comment : Language Compatibility issue
+Fix : Post Content : Alignment not working while selecting excerpt from the Post Content Type
+Fix : Switcher : Active Padding not working in the second switcher
+Fix : Minor Bug Fixes & Performance Improvements
 
 = 6.4.5 =
 Fix : Minor Bug Fixes & Performance Improvements

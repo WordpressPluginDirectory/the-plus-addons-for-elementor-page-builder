@@ -81,7 +81,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Page Piling', 'Page Scroll', 'Scrollable Pages', 'Vertical Scroll', 'Full Page Scroll', 'Scrollable Sections' );
+		return array( 'Full Page Scroll', 'Vertical Scroll Sections', 'Page Piling', 'Multi-Scroll', 'Horizontal Scrolling Page', 'Scroll-Based Navigation', 'Slide-by-Slide Scrolling', 'Full-Screen Slides', 'Scrolling Transitions', 'Interactive Page Scroll', 'Dot Navigation Scroll', 'Next/Prev Scrolling', 'Smooth Scrolling' );
 	}
 
 	/**

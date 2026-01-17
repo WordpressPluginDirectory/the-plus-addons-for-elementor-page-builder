@@ -100,7 +100,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Pricing', 'Table', 'Pricing Table', 'Pricing Plan', 'Pricing Comparison', 'Pricing Options', 'Pricing Packages', 'Pricing Grid', 'Pricing Chart' );
+		return array( 'Pricing List', 'Menu Price List', 'Modern Pricing List', 'Food Menu', 'Menu List', 'Flip-Box Pricing' );
 	}
 
 	/**

@@ -79,7 +79,7 @@ class ThePlus_Age_Gate extends Widget_Base {
 	 * @since 5.3.5
 	 */
 	public function get_keywords() {
-		return array( 'Age Gate', 'Age Verification', 'Age Restriction', 'Age Confirmation', 'Age Check', 'Age Limit', 'Age Requirement' );
+		return array( 'Age Verification', 'Birthdate Verification', 'Age Restriction', '18+ Verification', 'Adult Content Lock', 'Age Popup', 'Age Restricted Content', 'Minimum Age Limit' );
 	}
 
 	/**

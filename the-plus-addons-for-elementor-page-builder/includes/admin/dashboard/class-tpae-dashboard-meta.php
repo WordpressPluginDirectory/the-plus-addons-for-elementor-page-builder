@@ -200,10 +200,16 @@ if ( ! class_exists( 'Tpae_Dashboard_Meta' ) ) {
 		public function tpae_add_dashboard_menu() {
 
 			$setting_name = esc_html__( 'The Plus Addons', 'tpebl' );
+
+			$plugin_ads   = '';
+			$template_tab = '';
 			if ( defined( 'THEPLUS_VERSION' ) ) {
 				$options = get_option( 'theplus_white_label' );
 
 				$setting_name = ! empty( $options['tp_plugin_name'] ) ? $options['tp_plugin_name'] : __( 'The Plus Addons', 'tpebl' );
+				
+				$plugin_ads   = isset( $options ) && ! empty( $options['plugin_ads'] ) ? $options['plugin_ads'] : '';
+				$template_tab = isset( $options ) && ! empty( $options['template_tab'] ) ? $options['template_tab'] : '';
 			}
 
 			$et_plugin_status    = apply_filters( 'tpae_get_plugin_status', 'template-kit-import/template-kit-import.php' );
@@ -213,16 +219,12 @@ if ( ! class_exists( 'Tpae_Dashboard_Meta' ) ) {
 
 			add_submenu_page( 'theplus_welcome_page', esc_html__( 'Widgets', 'tpebl' ), esc_html__( 'Widgets', 'tpebl' ), 'manage_options', 'theplus_welcome_page#/widgets', array( $this, 'tpae_admin_page_display' ), );
 			add_submenu_page( 'theplus_welcome_page', esc_html__( 'Extensions', 'tpebl' ), esc_html__( 'Extensions', 'tpebl' ), 'manage_options', 'theplus_welcome_page#/extension', array( $this, 'tpae_admin_page_display' ) );
-			add_submenu_page(
-				'theplus_welcome_page',
-				esc_html__( 'Theme Builder', 'tpebl' ),
-				esc_html__( 'Theme Builder', 'tpebl' ),
-				'manage_options',
-				'nxt_builder',
-				array( $this, 'nexter_theme_builder_display' )
-			);
 
-			if ( 'not_installed' === $et_plugin_status || 'active' === $wdkit_plugin_status ) {
+			if ( empty( $options ) || 'on' !== $plugin_ads ) {
+				add_submenu_page( 'theplus_welcome_page', esc_html__( 'Theme Builder', 'tpebl' ), esc_html__( 'Theme Builder', 'tpebl' ), 'manage_options', 'nxt_builder', array( $this, 'nexter_theme_builder_display' ) );
+			}
+
+			if ( ( 'not_installed' === $et_plugin_status || 'active' === $wdkit_plugin_status ) && ( empty( $options ) || 'on' !== $template_tab ) ) {
 				add_submenu_page( 'theplus_welcome_page', esc_html__( 'Starter Templates', 'tpebl' ), esc_html__( 'Starter Templates', 'tpebl' ), 'manage_options', 'theplus_welcome_page#/elementor_templates', array( $this, 'tpae_admin_page_display' ) );
 			}
 

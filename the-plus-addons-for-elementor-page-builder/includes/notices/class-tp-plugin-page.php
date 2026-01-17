@@ -108,7 +108,7 @@ if ( ! class_exists( 'Tp_Plugin_Page' ) ) {
 				$links[]  = $pro_link;
 			}
 
-			/** Save 2000+ */
+			/**Save $2000+*/
 			if ( ! defined( 'THEPLUS_VERSION' ) ) {
 				$pro_link = sprintf( '<a href="%s" target="_blank" style="color: #cc0000;font-weight: 700;" rel="noopener noreferrer">%s</a>', esc_url( 'https://theplusaddons.com/pricing?utm_source=wpbackend&utm_medium=dashboard&utm_campaign=plussettings' ), __( 'Save $2000+', 'tpebl' ) );
 				$links    = (array) $links;

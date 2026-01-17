@@ -79,7 +79,7 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Meeting Scheduler', 'Schedule Meeting', 'Meeting Planner', 'Meeting Organizer', 'Meeting Arranger', 'Meeting Time Manager', 'Meeting Coordinator', 'Meeting Scheduling Tool', 'Meeting Booking', 'Meeting Calendar' );
+		return array( 'Meeting Scheduler', 'Calendly Integration', 'Freebusy Scheduling', 'Vyte Booking', 'Appointment Scheduler', 'Booking Widget', 'Calendar Integration', 'Meeting Booking', 'Scheduler App Integration', 'Meeting Planner', 'Meeting Calendar', 'Appointment Manager' );
 	}
 
 	/**

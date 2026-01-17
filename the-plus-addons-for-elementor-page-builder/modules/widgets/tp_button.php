@@ -76,7 +76,7 @@ class L_ThePlus_Button extends Widget_Base {
 	 * @since 1.0.0
 	 */
 	public function get_keywords() {
-		return array( 'Buttons', 'Button widget', 'Elementor buttons', ' Elementor button widget', 'Button elementor addon', 'Elementor plus addon buttons', 'Elementor plus buttons', 'Button', 'Button elementor element', 'Button elementor module', 'Elementor button module', 'Elementor button element', 'Button elementor extension', 'Elementor button extension', 'Button elementor plugin', 'Elementor button plugin' );
+		return array( 'Button', 'CTA Button', 'Hover-Text Button', 'Icon Button', 'Tooltip Button', 'Parallax Button', 'Continuous Animation Button', 'Shake Animation Button', 'Full-Width Button', 'Scroll-Animation Button' );
 	}
 
 	public function get_custom_help_url() {

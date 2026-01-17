@@ -92,7 +92,7 @@ class L_ThePlus_Switcher extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Switcher', 'Elementor switcher', 'switcher', 'switcher addon', 'switcher plugin', 'switcher elementor addon', 'switcher', 'switcher plus addons', 'switcher plus addons for elementor', 'switcher the plus addons for elementor' );
+		return array( 'Switcher', 'Content Toggle', 'Dual Content' );
 	}
 
 	/**
@@ -871,7 +871,9 @@ class L_ThePlus_Switcher extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .switch-toggle + .switch-slider,{{WRAPPER}} .theplus-switcher .switcher-toggle.inactive .switch-label-1,{{WRAPPER}} .theplus-switcher .switcher-toggle.active .switch-label-2 .switch-label-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .switch-toggle + .switch-slider,
+					{{WRAPPER}} .theplus-switcher .switcher-toggle.inactive .switch-label-1,
+					{{WRAPPER}} .theplus-switcher .switcher-toggle.active .switch-label-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);

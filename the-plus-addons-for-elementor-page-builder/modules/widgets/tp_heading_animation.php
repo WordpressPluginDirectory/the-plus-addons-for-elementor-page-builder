@@ -70,7 +70,7 @@ class ThePlus_Heading_Animation extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Animated Text', 'Text Animation', 'Animated Typography', 'Animated Heading', 'Animated Title', 'Animated Words' );
+		return array( 'Animated Heading', 'Heading Animation', 'Text Animation Effects', 'Typing Heading', 'Flipping Text', 'Zoom-In Heading', 'Underline Heading Animation', 'Slide-In Heading', 'Bounce Letter Heading', 'Prefix-Postfix Heading', 'Split Text Animation', 'Looping Animated Title' );
 	}
 
 	/**

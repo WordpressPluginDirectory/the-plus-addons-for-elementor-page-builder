@@ -79,7 +79,7 @@ class L_ThePlus_Countdown extends Widget_Base {
 	 * @since 1.0.0
 	 */
 	public function get_keywords() {
-		return array( 'Countdown', 'Timer', 'Countdown Timer', 'Elementor Countdown', 'Elementor Timer', 'Elementor Countdown Timer', 'Time Limit', 'Time Countdown' );
+		return array( 'Countdown Timer', 'Scarcity Countdown', 'Evergreen Countdown', 'Fake-Number Counter', 'Content Swap Timer', 'WooCommerce Timer', 'FOMO Countdown', 'Inline Countdown', 'Marketing Countdown Timer', 'Urgency Countdown', 'Event Countdown', 'Offer Countdown' );
 	}
 
 	public function get_custom_help_url() {

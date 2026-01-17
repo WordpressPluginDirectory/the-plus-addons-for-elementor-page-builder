@@ -87,7 +87,7 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'client', 'listing' );
+		return array( 'Client Listing', 'Logo Listing', 'Logo Showcase', 'Logo Carousel', 'Logo Grid', 'Logo Masonry', 'Logo Filter', 'Load More Logos', 'Logo Pagination' );
 	}
 
 	/**
@@ -166,7 +166,7 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
                 'label_block' => true,
             )
         );
-		$this->add_control(
+		/* $this->add_control(
 			'style',
 			array(
 				'label'   => esc_html__( 'Style', 'tpebl' ),
@@ -174,7 +174,7 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 				'default' => 'style-1',
 				'options' => l_theplus_get_style_list( 1 ),
 			)
-		);
+		); */
 		$this->add_control(
 			'layout',
 			array(

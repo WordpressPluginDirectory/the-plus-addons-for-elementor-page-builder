@@ -83,7 +83,7 @@ class ThePlus_Wp_Forms extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'WP Forms', 'WordPress Forms', 'Form Builder', 'Elementor Forms', 'Contact Forms', 'Custom Forms', 'Drag and Drop Forms', 'Form Creator', 'Form Designer', 'Form Generator', 'Form Maker', 'Form Plugin', 'Form Widget' );
+		return array( 'Form Style', 'Contact Form 7 Style', 'WPForms Style', 'Ninja Forms Design', 'Gravity Forms Style', 'Everest Forms Design', 'Form Design', 'Form Customization' );
 	}
 
 	/**

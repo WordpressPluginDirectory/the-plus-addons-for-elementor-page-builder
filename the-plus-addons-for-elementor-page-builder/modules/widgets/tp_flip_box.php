@@ -79,7 +79,7 @@ class L_ThePlus_Flip_Box extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Flipbox', 'Flip Box', ' Flip-card', 'Card flip', 'Box flip', 'Elementor flipbox', 'Elementor flip box', 'Elementor flip-card', 'Elementor card flip', ' Elementor box flip' );
+		return array( 'Flip Box', 'Horizontal Flip Box', 'Vertical Flip Box', 'Flip Box Carousel', 'Flip-Box Grid', 'Interactive Flip Box', 'Flip Box with Button', 'Animated Flip Box' );
 	}
 
 	/**

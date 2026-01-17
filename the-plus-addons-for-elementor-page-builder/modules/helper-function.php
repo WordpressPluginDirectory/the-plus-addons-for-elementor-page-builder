@@ -552,3 +552,13 @@ function l_theplus_get_image_size_options() {
 		'contain' => esc_html__( 'Contain', 'tpebl' ),
 	);
 }
+
+function tpae_wl_pluginads_enabled() {
+    $whitelabel = get_option( 'theplus_white_label' );
+
+    if ( ! empty( $whitelabel['plugin_ads'] ) && 'on' === $whitelabel['plugin_ads'] ) {
+        return true;
+    }
+
+    return false;
+}

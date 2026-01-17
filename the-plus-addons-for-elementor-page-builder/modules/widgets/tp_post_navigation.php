@@ -83,7 +83,7 @@ class ThePlus_Post_Navigation extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Post', 'Navigation', 'Post Navigation', 'Previous', 'Next', 'Previous Post', 'Next Post' );
+		return array( 'Post Navigation', 'Blog Post Nav', 'Prev Next Buttons', 'Post Prev Next', 'Blog Post Navigation', 'Next Post Button', 'Previous Post Button', 'Blog Navigation Buttons' );
 	}
 
 	/**
@@ -273,10 +273,7 @@ class ThePlus_Post_Navigation extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$get_whitelabel = get_option( 'theplus_white_label' );
-		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
-
-		if( !empty( $help_link ) && 'on'!== $help_link ) {
+		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
 				'tpae_theme_builder_sec',
 				array(

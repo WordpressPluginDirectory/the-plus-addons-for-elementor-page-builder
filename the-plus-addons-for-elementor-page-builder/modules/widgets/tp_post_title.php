@@ -84,7 +84,7 @@ class ThePlus_Post_Title extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Post Title', 'Title', 'Blog Title', 'Article Title', 'Page Title', 'Post Name', 'Article Name', 'Page Name' );
+		return array( 'Post Title', 'Dynamic Title', 'Post Heading', 'Blog Title' );
 	}
 
 	/**
@@ -340,9 +340,7 @@ class ThePlus_Post_Title extends Widget_Base {
 		$this->end_controls_section();
 
 		$get_whitelabel = get_option( 'theplus_white_label' );
-		$help_link      = isset( $get_whitelabel ) && ! empty( $get_whitelabel['plugin_ads'] ) ? $get_whitelabel['plugin_ads'] : '';
-
-		if( !empty( $help_link ) && 'on'!== $help_link ) {
+		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
 				'tpae_theme_builder_sec',
 				array(

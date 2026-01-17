@@ -99,7 +99,7 @@ class L_ThePlus_Accordion extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Accordion', 'Toggle', 'Collapsible', 'Expandable', ' Content Panel', 'FAQ', 'Q&A', 'Show/Hide', 'Dropdown', 'Tabbed Content', 'Vertical Tabs', 'Accordion Menu', 'Expand/Collapse', 'Content Slider' );
+		return array( 'Accordion', 'FAQ', 'Content Accordion', 'Collapsible Content', 'Expandable Content', 'Horizontal Accordion', 'Hover Accordion', 'Autoplay Accordion', 'Accordion Search', 'Accordion Pagination', 'Accordion Toggle', 'Animated Accordion', 'SEO Schema Accordion', 'Multi-section Accordion', 'Foldable Content' );
 	}
 
 	/**

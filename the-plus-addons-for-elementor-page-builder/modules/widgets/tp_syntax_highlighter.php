@@ -84,7 +84,7 @@ class ThePlus_Syntax_Highlighter extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Syntax Highlighter', 'code highlighter', 'code syntax', 'code editor', 'code formatting', 'code styling', 'code display', 'code snippet', 'code block' );
+		return array( 'Syntax Highlighter', 'Code Highlighter', 'Code Syntax Highlighter', 'Highlight Code' );
 	}
 
 	/**

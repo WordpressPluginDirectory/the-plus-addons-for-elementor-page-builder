@@ -72,7 +72,7 @@ class ThePlus_Social_Embed extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Social Embed', 'Social Media Embed', 'Embed Social Media', 'Social Media Widget', 'Social Media', 'Elementor Social Embed', 'Social Embed' );
+		return array( 'Social Media Embed', 'Facebook Embed', 'X (Twitter) Embed', 'Instagram Embed', 'YouTube Embed', 'Vimeo Embed', 'Google Maps Embed', 'Social Feed', 'Facebook Comments', 'Facebook Post', 'Facebook Video', 'Facebook Page', 'Facebook Like Button', 'Twitter Profile', 'Instagram Reels', 'YouTube Playlist', 'Google Maps', 'Vimeo Video', 'Tweets', 'Retweet Button', 'Twitter Follow Button', 'Twitter Likes Timeline' );
 	}
 
 	/**

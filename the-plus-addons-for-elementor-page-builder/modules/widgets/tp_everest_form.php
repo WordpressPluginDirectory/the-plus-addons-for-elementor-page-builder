@@ -80,7 +80,7 @@ class ThePlus_Everest_form extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'Everest Forms', 'contact form', 'form builder', 'form plugin', 'form creator', 'form designer', 'form element', 'form widget', 'form generator', 'form maker', 'form editor', 'form module', 'form addon', 'form extension' );
+		return array( 'Form Style', 'Contact Form 7 Style', 'WPForms Style', 'Ninja Forms Design', 'Gravity Forms Style', 'Everest Forms Design', 'Form Design', 'Form Customization' );
 	}
 
 	/**

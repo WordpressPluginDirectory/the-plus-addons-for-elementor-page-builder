@@ -44,7 +44,7 @@ if ( ! class_exists( 'Tp_Dashboard_Overview' ) ) {
 		 *
 		 * @var string
 		 */
-		public $T_P_R_S_S_U_R_L = 'https://theplusaddons.com/blog-category/product-announcement/feed/';
+		public $T_P_R_S_S_U_R_L = 'https://theplusaddons.com/wp-content/tpae-feed-cache.json';
 
 		/**
 		 * API Overview Data
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Tp_Dashboard_Overview' ) ) {
 			}
 
 			return self::$instance;
-		}
+		}	
 
 		/**
 		 * Constructor
@@ -102,7 +102,7 @@ if ( ! class_exists( 'Tp_Dashboard_Overview' ) ) {
 
 				$feed_url = $this->T_P_R_S_S_U_R_L;
 
-				$response = wp_remote_get( $feed_url );
+				$response = wp_remote_get( $feed_url, array( 'timeout' => 25 ) );
 
 				$status_code = wp_remote_retrieve_response_code( $response );
 
@@ -118,48 +118,20 @@ if ( ! class_exists( 'Tp_Dashboard_Overview' ) ) {
 
 				$body = wp_remote_retrieve_body( $response );
 
-				$xml = simplexml_load_string( $body, 'SimpleXMLElement', LIBXML_NOCDATA );
+				$data = json_decode( $body, true );
 
-				$items = array();
-				$id    = 1;
-
-				if ( $xml && isset( $xml->channel->item ) ) {
-					foreach ( $xml->channel->item as $item ) {
-
-						if ( $id > 6 ) {
-							break;
-						}
-
-						$content   = (string) $item->children( 'content', true )->encoded;
-						$image_url = '';
-
-						if ( preg_match( '/<img.*?src=["\'](.*?)["\']/', $content, $matches ) ) {
-							$image_url = $matches[1];
-						}
-
-						if ( empty( $image_url ) && isset( $item->enclosure['url'] ) ) {
-							$image_url = (string) $item->enclosure['url'];
-						}
-
-						$items[] = array(
-							'id'          => $id++,
-							'title'       => (string) $item->title,
-							'description' => '',
-							'link'        => (string) $item->link,
-							'image'       => esc_url( $image_url ),
-							'datetime'    => date( 'Y-m-d H:i:s', strtotime( (string) $item->pubDate ) ),
-						);
-					}
+				if ( ! is_array( $data ) ) {
+					return [];
 				}
-
+				
 				$this->overview_data = array(
 					'HTTP_CODE' => $status_code,
 					'success'   => 1,
 					'message'   => 'RSS data fetched successfully',
-					'data'      => $items,
+					'data'      => $data,
 				);
 
-				set_transient( $this->transient_key, $this->overview_data, DAY_IN_SECONDS );
+				set_transient( $this->transient_key, $this->overview_data, 4 * DAY_IN_SECONDS  );
 
 			} else {
 				$this->overview_data = $data;

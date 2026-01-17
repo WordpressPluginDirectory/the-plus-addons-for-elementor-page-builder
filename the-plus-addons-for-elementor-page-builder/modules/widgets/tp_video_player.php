@@ -12,6 +12,7 @@ namespace TheplusAddons\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Icons_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
@@ -78,7 +79,7 @@ class ThePlus_Video_Player extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'video', 'media', 'player', 'multimedia', 'youtube', 'vimeo', 'mp4', 'embed', 'playback', 'watch', 'stream', 'online', 'clip', 'film', 'movie', 'visual', 'recording', 'motion picture' );
+		return array( 'Video Embed', 'Video Player', 'YouTube Embed', 'Vimeo Video', 'Self‑Hosted Video', 'Sticky Video', 'Video Popup', 'Video Mask', 'Responsive Video Player', 'Video Embedding' );
 	}
 
 	/**
@@ -453,6 +454,21 @@ class ThePlus_Video_Player extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'only_icon_opt',
+			array(
+				'label'   => esc_html__( 'Select Icon Option', 'tpebl' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'image',
+				'options' => array(
+					'image'  => esc_html__( 'Image', 'tpebl' ),
+					'icon'   => esc_html__( 'Icon', 'tpebl' ),
+				),
+				'condition' => array(
+					'image_banner' => 'only_icon',
+				),
+			)
+		);
+		$this->add_control(
 			'only_img',
 			array(
 				'label'     => esc_html__( 'Choose Image', 'tpebl' ),
@@ -461,6 +477,7 @@ class ThePlus_Video_Player extends Widget_Base {
 				'dynamic'   => array( 'active' => true ),
 				'condition' => array(
 					'image_banner' => 'only_icon',
+					'only_icon_opt' => 'image',
 				),
 			)
 		);
@@ -472,10 +489,26 @@ class ThePlus_Video_Player extends Widget_Base {
 				'separator' => 'none',
 				'condition' => array(
 					'image_banner' => 'only_icon',
+					'only_icon_opt' => 'image',
 				),
 			)
 		);
 
+		$this->add_control(
+			'select_icon',
+			array(
+				'label'   => esc_html__( 'Choose Icon', 'tpebl' ),
+				'type'    => Controls_Manager::ICONS,
+				'default' => array(
+					'value'   => 'fas fa-star',
+					'library' => 'fa-solid',
+				),
+				'condition' => array(
+					'image_banner' => 'only_icon',
+					'only_icon_opt' => 'icon',
+				),
+			)
+		);	
 		$this->add_control(
 			'icon_align',
 			array(
@@ -1026,6 +1059,54 @@ class ThePlus_Video_Player extends Widget_Base {
 				),
 				'selectors'  => array(
 					'{{WRAPPER}} .pt_plus_video_player .tp-video-icon-inner,{{WRAPPER}} .pt_plus_video_player .tp-video-popup,{{WRAPPER}} .pt_plus_video_player .tp-video-popup-icon' => 'max-width: {{SIZE}}{{UNIT}};width: {{SIZE}}{{UNIT}};max-height: {{SIZE}}{{UNIT}};height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .pt_plus_video_player .tp-video-only-icon-wrapper > i::before' => 'font-size: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+		$this->add_control(
+			'icon_color',
+			array(
+				'label'     => esc_html__( 'Color', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .pt_plus_video_player .tp-video-only-icon-wrapper > i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .pt_plus_video_player .tp-video-only-icon-wrapper > svg' => 'fill: {{VALUE}};',
+				),
+				'condition' => array(
+					'image_banner' => 'only_icon',
+					'only_icon_opt' => 'icon',
+				),
+			)
+		);
+		$this->add_control(
+			'icon_fill_color',
+			array(
+				'label'     => esc_html__( 'Fill', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .pt_plus_video_player .tp-video-only-icon-wrapper > svg' => 'fill: {{VALUE}} !important; ',
+
+				),
+				'condition' => array(
+					'image_banner'  => 'only_icon',
+					'only_icon_opt' => 'icon',
+					'select_icon[library]' => 'svg',
+				),
+			)
+		);
+		$this->add_control(
+			'icon_stroke_color',
+			array(
+				'label'     => esc_html__( 'Stroke', 'tpebl' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .pt_plus_video_player .tp-video-only-icon-wrapper > svg' => 'stroke: {{VALUE}} !important;',
+
+				),
+				'condition' => array(
+					'image_banner'  => 'only_icon',
+					'only_icon_opt' => 'icon',
+					'select_icon[library]' => 'svg',
 				),
 			)
 		);
@@ -1240,16 +1321,34 @@ class ThePlus_Video_Player extends Widget_Base {
 
 			$title .= '</div>';
 		}
+
+		$only_icon_opt = ! empty( $settings['only_icon_opt'] ) ? $settings['only_icon_opt'] : 'image';
+
+		if( 'icon' === $only_icon_opt ) {
+			$select_icon = ! empty( $settings['select_icon'] ) ? $settings['select_icon'] : 'fas fa-star';
+
+			$only_image .= '<div class="tp-video-only-icon-wrapper">';
+				ob_start();
+				\Elementor\Icons_Manager::render_icon( $select_icon, array( 'aria-hidden' => 'true' ) );
+				$only_image .= ob_get_contents();
+				ob_end_clean();
+			$only_image .= '</div>';
+
+			// $only_image .= '<div class="tp-video-only-icon-wrapper ' . esc_attr( $icon_effect ) . '">';
+		}
+
+		if( 'image' === $only_icon_opt ) {
 			$img_url = ! empty( $settings['only_img'] ) ? $settings['only_img'] : '';
 
-		if ( ! empty( $img_url['url'] ) ) {
+			if ( ! empty( $img_url['url'] ) ) {
 
-			$only_img = $img_url['id'];
+				$only_img = $img_url['id'];
 
-			$img = wp_get_attachment_image_src( $only_img, $settings['only_img_thumbnail_size'] );
+				$img = wp_get_attachment_image_src( $only_img, $settings['only_img_thumbnail_size'] );
 
-			$only_img_icon = isset( $img[0] ) ? $img[0] : '';
-			$only_image   .= '<img class="ts-video-only-icon" src="' . esc_url( $only_img_icon ) . '" alt="' . esc_html__( 'play-icon', 'tpebl' ) . '" />';
+				$only_img_icon = isset( $img[0] ) ? $img[0] : '';
+				$only_image   .= '<img class="ts-video-only-icon" src="' . esc_url( $only_img_icon ) . '" alt="' . esc_html__( 'play-icon', 'tpebl' ) . '" />';
+			}
 		}
 
 		$img_video = ! empty( $settings['image_video']['url'] ) ? $settings['image_video']['url'] : '';

@@ -54,7 +54,7 @@ if ( 'tlrepeater' === $con_from ) {
 			mask-image: url('<?php echo esc_url( L_THEPLUS_ASSETS_URL . 'svg/testimonial-mask.svg' ); ?>');
 			mask-size: contain;
 			width: 75px;
-            height: 75px;
+            height: 90px;
 		">
 			<?php echo $featured_image; ?>
 		</span>

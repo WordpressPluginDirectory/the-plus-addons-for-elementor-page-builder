@@ -91,6 +91,8 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 		public function __construct() {
 			$this->tp_white_label();
 			$this->tp_notices_manage();
+
+			$this->tp_delete_removed_notice_keys();
 		}
 
 		/**
@@ -186,7 +188,7 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 				include L_THEPLUS_PATH . 'includes/notices/class-tp-dashboard-overview.php';
 
 				/**Remove Key In Databash*/
-				include L_THEPLUS_PATH . 'includes/notices/class-tp-notices-remove.php';
+				// include L_THEPLUS_PATH . 'includes/notices/class-tp-notices-remove.php';
 			}
 
 			$license_data = get_option( 'tpaep_licence_data' );
@@ -195,9 +197,8 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 
 				$check_license = $license_data ? $license_data['expires'] : '';
 
-				if ( ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) || ( defined( 'THEPLUS_VERSION' ) && ( empty( $check_license ) || 'lifetime' !== $check_license ) ) ) {
-					include L_THEPLUS_PATH . 'includes/notices/class-tp-ws-banner.php';
-				}
+				/** Plugin Features Banner*/
+				include L_THEPLUS_PATH . 'includes/notices/class-tp-plugin-features-banner.php';
 
 				if ( ! empty( $ele_pro_details[0]['status'] ) && 'unavailable' == $ele_pro_details[0]['status'] ) {
 					if ( ! empty( $nxt_ext_details[0]['status'] ) && 'unavailable' == $nxt_ext_details[0]['status'] ) {
@@ -345,6 +346,17 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 
 				return get_plugins();
 			}
+		}
+
+		/**
+		 * Delete notice keys which notice removed from plugin
+		 *
+		 * @since 6.5.6
+		 */		
+		public function tp_delete_removed_notice_keys() {
+			delete_option( 'tpae_bfsale_notice_dismissed' );
+			delete_option( 'tpae_cmsale_notice_dismissed' );
+			delete_option( 'tpae_wintersale_notice_dismissed' );
 		}
 	}
 

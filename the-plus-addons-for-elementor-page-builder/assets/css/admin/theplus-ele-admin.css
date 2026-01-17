@@ -297,6 +297,7 @@ ul#adminmenu a[href*="page=theplus-upgrade"]{color:#FFF;background:#8072FC;margi
 .elementor-control-plus_section_tooltip_section:before,
 .elementor-control-plus_section_contianimation_section:before,
 .elementor-control-plus_magic_scroll_section:before,
+.elementor-control-plus_gsap_animation_sections:before,
 .elementor-control-plus_section_stickycon_section:before {
     content: "";
     position: absolute;

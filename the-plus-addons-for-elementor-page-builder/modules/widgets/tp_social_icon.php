@@ -78,7 +78,7 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	public function get_keywords() {
-		return array( 'social', 'icon', 'social icon' );
+		return array( 'Social Icons', 'Tooltip Social Icon', 'Animated Social Icon', 'Parallax Social Icon', 'Custom Social Links', 'Vertical Icon Layout', 'Horizontal Icon Layout' );
 	}
 
 	/**
