@@ -158,6 +158,19 @@ class ThePlus_Featured_Image extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'pfi_type_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Choose how you want to display the featured image, either as a normal image inside your layout or as a background behind your content.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+			)
+		);
+		$this->add_control(
 			'bg_in',
 			array(
 				'type'      => Controls_Manager::SELECT,
@@ -172,6 +185,19 @@ class ThePlus_Featured_Image extends Widget_Base {
 				'condition' => array(
 					'pfi_type' => 'pfi-background',
 				),
+			)
+		);
+		$this->add_control(
+			'bg_in_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Select where the featured image should appear.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 			)
 		);
 		$this->add_control(
@@ -282,10 +308,10 @@ class ThePlus_Featured_Image extends Widget_Base {
 			$this->add_control(
 				'tpae_theme_builder',
 				array(
-					'type'   => 'tpae_theme_builder',
-					'notice' => 'We recommend placing this widget in the Post Single Page Template to show the featured image of the post.',
+					'type'        => 'tpae_theme_builder',
+					'notice'      => 'We recommend placing this widget in the Post Single Page Template to show the featured image of the post.',
 					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
-					'page_type'   => 'tp_singular_page'
+					'page_type'   => 'tp_singular_page',
 				)
 			);
 			$this->end_controls_section();
@@ -518,7 +544,7 @@ class ThePlus_Featured_Image extends Widget_Base {
 			if ( has_post_thumbnail( $post_id ) ) {
 				$image_content = get_the_post_thumbnail_url( $post_id, $image_size );
 			} else {
-				$image_content = L_THEPLUS_URL . '/assets/images/tp-placeholder.jpg';
+				$image_content = L_THEPLUS_URL . 'assets/images/tp-placeholder.jpg';
 			}
 
 			if ( tp_has_lazyload() ) {
@@ -527,7 +553,7 @@ class ThePlus_Featured_Image extends Widget_Base {
 		} elseif ( has_post_thumbnail( $post_id ) ) {
 			$image_content = tp_get_image_rander( $post_id, $image_size, array( 'class' => 'tp-featured-img' ), 'post' );
 		} else {
-			$image_content = '<img src="' . L_THEPLUS_URL . '/assets/images/tp-placeholder.jpg" alt="' . get_the_title() . '" class="tp-featured-img" />';
+			$image_content = '<img src="' . L_THEPLUS_URL . 'assets/images/tp-placeholder.jpg" alt="' . get_the_title() . '" class="tp-featured-img" />';
 		}
 
 		// if ( has_post_thumbnail( $post_id ) ) {
@@ -535,8 +561,8 @@ class ThePlus_Featured_Image extends Widget_Base {
 		// $image_content = tp_get_image_rander( $post_id, $image_size, array( 'class' => 'tp-featured-img' ), 'post' );
 
 		// } else {
-		// $image_content = L_THEPLUS_URL . '/assets/images/tp-placeholder.jpg';
-		// $image_content = '<img src="' . THEPLUS_URL . '/assets/images/tp-placeholder.jpg" alt="' . get_the_title() . '" class="tp-featured-img" />';
+		// $image_content = L_THEPLUS_URL . 'assets/images/tp-placeholder.jpg';
+		// $image_content = '<img src="' . THEPLUS_URL . 'assets/images/tp-placeholder.jpg" alt="' . get_the_title() . '" class="tp-featured-img" />';
 		// }
 
 		if ( 'pfi-background' === $pfi_type ) {

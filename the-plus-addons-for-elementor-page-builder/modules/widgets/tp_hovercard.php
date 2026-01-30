@@ -60,7 +60,7 @@ class ThePlus_Hovercard extends Widget_Base {
 		return esc_html__( 'Hover Card', 'tpebl' );
 	}
 
-    /**
+	/**
 	 * Get Widget Icon.
 	 *
 	 * @since 1.0.0
@@ -114,7 +114,7 @@ class ThePlus_Hovercard extends Widget_Base {
 	public function is_dynamic_content(): bool {
 		return false;
 	}
-	
+
 	/**
 	 * It is use for adds.
 	 *
@@ -123,18 +123,18 @@ class ThePlus_Hovercard extends Widget_Base {
 	public function get_upsale_data() {
 		$val = false;
 
-		if( ! defined( 'THEPLUS_VERSION' ) ) {
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
 			$val = true;
 		}
 
-		return [
-			'condition' => $val,
-			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
 			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		];
+		);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class ThePlus_Hovercard extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register controls.
 	 *
@@ -162,13 +162,13 @@ class ThePlus_Hovercard extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 17376,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 17376,
+				'label_block' => true,
+			)
+		);
 		$repeater = new \Elementor\Repeater();
 		$repeater->start_controls_tabs( 'tabs_tag_open_close' );
 
@@ -201,6 +201,19 @@ class ThePlus_Hovercard extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
+			'open_tag_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Select the HTML tag to wrap the hover card content.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+			)
+		);
+		$repeater->add_control(
 			'a_link',
 			array(
 				'label'       => esc_html__( 'Link', 'tpebl' ),
@@ -225,6 +238,19 @@ class ThePlus_Hovercard extends Widget_Base {
 				'condition' => array(
 					'open_tag!' => 'none',
 				),
+			)
+		);
+		$repeater->add_control(
+			'open_tag_class_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Add a custom CSS class to style or target this hover card.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 			)
 		);
 		$repeater->end_controls_tab();
@@ -257,6 +283,19 @@ class ThePlus_Hovercard extends Widget_Base {
 				),
 			)
 		);
+		$repeater->add_control(
+			'close_tag_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Select how the HTML closing tag should be applied.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+			)
+		);
 		$repeater->end_controls_tab();
 		$repeater->end_controls_tabs();
 
@@ -275,6 +314,19 @@ class ThePlus_Hovercard extends Widget_Base {
 					'script' => esc_html__( 'Script', 'tpebl' ),
 				),
 				'separator' => 'before',
+			)
+		);
+		$repeater->add_control(
+			'content_tag_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Choose the content type to display inside the hover card.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 			)
 		);
 		$repeater->add_control(
@@ -333,7 +385,7 @@ class ThePlus_Hovercard extends Widget_Base {
 		$repeater->add_control(
 			'html_content',
 			array(
-				 'label'     => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
 						esc_html__( 'HTML Content', 'tpebl' ),
@@ -385,14 +437,19 @@ class ThePlus_Hovercard extends Widget_Base {
 			)
 		);
 
-		if( ! tp_senitize_role( 'unfiltered_html' ) ){
+		if ( ! tp_senitize_role( 'unfiltered_html' ) ) {
 			$repeater->add_control(
 				'script_c_notice',
 				array(
 					'type'        => Controls_Manager::RAW_HTML,
-					'raw'         => '<p class="tp-controller-notice"><i>You are not a admin user so <b>Custom Script</b> option dose not work for you tell your admin to give you rights.</i></p>',
+					'raw'         => wp_kses_post(
+						sprintf(
+							'<p class="tp-controller-label-text"><i> %s </i></p>',
+							esc_html__( 'You are not a admin user so <b>Custom Script</b> option dose not work for you tell your admin to give you rights.', 'tpebl' ),
+						)
+					),
 					'label_block' => true,
-					'condition' => array(
+					'condition'   => array(
 						'content_tag' => 'script',
 					),
 				)
@@ -429,6 +486,22 @@ class ThePlus_Hovercard extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
+			'position_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Set how the hover card is positioned relative to other elements.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition' => array(
+					'open_tag!' => 'none',
+				),
+			)
+		);
+		$repeater->add_control(
 			'display',
 			array(
 				'type'      => Controls_Manager::SELECT,
@@ -445,6 +518,22 @@ class ThePlus_Hovercard extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} {{CURRENT_ITEM}} ' => 'display: {{VALUE}}',
 				),
+				'condition' => array(
+					'open_tag!' => 'none',
+				),
+			)
+		);
+		$repeater->add_control(
+			'display_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Control how the hover card is displayed.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 				'condition' => array(
 					'open_tag!' => 'none',
 				),
@@ -479,6 +568,22 @@ class ThePlus_Hovercard extends Widget_Base {
 				'default'   => 'no',
 				'label_on'  => esc_html__( 'Enable', 'tpebl' ),
 				'label_off' => esc_html__( 'Disable', 'tpebl' ),
+				'condition' => array(
+					'open_tag!' => 'none',
+				),
+			)
+		);
+		$repeater->add_control(
+			'display_alignmet_opt_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Enable alignment controls using CSS.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 				'condition' => array(
 					'open_tag!' => 'none',
 				),
@@ -768,6 +873,22 @@ class ThePlus_Hovercard extends Widget_Base {
 				),
 			)
 		);
+		$repeater->add_control(
+			'width_height_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Enable custom width and height controls.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition' => array(
+					'open_tag!' => 'none',
+				),
+			)
+		);
 		$repeater->add_responsive_control(
 			'width',
 			array(
@@ -923,6 +1044,22 @@ class ThePlus_Hovercard extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
+			'zindex_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Control the stacking order of the hover card.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition' => array(
+					'open_tag!' => 'none',
+				),
+			)
+		);
+		$repeater->add_control(
 			'overflow',
 			array(
 				'label'     => esc_html__( 'Overflow', 'tpebl' ),
@@ -935,6 +1072,22 @@ class ThePlus_Hovercard extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} {{CURRENT_ITEM}} ' => 'overflow:{{VALUE}} !important;',
 				),
+				'condition' => array(
+					'open_tag!' => 'none',
+				),
+			)
+		);
+		$repeater->add_control(
+			'overflow_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Define how content behaves when it overflows the container.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 				'condition' => array(
 					'open_tag!' => 'none',
 				),
@@ -954,6 +1107,22 @@ class ThePlus_Hovercard extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} {{CURRENT_ITEM}} ' => 'visibility:{{VALUE}} !important;',
 				),
+				'condition' => array(
+					'open_tag!' => 'none',
+				),
+			)
+		);
+		$repeater->add_control(
+			'visibility_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s </i></p>',
+						esc_html__( 'Control when the hover card is visible.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 				'condition' => array(
 					'open_tag!' => 'none',
 				),
@@ -2890,7 +3059,7 @@ class ThePlus_Hovercard extends Widget_Base {
 				}
 				if ( $item['content_tag'] == 'script' && ! empty( $item['script_content'] ) ) {
 					$sanitized_script = current_user_can( 'manage_options' ) ? wp_kses_post( $item['script_content'] ) : '';
-					$loopitem .= wp_print_inline_script_tag( $sanitized_script );
+					$loopitem        .= wp_print_inline_script_tag( $sanitized_script );
 				}
 			}
 
@@ -3055,5 +3224,4 @@ class ThePlus_Hovercard extends Widget_Base {
 
 	protected function content_template() {
 	}
-
 }

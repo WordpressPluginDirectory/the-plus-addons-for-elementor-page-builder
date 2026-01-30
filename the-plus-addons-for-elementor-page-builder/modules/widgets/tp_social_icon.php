@@ -109,18 +109,18 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 	public function get_upsale_data() {
 		$val = false;
 
-		if( ! defined( 'THEPLUS_VERSION' ) ) {
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
 			$val = true;
 		}
 
-		return [
-			'condition' => $val,
-			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
 			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		];
+		);
 	}
 
 	/**
@@ -131,7 +131,7 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register controls.
 	 *
@@ -148,13 +148,13 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 16804,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 16804,
+				'label_block' => true,
+			)
+		);
 		$this->add_control(
 			'styles',
 			array(
@@ -200,8 +200,8 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 		$this->add_control(
 			'repeater_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Select the social media platform you want to display', 'tpebl' ),
@@ -289,8 +289,8 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 		$repeater->add_control(
 			'social_url_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Add the URL to your social profile or page.', 'tpebl' ),
@@ -306,15 +306,15 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 				'label_block' => true,
 				'label'       => esc_html__( 'Title', 'tpebl' ),
 				'default'     => '',
-				'ai'          => false, 
+				'ai'          => false,
 				'dynamic'     => array( 'active' => true ),
 			)
 		);
 		$repeater->add_control(
 			'social_text_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Enter a custom title or label for the icon for accessibility or tooltip purposes.', 'tpebl' ),
@@ -412,16 +412,16 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
-            'loop_magic_scroll_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'loop_magic_scroll_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'loop_magic_scroll' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$repeater->add_control(
 			'plus_tooltip',
 			array(
@@ -433,23 +433,23 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 					)
 				),
 				'type'        => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
+				'label_on'    => esc_html__( 'Show', 'tpebl' ),
+				'label_off'   => esc_html__( 'Hide', 'tpebl' ),
 				'render_type' => 'template',
 				'separator'   => 'before',
 			)
 		);
 		$repeater->add_control(
-            'plus_tooltip_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'plus_tooltip_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'plus_tooltip' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$repeater->add_control(
 			'plus_mouse_move_parallax',
 			array(
@@ -467,16 +467,16 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
-            'plus_mouse_move_parallax_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'plus_mouse_move_parallax_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'plus_mouse_move_parallax' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$repeater->add_control(
 			'plus_continuous_animation',
 			array(
@@ -490,8 +490,8 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 		$repeater->add_control(
 			'plus_conti_ani_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Add a looping animation to make the icon more visually engaging.', 'tpebl' ),
@@ -635,8 +635,8 @@ class L_ThePlus_Social_Icon extends Widget_Base {
 		$this->add_control(
 			'social_icon_verical_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Enable this option to stack the social icons vertically instead of horizontally.', 'tpebl' ),

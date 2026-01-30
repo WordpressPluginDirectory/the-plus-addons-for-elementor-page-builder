@@ -104,7 +104,7 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 	public function is_dynamic_content(): bool {
 		return false;
 	}
-	
+
 	/**
 	 * It is use for adds.
 	 *
@@ -113,18 +113,18 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 	public function get_upsale_data() {
 		$val = false;
 
-		if( ! defined( 'THEPLUS_VERSION' ) ) {
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
 			$val = true;
 		}
 
-		return [
-			'condition' => $val,
-			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
 			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		];
+		);
 	}
 
 	/**
@@ -135,7 +135,7 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register controls.
 	 *
@@ -336,8 +336,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'search_icon_style_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_search_bar' => 'yes',
 					'search_icon_style'  => array( 'style-custom-icon', 'style-custom-image' ),
@@ -1036,8 +1036,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'cart_icon_style_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_mini_cart' => 'yes',
 					'cart_icon_style'   => 'style-2',
@@ -1513,8 +1513,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'cart_inner_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_mini_cart' => 'yes',
 					'cart_icon_style'   => 'style-2',
@@ -2370,8 +2370,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'mc_close_heading_options_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'cart_icon_style' => 'style-2',
 				),
@@ -2417,8 +2417,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'extra_toggle_style_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_extra_toggle_bar' => 'yes',
 				),
@@ -2439,8 +2439,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'section_extra_toggle_bar_styling_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 			)
 		);
 		$this->end_controls_section();
@@ -2459,8 +2459,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'section_language_switcher_wpml_styling_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 			)
 		);
 		$this->end_controls_section();
@@ -2479,8 +2479,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'section_language_switcher_translatepress_styling_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 			)
 		);
 		$this->end_controls_section();
@@ -2520,8 +2520,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'select_trans_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_language_switcher' => 'yes',
 				),
@@ -2549,8 +2549,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'display_music_bar_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_music_bar' => array( 'yes' ),
 				),
@@ -2571,8 +2571,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'section_music_bar_styling_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 			)
 		);
@@ -2596,15 +2596,15 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'display_call_to_action_1_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'display_call_to_action_1_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_call_to_action_1' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2618,13 +2618,13 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2645,16 +2645,16 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'display_call_to_action_2_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'display_call_to_action_2_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'display_call_to_action_2' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2670,8 +2670,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'section_button_2_styling_options',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 			)
 		);
@@ -2760,7 +2760,7 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 					'type'        => 'tpae_theme_builder',
 					'notice'      => esc_html__( 'We recommend using this widget in the Header Template to load on all pages.', 'tpebl' ),
 					'button_text' => esc_html__( 'Create Header Template', 'tpebl' ),
-					'page_type'   => 'tp_header'
+					'page_type'   => 'tp_header',
 				)
 			);
 			$this->end_controls_section();
@@ -2786,8 +2786,8 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'sticky_options_pro',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'sticky_options' => array( 'yes' ),
 				),

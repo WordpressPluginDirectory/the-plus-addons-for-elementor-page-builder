@@ -338,22 +338,6 @@ class TP_GSAP_Text_Global extends Tab_Base {
 				),
 			)
 		);
-		// $repeater->add_control(
-		// 	'text_repeat_yoyo',
-		// 	array(
-		// 		'label'        => esc_html__( 'YoYo', 'tpebl' ),
-		// 		'type'         => \Elementor\Controls_Manager::SWITCHER,
-		// 		'label_on'     => esc_html__( 'Yes', 'tpebl' ),
-		// 		'label_off'    => esc_html__( 'No', 'tpebl' ),
-		// 		'return_value' => 'yes',
-		// 		'default'      => 'no',
-		// 		'condition'    => array(
-		// 			'text_repeat'          => 'yes',
-		// 			'text_animation_type!' => 'typing',
-		// 			'text_animation_type!' => 'scramble',
-		// 		),
-		// 	)
-		// );
 		$this->add_control(
 			'tp_text_global_gsap_list',
 			array(

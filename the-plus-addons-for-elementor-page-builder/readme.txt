@@ -4,7 +4,7 @@ Tags: elementor, elementor widgets, elementor addons, elementor templates, widge
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 6.4.6
+Stable tag: 6.4.7
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -391,6 +391,38 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 12. Unique 22+ Elementor Extensions
 
 == Changelog ==
+
+= 6.4.7 =
+Improvement : Breadcrumbs Bar : Condition Improvement
+Improvement : Dashboard : Design Improvement
+Improvement : Dashboard : Language Compatibility
+Improvement : Unused files & code removed from the plugin
+Improvement : Age Gate : Add labels for the options
+Improvement : Contact Form 7 : Add labels for the options
+Improvement : Dark Mode : Add labels for the options
+Improvement : Everest Form : Add labels for the options
+Improvement : Gravity Form : Add labels for the options
+Improvement : Heading Animation : Add labels for the options
+Improvement : Hover Card : Add labels for the options
+Improvement : Meeting Scheduler : Add labels for the options
+Improvement : Ninja Form : Add labels for the options
+Improvement : Post Comment : Add labels for the options
+Improvement : Post Content : Add labels for the options
+Improvement : Post Featured Image : Add labels for the options
+Improvement : Post Meta : Add labels for the options
+Improvement : Post Prev/Next : Add labels for the options
+Improvement : Post Title : Add labels for the options
+Improvement : Progress Bar : Add labels for the options
+Improvement : Smooth Scroll : Add labels for the options
+Improvement : Syntax Highlighter : Add labels for the options
+Improvement : Text Block : Add labels for the options
+Improvement : Video Player : Add labels for the options
+Improvement : WP Form : Add labels for the options
+Fix : Blog Listing : Style5 - Box shadow not working
+Fix : Blog Listing : Translation Issue
+Fix : Post Comment : Translation Issue 
+Fix : Dashboard : Console Errors
+Fix : Minor Bug Fixes & Performance Improvements
 
 = 6.4.6 =
 Add : New Extension : Dynamic Tag (Post, Site)
@@ -932,125 +964,6 @@ Improvement: Code enhanced for better performance and security
 Improvement: Unnecessary files removed, and file structure improved
 Fix: Minor bug fixes and performance improvements
 
-= 5.6.7 =
-Update : File Structures
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.6 =
-Update : The Plus Settings Menu Number Sequence Change Issue
-Update : Plus Extras : Advanced shadow Document Link Update
-Update : Info Box : Responsive Control for Text Align
-Fix : Progress Bar : Controller & UI Improvement  
-Fix : Style List : Controller & UI Improvement
-Fix : Info Box : Backend ( Elementor Editor ) style 4 load Issue
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.5 =
-Add : WDesignKit Elementor Template Integration with The Plus Addons for Elementor
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.4 =
-Fix: Corrected the Text Domain.
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.3 =
-Fix : Video : Security Patch ( Low security )
-Fix : Testimonial : Security Patch ( Low security )
-Fix : Page Scroll : Security Patch ( Low security )
-Fix : WP Dashboard : Security Patch ( Low security )
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.2 =
-Fix : Countdown : Security Patch ( Low security )
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.1 =
-Fix : Video : Security Patch ( Low security )
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.6.0 =
-Add : New Widget : Table
-Add : New Widget : Carousel Anything
-Add : Accordion : Option to add content from elementor Templates
-Add : Accordion : Option to add padding for title background
-Add : Accordion : Option to add box border for title background
-Add : Info Box : Option to add padding for Description
-Add : Pricing Table : Option to add Alignment option for Title, Sub Title, Price & Ribbon
-Add : Pricing Table : Option to add padding for ribbon text
-Add : Pricing Table : Option to change position of pricing button
-Add : Tabs/Tour : Styling options for tabs Navigation area
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.5.6 =
-Fix : Minor Bug Fixes & performance Improvements
-
-= 5.5.5 =
-Fix : Age Gate : Security Patch ( Low security )
-Fix : Hover Card : Security Patch ( Low security )
-Fix : Header Meta content : Security Patch ( Low security )
-
-= 5.5.4 =
-Add : Accordion : Default tab active Option
-Add : Accordion : Option to add space between tabs
-Add : Accordion : Option to style border
-Add : Accordion : Option for content background styling
-Add : Blog Listout : Post load more option
-Add : Blog Listout : Border styling option
-Add : Blog Listout : Social Icon Background color option
-Add : Blog Listout : Box shadow option
-Add : Contact Form 7 : Add option for uncheck radio button color
-Add : Gallery Listing : add style 2 layout
-Add : Info Box : Add Style 4
-Add : Number Counter : Symbol color option
-Add : Navigation Menu Lite : Add Repeater option 
-Add : Pricing Table : Ribbon style 1  
-Add : Pricing Table : Font Awesome icon option 
-Add : Pricing Table : Content style option
-Add : Pricing Table : Button Alignment
-Add : Process Steps widget
-Add : Stylis List widget
-Add : Team Member : Add style 3
-Add : Team Member : Border width option
-Add : Team Member : Box shadow option
-Add : Team Member : Social icon background color option
-Add : Testimonial : Box shadow option
-Add : Testimonial : Alignment for style-4
-Add : Tabs/Tour : Font Awesome 5 icons 
-Add : Tabs/Tour : Option add content via Elementor Template 
-Add : Tabs/Tour : Option to style border 
-Add : Tabs/Tour : Option to style box shadow 
-Add : WP Forms : Display option for hide/show form Name & Description
-Compatibility : Button : Add responsive compatibility for button size and spacing
-compatibility : Info Box : Responsive compatibility for title top/bottom space
-compatibility : Flip Box : Responsive compatibility for Icons size & title top/bottom space
-Fix : Blockquote : Image should not hide when toggle of icon disable
-Fix : Gravity Form : checkbox and radio button not showing
-Fix : Flip Box : Security Patch ( Low security )
-Fix : Info Box : SVG icons css improvement
-Fix : Info Box : Button SVG icon not showing fix
-Fix : Pricing Table : Content Description style 2 alignment not working 
-Fix : Post Featured Image : Css improvement for border radius
-Fix : Progress Bar : Security Patch ( Low security )
-Fix : Scroll Navigation : Security Patch ( Low security )
-Fix : Minor Bug Fixes & Performance Improvements
-
-= 5.5.3 =
-Add : Syntax Highlighter Widget
-Fix : Button : Security Patch ( Low security )
-Fix : Dark Mode : Global color Condition Improvement
-Fix : Meeting schedular : Security Patch ( Low security )
-Fix : Minor Bug Fixes & Performance Improvements
-
-= 5.5.2 =
-Add : Info Box : Button Icon size option
-Add : Post Title : Add Text Alignment Option
-Fix : Post Meta : Post Author name compatibility with Nexter Extension Single Page
-Add : Contact Form 7 : Option to Change checkbox Position
-Fix : Gravity Form : Condition Improvement
-Fix : Condition Improvement for Caching File generating flow
-Fix : Minor Bug Fixes & Performance Improvements
+For older changelog entries, please see the [additional changelog.txt file](https://plugins.svn.wordpress.org/the-plus-addons-for-elementor-page-builder/assets/changelog.txt) delivered with the plugin.
 
 == Upgrade Notice ==
-
-= 2.0.7 =
-Notice : This is a security update. Update it soon. For More details check Changelog.

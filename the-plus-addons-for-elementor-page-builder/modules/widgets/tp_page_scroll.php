@@ -101,7 +101,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 	 * @since 6.1.2
 	 */
 	// public function is_dynamic_content(): bool {
-	// 	return false;
+	// return false;
 	// }
 
 	/**
@@ -200,7 +200,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '0',
 				'options'     => l_theplus_get_templates(),
-				'classes'    => 'tp-template-create-btn',
+				'classes'     => 'tp-template-create-btn',
 				'label_block' => 'true',
 			)
 		);
@@ -259,13 +259,13 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'hscroll_content_template_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'hscroll_content_template_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'settings_section',
@@ -278,13 +278,13 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'settings_section_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'settings_section_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'multi_scroll_content_templates',
@@ -304,16 +304,16 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'multi_scroll_content_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'multi_scroll_content_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'display_call_to_action_2' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'dots_settings',
@@ -394,17 +394,17 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'multi_navigation_dots_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'multi_navigation_dots_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'page_scroll_opt'       => 'tp_multi_scroll',
 					'multi_navigation_dots' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'scroll_nav_connection',
 			array(
@@ -417,16 +417,16 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'scroll_nav_connection_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'scroll_nav_connection_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'scroll_nav_connection' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'next_previous_settings',
@@ -465,16 +465,16 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'next_prev_style_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'next_prev_style_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'show_next_prev' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -497,16 +497,16 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'show_paginate_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'show_paginate_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'show_paginate' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -537,16 +537,16 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tp_show_footer_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'tp_show_footer_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'tp_show_footer' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -588,17 +588,17 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tp_fp_hide_hash_id_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'tp_fp_hide_hash_id_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'page_scroll_opt'    => array( 'tp_full_page' ),
 					'tp_fp_hide_hash_id' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tp_keyboard_scrolling',
 			array(
@@ -611,17 +611,17 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tp_keyboard_scrolling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'tp_keyboard_scrolling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'page_scroll_opt'       => array( 'tp_full_page' ),
 					'tp_keyboard_scrolling' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tp_scrolling_speed',
 			array(
@@ -647,16 +647,16 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tp_loop_bottom_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'tp_loop_bottom_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'tp_loop_bottom' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tp_loop_top',
 			array(
@@ -669,16 +669,16 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tp_loop_top_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'tp_loop_top_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'tp_loop_top' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tp_tablet_off',
 			array(
@@ -694,17 +694,17 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tp_tablet_off_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'tp_tablet_off_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'page_scroll_opt!' => array( 'tp_full_page' ),
 					'tp_tablet_off'    => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tp_mobile_off',
 			array(
@@ -719,17 +719,17 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tp_mobile_off_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'tp_mobile_off_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'page_scroll_opt!' => array( 'tp_full_page' ),
 					'tp_mobile_off'    => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tp_continuous_vertical',
 			array(
@@ -745,17 +745,17 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tp_continuous_vertical_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'tp_continuous_vertical_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'page_scroll_opt!'       => array( 'tp_page_pilling' ),
 					'tp_continuous_vertical' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tp_responsive_width',
 			array(
@@ -797,13 +797,13 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_multi_extra_opt_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_multi_extra_opt_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -842,13 +842,13 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_hscroll_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_hscroll_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -982,13 +982,13 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_nxt_prv_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_nxt_prv_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_nxt_prv_custom',
@@ -1002,13 +1002,13 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_nxt_prv_custom_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_nxt_prv_custom_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1023,13 +1023,13 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_paginate_custom_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_paginate_custom_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
@@ -1074,13 +1074,13 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 					if ( ! empty( $elem_templates ) ) {
 						$slideid = ! empty( $item['fp-slideid'] ) ? $item['fp-slideid'] : 'fp_' . $id . '_' . $i;
 
-						$full_page_anchors[] = tp_senitize_js_input($slideid);
+						$full_page_anchors[] = tp_senitize_js_input( $slideid );
 
 						$full_page_content .= '<div class="section">';
 
-							if ( has_filter( 'wpml_object_id' ) ) {
-								$elem_templates = apply_filters( 'wpml_object_id', $elem_templates, get_post_type( $elem_templates ), true);
-							}
+						if ( has_filter( 'wpml_object_id' ) ) {
+							$elem_templates = apply_filters( 'wpml_object_id', $elem_templates, get_post_type( $elem_templates ), true );
+						}
 
 							$template_status = get_post_status( $elem_templates );
 						if ( 'publish' === $template_status ) {

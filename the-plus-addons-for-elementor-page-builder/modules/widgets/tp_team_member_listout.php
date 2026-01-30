@@ -148,7 +148,7 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register Controls.
 	 *
@@ -165,13 +165,13 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 17498,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 17498,
+				'label_block' => true,
+			)
+		);
 		$this->add_control(
 			'selctSource',
 			array(
@@ -187,8 +187,8 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 		$this->add_control(
 			'selctSource_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Choose how you want to add your team members, either dynamically from a Post Type or manually using the Repeater option.', 'tpebl' ),
@@ -200,12 +200,12 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 		$this->add_control(
 			'how_it_works_Post_Type',
 			array(
-				'label'     => wp_kses_post( 
+				'label'     => wp_kses_post(
 					sprintf(
 						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s <i class="eicon-help-o"></i> </a>',
 						esc_url( $this->tp_doc . 'create-elementor-team-members-section-with-custom-post-type/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
 						esc_html__( 'Learn How it works', 'tpebl' ),
-					) 
+					)
 				),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
@@ -229,7 +229,7 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Member Image', 'tpebl' ),
 				'type'    => Controls_Manager::MEDIA,
-				'ai'      => false, 
+				'ai'      => false,
 				'default' => array(
 					'url' => Utils::get_placeholder_image_src(),
 				),
@@ -411,11 +411,11 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 		$this->add_control(
 			'style',
 			array(
-				'label'        => esc_html__( 'Style', 'tpebl' ),
-				'label_block'  => true,
-				'type'         => Controls_Manager::VISUAL_CHOICE,
-				'default'      => 'style-1',
-				'options'      => array(
+				'label'       => esc_html__( 'Style', 'tpebl' ),
+				'label_block' => true,
+				'type'        => Controls_Manager::VISUAL_CHOICE,
+				'default'     => 'style-1',
+				'options'     => array(
 					'style-1' => array(
 						'title' => esc_html__( 'Style 1', 'tpebl' ),
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/team-member-listing/style-1.svg' ),
@@ -433,34 +433,34 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/team-member-listing/style-4-pro.svg' ),
 					),
 				),
-				'columns'      => 4,
-				'classes'      => 'tpae-visual_choice',
+				'columns'     => 4,
+				'classes'     => 'tpae-visual_choice',
 			)
 		);
 		$this->add_control(
-            'plus_pro_style_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'plus_pro_style_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'style!' => array( 'style-1', 'style-3' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'layout',
 			array(
-				'label'        => esc_html__( 'Layout', 'tpebl' ),
-				'label_block'  => true,
-				'type'         => Controls_Manager::VISUAL_CHOICE,
-				'default'      => 'grid',
-				'options'      => array(
-					'grid' => array(
+				'label'       => esc_html__( 'Layout', 'tpebl' ),
+				'label_block' => true,
+				'type'        => Controls_Manager::VISUAL_CHOICE,
+				'default'     => 'grid',
+				'options'     => array(
+					'grid'     => array(
 						'title' => esc_html__( 'Grid', 'tpebl' ),
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/listing-layout/grid.svg' ),
 					),
-					'masonry' => array(
+					'masonry'  => array(
 						'title' => esc_html__( 'Masonry', 'tpebl' ),
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/listing-layout/masonry.svg' ),
 					),
@@ -469,19 +469,19 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/listing-layout/carousel-pro.svg' ),
 					),
 				),
-				'columns'      => 3,
-				'classes'      => 'tpae-visual_choice',
+				'columns'     => 3,
+				'classes'     => 'tpae-visual_choice',
 			)
 		);
 		$this->add_control(
 			'how_it_works_grid',
 			array(
-				'label'     => wp_kses_post( 
+				'label'     => wp_kses_post(
 					sprintf(
 						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s <i class="eicon-help-o"></i> </a>',
 						esc_url( $this->tp_doc . 'show-team-members-in-grid-layout-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
 						esc_html__( 'Learn How it works', 'tpebl' ),
-					) 
+					)
 				),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
@@ -492,12 +492,12 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 		$this->add_control(
 			'how_it_works_Masonry',
 			array(
-				'label'     => wp_kses_post( 
+				'label'     => wp_kses_post(
 					sprintf(
 						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s <i class="eicon-help-o"></i> </a>',
 						esc_url( $this->tp_doc . 'show-team-members-in-masonry-grid-layout-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
 						esc_html__( 'Learn How it works', 'tpebl' ),
-					) 
+					)
 				),
 				'type'      => Controls_Manager::HEADING,
 				'condition' => array(
@@ -506,16 +506,16 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'layout_pro_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'layout_pro_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'layout' => 'carousel',
 				),
-            )
-        );
+			)
+		);
 		$this->add_responsive_control(
 			'content_alignment',
 			array(
@@ -546,12 +546,12 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 		$this->add_control(
 			'disable_link',
 			array(
-				'label'     => wp_kses_post( 
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Disable Link', 'tpebl' ),
 						esc_url( L_THEPLUS_URL . 'assets/images/pro-features/pro-tag.svg' )
-					) 
+					)
 				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
@@ -560,16 +560,16 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'disable_link_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'disable_link_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'disable_link' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'content_source_section',
@@ -607,19 +607,19 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 		$this->add_control(
 			'post_offset',
 			array(
-				'label'       => esc_html__( 'Offset Posts', 'tpebl' ),
-				'type'        => Controls_Manager::NUMBER,
-				'min'         => 0,
-				'max'         => 50,
-				'step'        => 1,
-				'default'     => '',
+				'label'   => esc_html__( 'Offset Posts', 'tpebl' ),
+				'type'    => Controls_Manager::NUMBER,
+				'min'     => 0,
+				'max'     => 50,
+				'step'    => 1,
+				'default' => '',
 			)
 		);
 		$this->add_control(
 			'post_offset_note',
 			array(
-				'type' => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Hide posts from the beginning of listing.', 'tpebl' ),
@@ -763,12 +763,12 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 		$this->add_control(
 			'display_thumbnail',
 			array(
-				 'label'     => wp_kses_post( 
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Display Image Size', 'tpebl' ),
 						esc_url( L_THEPLUS_URL . 'assets/images/pro-features/pro-tag.svg' )
-					) 
+					)
 				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
@@ -780,26 +780,26 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'display_thumbnail_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'display_thumbnail_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'layout!'           => 'carousel',
 					'display_thumbnail' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'filter_category',
 			array(
-				'label'     => wp_kses_post( 
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Category Wise Filter', 'tpebl' ),
 						esc_url( L_THEPLUS_URL . 'assets/images/pro-features/pro-tag.svg' )
-					) 
+					)
 				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
@@ -812,17 +812,17 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'filter_category_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'filter_category_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'layout!'         => 'carousel',
 					'filter_category' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'tpebl_section_needhelp',
@@ -1318,13 +1318,13 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_filter_category_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_filter_category_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1551,13 +1551,13 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_carousel_options_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_carousel_options_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1570,12 +1570,12 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 		$this->add_control(
 			'messy_column',
 			array(
-				'label'     => wp_kses_post( 
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Messy Columns', 'tpebl' ),
 						esc_url( L_THEPLUS_URL . 'assets/images/pro-features/pro-tag.svg' )
-					) 
+					)
 				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
@@ -1584,16 +1584,16 @@ class L_ThePlus_Team_Member_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'messy_column_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'messy_column_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'messy_column' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(

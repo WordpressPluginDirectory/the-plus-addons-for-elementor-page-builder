@@ -153,7 +153,7 @@ if ( ! class_exists( 'Tp_Wdkit_Preview_Popup' ) ) {
 			check_ajax_referer( 'tp_wdkit_preview_popup', 'security' );
 
 			if ( ! current_user_can( 'install_plugins' ) ) {
-				$response = $this->tp_response('Invalid Permission.', 'Something went wrong.',false );
+				$response = $this->tp_response( 'Invalid Permission.', 'Something went wrong.', false );
 
 				wp_send_json( $response );
 				wp_die();
@@ -222,14 +222,14 @@ if ( ! class_exists( 'Tp_Wdkit_Preview_Popup' ) ) {
 		 *
 		 * @since 6.4.0
 		 */
-		public function tpae_wdkit_hook (){
+		public function tpae_wdkit_hook() {
 			$my_array = array(
-                'elementor_builder' => true,
-                'elementor_template' => true,
+				'elementor_builder'  => true,
+				'elementor_template' => true,
 			);
 
 			$builder = array( 'nexter-blocks' );
-            do_action( 'wdkit_active_settings', $my_array, $builder );
+			do_action( 'wdkit_active_settings', $my_array, $builder );
 		}
 
 		/**

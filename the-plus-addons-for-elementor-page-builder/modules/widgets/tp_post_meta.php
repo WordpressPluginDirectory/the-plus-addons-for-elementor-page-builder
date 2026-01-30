@@ -108,18 +108,18 @@ class ThePlus_Post_Meta extends Widget_Base {
 	public function get_upsale_data() {
 		$val = false;
 
-		if( ! defined( 'THEPLUS_VERSION' ) ) {
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
 			$val = true;
 		}
 
-		return [
-			'condition' => $val,
-			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
 			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		];
+		);
 	}
 
 	/**
@@ -130,7 +130,7 @@ class ThePlus_Post_Meta extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register controls.
 	 *
@@ -170,6 +170,70 @@ class ThePlus_Post_Meta extends Widget_Base {
 					'category' => esc_html__( 'Taxonomies', 'tpebl' ),
 					'author'   => esc_html__( 'Author', 'tpebl' ),
 					'comments' => esc_html__( 'Comments', 'tpebl' ),
+				),
+			)
+		);
+		$repeater->add_control(
+			'sortfield_date_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Shows the publish/update date of the post. Useful when you want readers to know when the content was written or modified.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition' => array(
+					'sortfield' => 'date',
+				),
+			)
+		);
+		$repeater->add_control(
+			'sortfield_cat_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Select a taxonomy to display after choosing the Taxonomies option', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition' => array(
+					'sortfield' => 'category',
+				),
+			)
+		);
+		$repeater->add_control(
+			'sortfield_author_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Displays the name of the post author. Ideal for blogs, magazines, or multi-author sites.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition' => array(
+					'sortfield' => 'author',
+				),
+			)
+		);
+		$repeater->add_control(
+			'sortfield_com_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Shows the number of comments on the post. Useful for creating engagement indicators.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition' => array(
+					'sortfield' => 'comments',
 				),
 			)
 		);
@@ -347,10 +411,10 @@ class ThePlus_Post_Meta extends Widget_Base {
 			$this->add_control(
 				'tpae_theme_builders',
 				array(
-					'type'   => 'tpae_theme_builder',
-					'notice' => 'We recommend using this widget in the Post Single Page Template to display date, category, author, and other meta details. ',
+					'type'        => 'tpae_theme_builder',
+					'notice'      => 'We recommend using this widget in the Post Single Page Template to display date, category, author, and other meta details. ',
 					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
-					'page_type'   => 'tp_singular_page'
+					'page_type'   => 'tp_singular_page',
 				)
 			);
 			$this->end_controls_section();
@@ -712,7 +776,7 @@ class ThePlus_Post_Meta extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Text', 'tpebl' ),
 				'type'      => Controls_Manager::TEXT,
-				'ai'        => false,										
+				'ai'        => false,
 				'default'   => esc_html__( 'in', 'tpebl' ),
 				'condition' => array(
 					'showCategory'   => 'yes',
@@ -1049,7 +1113,7 @@ class ThePlus_Post_Meta extends Widget_Base {
 				array(
 					'label'     => esc_html__( 'Prefix Text', 'tpebl' ),
 					'type'      => Controls_Manager::TEXT,
-					'ai'        => false, 
+					'ai'        => false,
 					'default'   => esc_html__( 'By', 'tpebl' ),
 					'condition' => array(
 						'showAuthor' => 'yes',
@@ -1625,7 +1689,7 @@ class ThePlus_Post_Meta extends Widget_Base {
 		$this->end_controls_tab();
 		$this->end_controls_tabs();
 		$this->end_controls_section();
-		
+
 		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
 			include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
 		}
@@ -1761,14 +1825,14 @@ class ThePlus_Post_Meta extends Widget_Base {
 							$iconauthor = '<i class="' . esc_attr( $author_icon ) . '"></i>';
 						}
 
-						$post        = get_queried_object();
+						$post            = get_queried_object();
 						$author_page_url = get_author_posts_url( $post->post_author );
-						$output .= '<span class="tp-meta-author" ><span class="tp-meta-author-label tp-meta-label" >' . esc_html( $author_prefix ) . '</span><a class="tp-meta-value" href="' . esc_url($author_page_url) . '" rel="' . esc_attr__( 'author', 'tpebl' ) . '">' . $iconauthor . get_the_author_meta( 'display_name', $author_id ) . '</a></span>';
+						$output         .= '<span class="tp-meta-author" ><span class="tp-meta-author-label tp-meta-label" >' . esc_html( $author_prefix ) . '</span><a class="tp-meta-value" href="' . esc_url( $author_page_url ) . '" rel="' . esc_attr__( 'author', 'tpebl' ) . '">' . $iconauthor . get_the_author_meta( 'display_name', $author_id ) . '</a></span>';
 					}
 				}
 
 				if ( 'comments' === $sortfield ) {
-					if ( ! empty( $show_comment ) )  {
+					if ( ! empty( $show_comment ) ) {
 						$count = 0;
 
 						$comment_icon   = '';

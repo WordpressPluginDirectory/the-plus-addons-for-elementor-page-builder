@@ -159,14 +159,15 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 17761,
-                'label_block' => true,
-            )
-        );
-		/* $this->add_control(
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 17761,
+				'label_block' => true,
+			)
+		);
+		/*
+		$this->add_control(
 			'style',
 			array(
 				'label'   => esc_html__( 'Style', 'tpebl' ),
@@ -178,16 +179,16 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 		$this->add_control(
 			'layout',
 			array(
-				'label'        => esc_html__( 'Layout', 'tpebl' ),
-				'label_block'  => true,
-				'type'         => Controls_Manager::VISUAL_CHOICE,
-				'default'      => 'grid',
-				'options'      => array(
-					'grid' => array(
+				'label'       => esc_html__( 'Layout', 'tpebl' ),
+				'label_block' => true,
+				'type'        => Controls_Manager::VISUAL_CHOICE,
+				'default'     => 'grid',
+				'options'     => array(
+					'grid'     => array(
 						'title' => esc_html__( 'Grid', 'tpebl' ),
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/listing-layout/grid.svg' ),
 					),
-					'masonry' => array(
+					'masonry'  => array(
 						'title' => esc_html__( 'Masonry', 'tpebl' ),
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/listing-layout/masonry.svg' ),
 					),
@@ -196,21 +197,21 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/listing-layout/carousel-pro.svg' ),
 					),
 				),
-				'columns'      => 3,
-				'classes'      => 'tpae-visual_choice',
+				'columns'     => 3,
+				'classes'     => 'tpae-visual_choice',
 			)
 		);
 		$this->add_control(
-            'plus_pro_layout_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'plus_pro_layout_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'layout' => array( 'carousel' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'how_it_works_grid',
 			array(
@@ -289,8 +290,8 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 		$this->add_control(
 			'clientContentFrom_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Choose where your client data comes from. Either manually or through a specific post type.', 'tpebl' ),
@@ -343,7 +344,7 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Client Logo', 'tpebl' ),
 				'type'    => Controls_Manager::MEDIA,
-				'ai'      => false, 
+				'ai'      => false,
 				'dynamic' => array( 'active' => true ),
 			)
 		);
@@ -544,8 +545,8 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 		$this->add_control(
 			'display_post_title_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Toggle this on to show each client’s name below their logo for better identification.', 'tpebl' ),
@@ -557,7 +558,7 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 		$this->add_control(
 			'disable_link',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Disable Link', 'tpebl' ),
@@ -572,20 +573,20 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'disable_link_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'disable_link_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'disable_link' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'display_thumbnail',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Display Image Size', 'tpebl' ),
@@ -600,20 +601,20 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'display_thumbnail_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'display_thumbnail_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'display_thumbnail' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'filter_category',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Category Wise Filter', 'tpebl' ),
@@ -631,16 +632,16 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'filter_category_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'filter_category_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'filter_category' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'post_extra_option',
 			array(
@@ -666,18 +667,18 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'post_extra_option_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'post_extra_option_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'layout!'            => array( 'carousel' ),
 					'clientContentFrom!' => 'clrepeater',
 					'post_extra_option!' => 'none',
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'tpebl_section_needhelp',
@@ -776,13 +777,13 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_filter_category_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_filter_category_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -808,16 +809,16 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'plus_pro_layout_style_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'plus_pro_layout_style_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'layout_style' => array( 'layout-style-1' ),
 				),
-            )
-        );
+			)
+		);
 		$this->start_controls_tabs( 'tabs_logo_style' );
 		$this->start_controls_tab(
 			'tab_logo_normal',
@@ -1032,7 +1033,7 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 		$this->start_controls_section(
 			'section_carousel_options_styling',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="%s" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Carousel Options', 'tpebl' ),
@@ -1047,13 +1048,13 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_carousel_options_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_carousel_options_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1065,8 +1066,8 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 		);
 		$this->add_control(
 			'messy_column',
-			array(	
-				'label' => wp_kses_post(
+			array(
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="%s" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Messy Columns', 'tpebl' ),
@@ -1081,16 +1082,16 @@ class L_ThePlus_Clients_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'messy_column_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'messy_column_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'messy_column' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(

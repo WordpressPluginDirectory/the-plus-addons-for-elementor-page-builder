@@ -111,18 +111,18 @@ class ThePlus_Post_Title extends Widget_Base {
 	public function get_upsale_data() {
 		$val = false;
 
-		if( ! defined( 'THEPLUS_VERSION' ) ) {
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
 			$val = true;
 		}
 
-		return [
-			'condition' => $val,
-			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
 			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		];
+		);
 	}
 
 	/**
@@ -133,7 +133,7 @@ class ThePlus_Post_Title extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register controls.
 	 *
@@ -159,6 +159,19 @@ class ThePlus_Post_Title extends Widget_Base {
 					'singlepage'  => esc_html__( 'Single Page', 'tpebl' ),
 					'archivepage' => esc_html__( 'Archive Page', 'tpebl' ),
 				),
+			)
+		);
+		$this->add_control(
+			'posttype_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Choose whether to show the title for a single post/page or for an archive page.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 			)
 		);
 		$this->add_responsive_control(
@@ -228,7 +241,7 @@ class ThePlus_Post_Title extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Prefix Text', 'tpebl' ),
 				'type'    => Controls_Manager::TEXT,
-				'ai' => false,
+				'ai'      => false,
 				'default' => '',
 				'dynamic' => array(
 					'active' => true,
@@ -240,7 +253,7 @@ class ThePlus_Post_Title extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Postfix Text', 'tpebl' ),
 				'type'    => Controls_Manager::TEXT,
-				'ai' => false,
+				'ai'      => false,
 				'default' => '',
 				'dynamic' => array(
 					'active' => true,
@@ -351,10 +364,10 @@ class ThePlus_Post_Title extends Widget_Base {
 			$this->add_control(
 				'tpae_theme_builder',
 				array(
-					'type'   => 'tpae_theme_builder',
-					'notice' => 'We recommend using this widget in the Post Single Page Template to display the blog post title',
+					'type'        => 'tpae_theme_builder',
+					'notice'      => 'We recommend using this widget in the Post Single Page Template to display the blog post title',
 					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
-					'page_type'   => 'tp_singular_page'
+					'page_type'   => 'tp_singular_page',
 				)
 			);
 			$this->end_controls_section();
@@ -689,7 +702,7 @@ class ThePlus_Post_Title extends Widget_Base {
 						$title = '<span class="vcard">' . get_the_author() . '</span>';
 					} elseif ( is_tax() ) {
 						// Translators: %1$s is replaced with the title.
-                        $title = sprintf( __( 'Title: %1$s', 'tpebl' ), single_term_title( '', false ) );
+						$title = sprintf( __( 'Title: %1$s', 'tpebl' ), single_term_title( '', false ) );
 					} elseif ( is_post_type_archive() ) {
 						$title = post_type_archive_title( '', false );
 					} elseif ( is_search() ) {
@@ -732,17 +745,17 @@ class ThePlus_Post_Title extends Widget_Base {
 
 			$output .= '<' . l_theplus_validate_html_tag( $titletag ) . ' class="tp-entry-title ' . esc_attr( $lz1 ) . '">';
 
-				if ( ! empty( $titleprefix ) ) {
-					$output .= '<span class="tp-post-title-prepost tp-prefix ' . esc_attr( $lz2 ) . ' ">' . wp_kses_post( $titleprefix ) . '</span>';
-				}
+		if ( ! empty( $titleprefix ) ) {
+			$output .= '<span class="tp-post-title-prepost tp-prefix ' . esc_attr( $lz2 ) . ' ">' . wp_kses_post( $titleprefix ) . '</span>';
+		}
 					$output .= $title;
 
-				if ( ! empty( $titlepostfix ) ) {
-					$output .= '<span class="tp-post-title-prepost tp-postfix">' . esc_html( $titlepostfix ) . '</span>';
-				}
+		if ( ! empty( $titlepostfix ) ) {
+			$output .= '<span class="tp-post-title-prepost tp-postfix">' . esc_html( $titlepostfix ) . '</span>';
+		}
 
 			$output .= '</' . l_theplus_validate_html_tag( $titletag ) . '>';
-		
+
 		if ( 'yes' === $title_link ) {
 			$output .= '</a>';
 		}

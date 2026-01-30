@@ -155,13 +155,13 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 16254,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 16254,
+				'label_block' => true,
+			)
+		);
 		$this->add_control(
 			'info_box_layout',
 			array(
@@ -210,25 +210,25 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'loop_select_icon_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'loop_select_icon_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'carousel_layout',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
-            'main_style_pro_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'main_style_pro_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'main_style!' => array( 'style_1', 'style_3', 'style_4' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'connection_switch',
 			array(
@@ -244,16 +244,16 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'connection_switch_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'connection_switch_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout'   => 'carousel_layout',
 					'connection_switch' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'title',
 			array(
@@ -345,7 +345,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 					''      => esc_html__( 'None', 'tpebl' ),
 					'icon'  => esc_html__( 'Icon', 'tpebl' ),
 					'image' => esc_html__( 'Image', 'tpebl' ),
-					'text' => esc_html__( 'Text', 'tpebl' ),
+					'text'  => esc_html__( 'Text', 'tpebl' ),
 					'svg'   => esc_html__( 'Svg (PRO)', 'tpebl' ),
 				),
 				'separator' => 'before',
@@ -374,13 +374,13 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_control(
 			'tp_info_title',
 			array(
-				'label'   => esc_html__( 'Title', 'tpebl' ),
-				'type'    => Controls_Manager::TEXT,
-				'default' => esc_html__( '0', 'tpebl' ),
-				'dynamic' => array(
+				'label'     => esc_html__( 'Title', 'tpebl' ),
+				'type'      => Controls_Manager::TEXT,
+				'default'   => esc_html__( '0', 'tpebl' ),
+				'dynamic'   => array(
 					'active' => true,
 				),
-				'condition'   => array(
+				'condition' => array(
 					'image_icon' => 'text',
 				),
 			)
@@ -398,17 +398,17 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'svg_icon_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'svg_icon_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'single_layout',
 					'main_style'      => array( 'style_1', 'style_3', 'style_4' ),
 					'image_icon'      => 'svg',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'select_image',
 			array(
@@ -492,18 +492,18 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'icons_image_pro_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'icons_image_pro_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'single_layout',
 					'main_style'      => array( 'style_1', 'style_3', 'style_4' ),
 					'image_icon'      => 'icon',
 					'icon_font_style' => array( 'icon_mind', 'icon_image' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'display_button',
 			array(
@@ -538,18 +538,18 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'button_style_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'button_style_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'single_layout',
 					'main_style'      => array( 'style_1', 'style_3', 'style_4' ),
 					'display_button'  => 'yes',
 					'button_style!'   => 'style-8',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'button_text',
 			array(
@@ -643,10 +643,10 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'button_icons_mind_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'button_icons_mind_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout'   => 'single_layout',
 					'main_style'        => array( 'style_1', 'style_3', 'style_4' ),
@@ -654,8 +654,8 @@ class L_ThePlus_Info_Box extends Widget_Base {
 					'button_style!'     => array( 'style-7', 'style-9' ),
 					'button_icon_style' => 'icon_mind',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'before_after',
 			array(
@@ -730,17 +730,17 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'display_pin_text_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'display_pin_text_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout'  => 'single_layout',
 					'main_style'       => array( 'style_3', 'style_4' ),
 					'display_pin_text' => 'yes',
 				),
-            )
-        );
+			)
+		);
 
 		$this->add_control(
 			'title_tag',
@@ -790,15 +790,15 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'full_infobox_switch_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'full_infobox_switch_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'full_infobox_switch' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'tpebl_section_needhelp',
@@ -1916,15 +1916,15 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_svg_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_svg_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'carousel_layout',
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2481,17 +2481,17 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'icon_overlay_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'icon_overlay_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'single_layout',
 					'main_style'      => array( 'style_1', 'style_3', 'style_4' ),
 					'icon_overlay'    => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'icon_shine_effect',
 			array(
@@ -2504,17 +2504,17 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'icon_shine_effect_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'icon_shine_effect_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout'   => 'single_layout',
 					'main_style'        => array( 'style_1', 'style_3', 'style_4' ),
 					'icon_shine_effect' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2622,15 +2622,15 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_pin_text_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_pin_text_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'carousel_layout',
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2644,21 +2644,21 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_carousel_options_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'section_carousel_options_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'carousel_layout',
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_text_styling',
 			array(
-				'label' => esc_html__( 'Text Style', 'tpebl' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Text Style', 'tpebl' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'image_icon' => 'text',
 				),
@@ -2667,12 +2667,12 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
-				'name'     => 'tab_text_typography',
-				'label'    => esc_html__( 'Typography', 'tpebl' ),
-				'global'   => array(
+				'name'      => 'tab_text_typography',
+				'label'     => esc_html__( 'Typography', 'tpebl' ),
+				'global'    => array(
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				),
-				'selector' => '{{WRAPPER}} .service-icon-text',
+				'selector'  => '{{WRAPPER}} .service-icon-text',
 				'condition' => array(
 					'image_icon' => 'text',
 				),
@@ -2694,7 +2694,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .service-icon-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
-				'condition' => array(
+				'condition'  => array(
 					'image_icon' => 'text',
 				),
 			)
@@ -2733,7 +2733,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			array(
 				'name'     => 'wl_btn_border',
 				'label'    => esc_html__( 'Border', 'tpebl' ),
-				'default' => array(
+				'default'  => array(
 					'color' => '#666666',
 				),
 				'selector' => '{{WRAPPER}} .service-icon-text',
@@ -2748,7 +2748,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .service-icon-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
-				'condition' => array(
+				'condition'  => array(
 					'image_icon' => 'text',
 				),
 			)
@@ -2787,7 +2787,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			array(
 				'name'     => 'wl_btn_border_h',
 				'label'    => esc_html__( 'Border', 'tpebl' ),
-				'default' => array(
+				'default'  => array(
 					'color' => '#666666',
 				),
 				'selector' => '{{WRAPPER}} .service-icon-text:hover',
@@ -2802,14 +2802,14 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .service-icon-text:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
-				'condition' => array(
+				'condition'  => array(
 					'image_icon' => 'text',
 				),
 			)
 		);
 		$this->end_controls_tab();
-		$this->end_controls_tabs();		
-	    $this->end_controls_section();
+		$this->end_controls_tabs();
+		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'section_extra_option_styling',
@@ -2867,15 +2867,15 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'Parallax_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'Parallax_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'tilt_parallax' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'messy_column',
 			array(
@@ -2890,16 +2890,16 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'messy_column_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'messy_column_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'info_box_layout' => 'carousel_layout',
 					'messy_column'    => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'min_height_section',
 			array(
@@ -3328,9 +3328,9 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				}
 			}
 		}
-		
+
 		if ( 'text' === $image_icon ) {
-			$service_img = '<div class="service-icon-text">'.wp_kses_post($settings['tp_info_title']).'</div>';
+			$service_img = '<div class="service-icon-text">' . wp_kses_post( $settings['tp_info_title'] ) . '</div>';
 		}
 
 		$border_cright = ! empty( $settings['border_check_right'] ) ? $settings['border_check_right'] : '';

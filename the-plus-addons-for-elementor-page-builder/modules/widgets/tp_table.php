@@ -114,9 +114,9 @@ class L_ThePlus_Data_Table extends Widget_Base {
 	 * @since 6.1.0
 	 */
 	// public function is_dynamic_content(): bool {
-	// 	return false;
+	// return false;
 	// }
-	
+
 	/**
 	 * It is use for adds.
 	 *
@@ -125,18 +125,18 @@ class L_ThePlus_Data_Table extends Widget_Base {
 	public function get_upsale_data() {
 		$val = false;
 
-		if( ! defined( 'THEPLUS_VERSION' ) ) {
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
 			$val = true;
 		}
 
-		return [
-			'condition' => $val,
-			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
 			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		];
+		);
 	}
 
 	/**
@@ -147,7 +147,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register controls.
 	 *
@@ -165,13 +165,13 @@ class L_ThePlus_Data_Table extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 16051,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 16051,
+				'label_block' => true,
+			)
+		);
 		$this->add_control(
 			'table_selection',
 			array(
@@ -183,25 +183,25 @@ class L_ThePlus_Data_Table extends Widget_Base {
 					'csv_file'     => esc_html__( 'CSV File (Pro)', 'tpebl' ),
 					'google_sheet' => esc_html__( 'Google Sheet (Pro)', 'tpebl' ),
 					'plus_form'    => esc_html__( 'Plus Form (Pro)', 'tpebl' ),
-					'sql_query' => esc_html__( 'SQL Query (Pro)', 'tpebl' ),
+					'sql_query'    => esc_html__( 'SQL Query (Pro)', 'tpebl' ),
 				),
 			)
 		);
 		$this->add_control(
-            'csv_content_Table',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'csv_content_Table',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'table_selection' => array( 'csv_file', 'google_sheet', 'plus_form', 'sql_query' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'custom_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'Manually add data to each row and column of your table for complete control over the content, using Elementor Editor.', 'tpebl' ),
@@ -230,8 +230,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'table_header_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Add your table header content manually, start adding header rows and cells here.', 'tpebl' )
@@ -260,8 +260,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater->add_control(
 			'row_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Your new row has been created. In the next repeater tab, select Cell Content from the Action dropdown to add content to the cells.', 'tpebl' )
@@ -276,8 +276,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater->add_control(
 			'cell_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Add the content you want to show inside this specific cell of your table.', 'tpebl' )
@@ -387,16 +387,16 @@ class L_ThePlus_Data_Table extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
-            'icons_mind',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'icons_mind',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'header_content_icon_image' => 'icon',
 					'icon_font_style'           => 'icon_mind',
 				),
-            )
-        );
+			)
+		);
 		$repeater->end_controls_tab();
 		$repeater->start_controls_tab(
 			'tab_head_advance',
@@ -425,8 +425,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater->add_control(
 			'heading_col_span_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Choose how many columns this cell should cover | for example, set 2 to make it span across two columns.', 'tpebl' )
@@ -454,8 +454,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater->add_control(
 			'heading_row_span_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Choose how many rows this cell should cover | for example, set 2 to make it span across two rows.', 'tpebl' )
@@ -585,8 +585,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'table_body_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Add your table body content here by inserting rows and filling in cell content.', 'tpebl' )
@@ -615,8 +615,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater_row_col->add_control(
 			'table_row_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Your new row has been created. In the next repeater tab, select Cell Content from the Action dropdown to add content to the cells.', 'tpebl' )
@@ -631,8 +631,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater_row_col->add_control(
 			'table_cell_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Add the content you want to show inside this specific cell of your table.', 'tpebl' )
@@ -687,12 +687,12 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater_row_col->add_control(
 			'cell_display_button',
 			array(
-				'label'     => wp_kses_post( 
-						sprintf(
+				'label'     => wp_kses_post(
+					sprintf(
 						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> <i class="eicon-help-o"></i> </a>',
 						esc_html__( 'Button', 'tpebl' ),
-						esc_url( $this->tp_doc . "insert-button-inside-elementor-table/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" )
-					) 
+						esc_url( $this->tp_doc . 'insert-button-inside-elementor-table/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
 				),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
@@ -836,8 +836,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater_row_col->add_control(
 			'cell_icons_mind',
 			array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'content_type'            => 'cell',
 					'cell_content_icon_image' => 'icon',
@@ -862,12 +862,12 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater_row_col->add_control(
 			'image',
 			array(
-				'label'     => wp_kses_post( 
-						sprintf(
+				'label'     => wp_kses_post(
+					sprintf(
 						"%s <a class='tp-docs-link' href='%s' target='_blank' rel='noopener noreferrer'> <i class='eicon-help-o'></i> </a>",
 						esc_html__( 'Choose Image', 'tpebl' ),
-						esc_url( $this->tp_doc . "insert-images-in-table-content-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget" )
-					) 
+						esc_url( $this->tp_doc . 'insert-images-in-table-content-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
+					)
 				),
 				'type'      => Controls_Manager::MEDIA,
 				'dynamic'   => array(
@@ -947,8 +947,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater_row_col->add_control(
 			'cell_column_span_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Choose how many columns this cell should cover | for example, set 2 to make it span across two columns.', 'tpebl' )
@@ -976,8 +976,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$repeater_row_col->add_control(
 			'cell_row_span_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Choose how many rows this cell should cover | for example, set 2 to make it span across two rows.', 'tpebl' )
@@ -1081,8 +1081,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'scrollbar_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s </a></i></p>',
 						esc_html__( 'Enable this to add a vertical scrollbar to your table, letting visitors scroll through content easily when the table height exceeds the screen.', 'tpebl' ),
@@ -1137,8 +1137,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'searchable_labeltext',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s </a></i></p>',
 						esc_html__( 'Enable this to let visitors instantly search within your table. ', 'tpebl' ),
@@ -1155,8 +1155,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'searchable_note',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s </i></p>',
 						esc_html__( 'Note: This won’t work if the table includes cells with Rowspan or Colspan.', 'tpebl' ),
@@ -1198,8 +1198,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'sortable_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s </a></i></p>',
 						esc_html__( 'Enable this to add sorting controls in the header, allowing users to sort the table in ascending or descending order.', 'tpebl' ),
@@ -1213,8 +1213,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'sortable_note',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s </i></p>',
 						esc_html__( 'Note: Sorting isn’t supported if the table contains cells with Rowspan or Colspan. ', 'tpebl' ),
@@ -1241,8 +1241,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'show_entries_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s </a></i></p>',
 						esc_html__( 'Enable this can show a dropdown so visitors can choose how many rows to display at once.', 'tpebl' ),
@@ -1256,8 +1256,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'show_entries_note',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s </i></p>',
 						esc_html__( 'Note: Not supported if the table has cells using Rowspan or Colspan', 'tpebl' ),
@@ -1282,12 +1282,12 @@ class L_ThePlus_Data_Table extends Widget_Base {
 				'separator' => 'before',
 			)
 		);
-		
+
 		$this->add_control(
 			'mobiledefault_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s </a></i></p>',
 						esc_html__( 'Make the full table visible on mobile by adding a horizontal scrollbar, allowing users to swipe sideways to view all columns.', 'tpebl' ),
@@ -1304,8 +1304,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$this->add_control(
 			'one_by_one_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s </a></i></p>',
 						esc_html__( 'Display each row as a separate block on mobile, letting users read data column by column without needing to scroll sideways.', 'tpebl' ),
@@ -2214,8 +2214,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 					'{{WRAPPER}} .pt_plus_button.button-style-8 .button-link-wrap' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 				'condition'  => array(
-					'table_selection!' => 'csv_file',
-					'button_border_style!' => 'none'
+					'table_selection!'     => 'csv_file',
+					'button_border_style!' => 'none',
 				),
 			)
 		);
@@ -2230,8 +2230,8 @@ class L_ThePlus_Data_Table extends Widget_Base {
 				),
 				'separator' => 'after',
 				'condition' => array(
-					'table_selection!' => 'csv_file',
-					'button_border_style!' => 'none'
+					'table_selection!'     => 'csv_file',
+					'button_border_style!' => 'none',
 				),
 			)
 		);
@@ -3318,9 +3318,9 @@ class L_ThePlus_Data_Table extends Widget_Base {
 							$counter           = 1;
 							$cell_inline_count = 0;
 
-							$row_count         = count( (array) $settings['table_content'] );
-							$attr_id           = 'cell';
-							$ij                = 0;
+							$row_count = count( (array) $settings['table_content'] );
+							$attr_id   = 'cell';
+							$ij        = 0;
 
 							if ( $settings['table_content'] ) {
 								$rowi = 0;
@@ -3337,7 +3337,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 									if ( ! empty( $row['cell_display_button'] ) && 'yes' === $row['cell_display_button'] ) {
 										$link_key = 'link_' . $ij;
 										if ( ! empty( $row['cell_button_link']['url'] ) ) {
-											$this->add_render_attribute( $link_key, 'href', esc_url($row['cell_button_link']['url']) );
+											$this->add_render_attribute( $link_key, 'href', esc_url( $row['cell_button_link']['url'] ) );
 											if ( $row['cell_button_link']['is_external'] ) {
 												$this->add_render_attribute( $link_key, 'target', '_blank' );
 											}
@@ -3350,7 +3350,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 
 										/*button attributes start*/
 										$button_custom_attributes = $row['button_custom_attributes'];
-										$custom_attributes        = tp_senitize_js_input ($row['custom_attributes']);
+										$custom_attributes        = tp_senitize_js_input( $row['custom_attributes'] );
 
 										$cst_att = '';
 										if ( ( ! empty( $button_custom_attributes ) && 'yes' === $button_custom_attributes ) && ! empty( $custom_attributes ) ) {
@@ -3401,7 +3401,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 									}
 
 									if ( ! empty( $row['link']['url'] ) ) {
-										$this->add_render_attribute( 'col-link-' . $row['_id'], 'href', esc_url($row['link']['url']) );
+										$this->add_render_attribute( 'col-link-' . $row['_id'], 'href', esc_url( $row['link']['url'] ) );
 										if ( $row['link']['is_external'] ) {
 											$this->add_render_attribute( 'col-link-' . $row['_id'], 'target', '_blank' );
 										}
@@ -3505,7 +3505,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 															<?php } ?>
 														<?php } ?>
 														<?php if ( ! empty( $row['cell_text'] ) ) { ?>
-															<span <?php echo $this->get_render_attribute_string( $repeater_cell_text ); ?>><?php echo wp_kses_post($row['cell_text']); ?></span>
+															<span <?php echo $this->get_render_attribute_string( $repeater_cell_text ); ?>><?php echo wp_kses_post( $row['cell_text'] ); ?></span>
 														<?php } ?>
 														<?php if ( 'icon' === $row['cell_content_icon_image'] ) { ?>
 															
@@ -3566,59 +3566,58 @@ class L_ThePlus_Data_Table extends Widget_Base {
 			</div> 
 			<?php
 
+			$html = ob_get_clean();
 
-		$html = ob_get_clean();
+			echo $html;
 
-		echo $html;
+			$css_rule = '<style>';
+			if ( ! empty( $cell_align_head_desktop ) ) {
+				$css_rule .= '#plus-table-id-' . esc_attr( $widget_id ) . ' th,#plus-table-id-' . esc_attr( $widget_id ) . ' th .plus-table__text{ ';
+				if ( 'left' === $cell_align_head_desktop ) {
+					$css_rule .= 'margin:0 auto;text-align:left;margin-left:0;';
+				}
+				if ( 'center' === $cell_align_head_desktop ) {
+					$css_rule .= 'margin:0 auto;text-align:center;';
+				}
+				if ( 'right' === $cell_align_head_desktop ) {
+					$css_rule .= 'margin:0 auto;text-align:right;margin-right:0;';
+				}
+				$css_rule .= '}';
+			}
 
-		$css_rule = '<style>';
-		if ( ! empty( $cell_align_head_desktop ) ) {
-			$css_rule .= '#plus-table-id-' . esc_attr( $widget_id ) . ' th,#plus-table-id-' . esc_attr( $widget_id ) . ' th .plus-table__text{ ';
-			if ( 'left' === $cell_align_head_desktop ) {
-				$css_rule .= 'margin:0 auto;text-align:left;margin-left:0;';
-			}
-			if ( 'center' === $cell_align_head_desktop ) {
-				$css_rule .= 'margin:0 auto;text-align:center;';
-			}
-			if ( 'right' === $cell_align_head_desktop ) {
-				$css_rule .= 'margin:0 auto;text-align:right;margin-right:0;';
-			}
-			$css_rule .= '}';
-		}
+			if ( ! empty( $cell_align_head_tablet ) ) {
+				$css_rule .= '@media (max-width:1024px){#plus-table-id-' . esc_attr( $widget_id ) . ' th,#plus-table-id-' . esc_attr( $widget_id ) . ' th .plus-table__text{';
 
-		if ( ! empty( $cell_align_head_tablet ) ) {
-			$css_rule .= '@media (max-width:1024px){#plus-table-id-' . esc_attr( $widget_id ) . ' th,#plus-table-id-' . esc_attr( $widget_id ) . ' th .plus-table__text{';
+				if ( 'left' === $cell_align_head_tablet ) {
+					$css_rule .= 'margin:0 auto;text-align:left;margin-left:0;';
+				}
+				if ( 'center' === $cell_align_head_tablet ) {
+					$css_rule .= 'margin:0 auto;text-align:center;';
+				}
+				if ( 'right' === $cell_align_head_tablet ) {
+					$css_rule .= 'margin:0 auto;text-align:right;margin-right:0;';
+				}
+				$css_rule .= '}}';
+			}
 
-			if ( 'left' === $cell_align_head_tablet ) {
-				$css_rule .= 'margin:0 auto;text-align:left;margin-left:0;';
-			}
-			if ( 'center' === $cell_align_head_tablet ) {
-				$css_rule .= 'margin:0 auto;text-align:center;';
-			}
-			if ( 'right' === $cell_align_head_tablet ) {
-				$css_rule .= 'margin:0 auto;text-align:right;margin-right:0;';
-			}
-			$css_rule .= '}}';
-		}
+			if ( ! empty( $cell_align_head_mobile ) ) {
+				$css_rule .= '@media (max-width:767px){#plus-table-id-' . esc_attr( $widget_id ) . ' th,#plus-table-id-' . esc_attr( $widget_id ) . ' th .plus-table__text{';
 
-		if ( ! empty( $cell_align_head_mobile ) ) {
-			$css_rule .= '@media (max-width:767px){#plus-table-id-' . esc_attr( $widget_id ) . ' th,#plus-table-id-' . esc_attr( $widget_id ) . ' th .plus-table__text{';
-
-			if ( 'left' === $cell_align_head_mobile ) {
-				$css_rule .= 'margin:0 auto;text-align:left;margin-left:0;';
+				if ( 'left' === $cell_align_head_mobile ) {
+					$css_rule .= 'margin:0 auto;text-align:left;margin-left:0;';
+				}
+				if ( 'center' === $cell_align_head_mobile ) {
+					$css_rule .= 'margin:0 auto;text-align:center;';
+				}
+				if ( 'right' === $cell_align_head_mobile ) {
+					$css_rule .= 'margin:0 auto;text-align:right;margin-right:0;';
+				}
+				$css_rule .= '}}';
 			}
-			if ( 'center' === $cell_align_head_mobile ) {
-				$css_rule .= 'margin:0 auto;text-align:center;';
-			}
-			if ( 'right' === $cell_align_head_mobile ) {
-				$css_rule .= 'margin:0 auto;text-align:right;margin-right:0;';
-			}
-			$css_rule .= '}}';
-		}
 
-		$css_rule .= '</style>';
+			$css_rule .= '</style>';
 
-		echo $css_rule;
+			echo $css_rule;
 	}
 
 	/**
@@ -3665,7 +3664,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 
 		return $final;
 	}
-	
+
 	/**
 	 * Render content_template
 	 *
@@ -3676,12 +3675,10 @@ class L_ThePlus_Data_Table extends Widget_Base {
 
 	/**
 	 * Prevent JS senitizer
-	 * 
 	 * */
+	public function tpae_senitize_js_input( $input ) {
 
-	 public function tpae_senitize_js_input( $input ) {
-
-		$input = preg_replace('/(on|hr)\w+=/', '', $input);
+		$input = preg_replace( '/(on|hr)\w+=/', '', $input );
 
 		return $input;
 	}

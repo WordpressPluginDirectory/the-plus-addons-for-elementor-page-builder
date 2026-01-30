@@ -204,8 +204,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'smart_loop_builder_note',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'This is first version of Smart Loop Builder, We will have more dynamic options, ACF support and release in more listing widgets coming up next..', 'tpebl' ),
@@ -381,7 +381,7 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'post_offset',
 			array(
-				'label'     => wp_kses_post( "Offset Posts" ),
+				'label'   => esc_html__( 'Offset Posts', 'tpebl' ),
 				'type'    => Controls_Manager::NUMBER,
 				'min'     => 0,
 				'max'     => 50,
@@ -392,8 +392,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'post_offset_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'Add a number here to hide posts from the beginning of your recent posts listing', 'tpebl' ),
@@ -606,8 +606,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'post_extra_option_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can choose how additional posts load on your page, either through Pagination, Load More, or Lazy Load.', 'tpebl' ),
@@ -1047,17 +1047,17 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'post_title_tag',
 			array(
-				'label'     => esc_html__( 'Title Tag', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'h3',
-				'options'   => l_theplus_get_tags_options(),
+				'label'   => esc_html__( 'Title Tag', 'tpebl' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'h3',
+				'options' => l_theplus_get_tags_options(),
 			)
 		);
 		$this->add_control(
 			'post_title_tag_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text">%s</p>',
 						esc_html__( 'Select the heading tag for your post title. Choose based on your page hierarchy to keep your website SEO-friendly and structured.', 'tpebl' ),
@@ -1079,8 +1079,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'display_title_limit_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text">%s</p>',
 						esc_html__( 'Enable this to limit long post titles and keep your layout clean. Perfect when you want all cards or listings to look uniform.', 'tpebl' ),
@@ -1216,8 +1216,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'show_post_date_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"> %s </p>',
 						esc_html__( 'Turn this on to display the post’s published date or last updated time below the title.', 'tpebl' ),
@@ -1239,8 +1239,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'show_post_author_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"> %s </p>',
 						esc_html__( 'Enable this to show the author name under each post.', 'tpebl' ),
@@ -1262,8 +1262,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'show_read_time_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"> %s </p>',
 						esc_html__( 'Display an estimated reading time for each post to help visitors gauge their reading commitment.', 'tpebl' ),
@@ -1437,8 +1437,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_control(
 			'display_post_meta_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"> %s </p>',
 						esc_html__( 'Enable this to show extra post details like date, author, and other meta information for better context.', 'tpebl' ),
@@ -1538,7 +1538,7 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 
 		if ( ! tpae_wl_pluginads_enabled() ) {
 			$this->start_controls_section(
-			'tpae_theme_builder_sec',
+				'tpae_theme_builder_sec',
 				array(
 					'label' => esc_html__( 'Use with Theme Builder', 'tpebl' ),
 					'tab'   => Controls_Manager::TAB_CONTENT,
@@ -1547,13 +1547,13 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 			$this->add_control(
 				'tpae_theme_builder',
 				array(
-					'type'   => 'tpae_theme_builder',
-					'notice' => 'We recommend using this widget in the Archive Template to load it for all categories & tags.',
+					'type'        => 'tpae_theme_builder',
+					'notice'      => 'We recommend using this widget in the Archive Template to load it for all categories & tags.',
 					'button_text' => esc_html__( 'Create Archive Page', 'tpebl' ),
-					'page_type'   => 'tp_archives'
+					'page_type'   => 'tp_archives',
 				)
 			);
-			$this->end_controls_section();	
+			$this->end_controls_section();
 		}
 
 		$this->start_controls_section(
@@ -1687,10 +1687,10 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_responsive_control(
 			'tp_row_one_width',
 			array(
-				'label'      => esc_html__( 'Image Box', 'tpebl' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( '%' ),
-				'default'    => array(
+				'label'          => esc_html__( 'Image Box', 'tpebl' ),
+				'type'           => Controls_Manager::SLIDER,
+				'size_units'     => array( '%' ),
+				'default'        => array(
 					'size' => '50',
 					'unit' => '%',
 				),
@@ -1702,8 +1702,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 					'size' => 50,
 					'unit' => '%',
 				),
-				'condition'  => array( 'wrap_flex_direction' => array( 'row', 'row-reverse' ) ),
-				'selectors'  => array(
+				'condition'      => array( 'wrap_flex_direction' => array( 'row', 'row-reverse' ) ),
+				'selectors'      => array(
 					'{{WRAPPER}} .tpae-compect-blog-wrap .tpae-blog-image' => 'width: {{SIZE}}%;',
 				),
 			)
@@ -1711,10 +1711,10 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 		$this->add_responsive_control(
 			'tp_row_two_width',
 			array(
-				'label'      => esc_html__( 'Content Box', 'tpebl' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( '%' ),
-				'default'    => array(
+				'label'          => esc_html__( 'Content Box', 'tpebl' ),
+				'type'           => Controls_Manager::SLIDER,
+				'size_units'     => array( '%' ),
+				'default'        => array(
 					'size' => '50',
 					'unit' => '%',
 				),
@@ -1726,8 +1726,8 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 					'size' => 50,
 					'unit' => '%',
 				),
-				'condition'  => array( 'wrap_flex_direction' => array( 'row', 'row-reverse' ) ),
-				'selectors'  => array(
+				'condition'      => array( 'wrap_flex_direction' => array( 'row', 'row-reverse' ) ),
+				'selectors'      => array(
 					'{{WRAPPER}} .tpae-compect-blog-wrap .tpae-blog-content' => 'width: {{SIZE}}%;',
 				),
 			)
@@ -3902,7 +3902,7 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 				'name'     => 'content_shadow',
 				'selector' =>
 				'{{WRAPPER}} .blog-list.blog-style-1 .blog-list-content,
-				{{WRAPPER}} .blog-list.blog-style-1 .tpae-compect-blog-wrap,
+				{{WRAPPER}} .blog-list .tpae-compect-blog-wrap,
 				{{WRAPPER}} .blog-list .post-inner-loop .grid-item .tpae-preset-blog',
 			)
 		);
@@ -3919,7 +3919,7 @@ class L_ThePlus_Blog_ListOut extends Widget_Base {
 				'name'     => 'content_hover_shadow',
 				'selector' =>
 				'{{WRAPPER}} .blog-list.blog-style-1 .blog-list-content:hover,
-				{{WRAPPER}} .blog-list.blog-style-1 .tpae-compect-blog-wrap:hover,
+				{{WRAPPER}} .blog-list .tpae-compect-blog-wrap:hover,
 				{{WRAPPER}} .blog-list .post-inner-loop .grid-item .tpae-preset-blog:hover',
 			)
 		);

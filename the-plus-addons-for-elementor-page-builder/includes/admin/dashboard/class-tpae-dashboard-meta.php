@@ -97,33 +97,33 @@ if ( ! class_exists( 'Tpae_Dashboard_Meta' ) ) {
 
 			$nexter_et_plugin_status = apply_filters( 'tpae_get_plugin_status', 'nexter-extension/nexter-extension.php' );
 
-			$next_et_status = '';
+			$next_et_status    = '';
 			$extensionactivate = '';
 
 			if ( 'active' === $nexter_et_plugin_status ) {
-				$next_et_status = true;
+				$next_et_status    = true;
 				$extensionactivate = 'active';
-			} elseif ('inactive' === $nexter_et_plugin_status) {
-				$next_et_status = false;
+			} elseif ( 'inactive' === $nexter_et_plugin_status ) {
+				$next_et_status    = false;
 				$extensionactivate = 'inactive';
 			} else {
-				$next_et_status = false;
+				$next_et_status    = false;
 				$extensionactivate = '';
 			}
 
 			$wdesign_plugin_status = apply_filters( 'tpae_get_plugin_status', 'wdesignkit/wdesignkit.php' );
 
 			$wdkit_status = '';
-			$wdkactive = '';
+			$wdkactive    = '';
 			if ( 'active' === $wdesign_plugin_status ) {
 				$wdkit_status = true;
-				$wdkactive = 'active';
-			} elseif('inactive' === $wdesign_plugin_status) {
+				$wdkactive    = 'active';
+			} elseif ( 'inactive' === $wdesign_plugin_status ) {
 				$wdkit_status = false;
-				$wdkactive = 'inactive';
+				$wdkactive    = 'inactive';
 			} else {
 				$wdkit_status = false;
-				$wdkactive = '';
+				$wdkactive    = '';
 			}
 
 			$get_whats_new_notification = get_option( 'tpae_whats_new_notification' );
@@ -132,7 +132,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Meta' ) ) {
 
 			if ( $get_whats_new_notification !== TPAE_WHATS_NEW_NOTIFICETIONS ) {
 				$show_whats_new = true;
-			} else{
+			} else {
 				$show_whats_new = false;
 			}
 
@@ -151,11 +151,11 @@ if ( ! class_exists( 'Tpae_Dashboard_Meta' ) ) {
 						'version'           => L_THEPLUS_VERSION,
 						'import_temp_nonce' => wp_create_nonce( 'nxt_ajax' ),
 						'wdkPlugin'         => $wdkit_status,
-						'wdkactive' => $wdkactive,
+						'wdkactive'         => $wdkactive,
 						'extensioninstall'  => $next_et_status,
 						'extensionactivate' => $extensionactivate,
 						'tpae'              => true,
-						'dashboard_url' => admin_url( 'admin.php?page=theplus_welcome_page'),
+						'dashboard_url'     => admin_url( 'admin.php?page=theplus_welcome_page' ),
 						'tpae_nonce'        => wp_create_nonce( 'tpae-db-nonce' ),
 					);
 
@@ -181,7 +181,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Meta' ) ) {
 						'onboarding_setup'     => $onbording_set,
 						'envato_plugin_status' => $et_plugin_status,
 						'wdkit_plugin_status'  => $wdkit_plugin_status,
-						'show_whats_new'    => $show_whats_new
+						'show_whats_new'       => $show_whats_new,
 					)
 				);
 
@@ -207,7 +207,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Meta' ) ) {
 				$options = get_option( 'theplus_white_label' );
 
 				$setting_name = ! empty( $options['tp_plugin_name'] ) ? $options['tp_plugin_name'] : __( 'The Plus Addons', 'tpebl' );
-				
+
 				$plugin_ads   = isset( $options ) && ! empty( $options['plugin_ads'] ) ? $options['plugin_ads'] : '';
 				$template_tab = isset( $options ) && ! empty( $options['template_tab'] ) ? $options['template_tab'] : '';
 			}

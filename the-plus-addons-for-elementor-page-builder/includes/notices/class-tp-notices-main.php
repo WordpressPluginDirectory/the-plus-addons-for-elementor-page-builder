@@ -91,8 +91,6 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 		public function __construct() {
 			$this->tp_white_label();
 			$this->tp_notices_manage();
-
-			$this->tp_delete_removed_notice_keys();
 		}
 
 		/**
@@ -187,8 +185,21 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 
 				include L_THEPLUS_PATH . 'includes/notices/class-tp-dashboard-overview.php';
 
+				$current_version = str_replace( '.', '', L_THEPLUS_VERSION );
+
+				$current_cleanup_key  = 'theplus_cleanup_sale_notices_' . $current_version;
+				$previous_cleanup_key = 'theplus_cleanup_sale_notices_' . ( (int) $current_version - 1 );
+
 				/**Remove Key In Databash*/
-				// include L_THEPLUS_PATH . 'includes/notices/class-tp-notices-remove.php';
+				if ( ! get_option( $current_cleanup_key ) ) {
+					if ( get_option( $previous_cleanup_key ) ) {
+						delete_option( $previous_cleanup_key );
+					}
+
+					include L_THEPLUS_PATH . 'includes/notices/class-tp-notices-remove.php';
+
+					update_option( $current_cleanup_key, true );
+				}
 			}
 
 			$license_data = get_option( 'tpaep_licence_data' );
@@ -198,7 +209,9 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 				$check_license = $license_data ? $license_data['expires'] : '';
 
 				/** Plugin Features Banner*/
-				include L_THEPLUS_PATH . 'includes/notices/class-tp-plugin-features-banner.php';
+				if ( ! get_option( 'tpae_pluginfeatures_notice_dismissed' ) ) {
+					include L_THEPLUS_PATH . 'includes/notices/class-tp-plugin-features-banner.php';
+				}
 
 				if ( ! empty( $ele_pro_details[0]['status'] ) && 'unavailable' == $ele_pro_details[0]['status'] ) {
 					if ( ! empty( $nxt_ext_details[0]['status'] ) && 'unavailable' == $nxt_ext_details[0]['status'] ) {
@@ -208,21 +221,28 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 					}
 				}
 
-				if ( ! empty( $nxt_details[0]['status'] ) && 'unavailable' == $nxt_details[0]['status'] ) {
-					if ( ! empty( $nxt_pro_details[0]['status'] ) && 'unavailable' == $nxt_pro_details[0]['status'] ) {
-						include L_THEPLUS_PATH . 'includes/notices/class-tp-nexter-notice.php';
+				if ( ! get_option( 'tpae_nexter_block_notice' ) ) {
+					if ( ! empty( $nxt_details[0]['status'] ) && 'unavailable' == $nxt_details[0]['status'] ) {
+						if ( ! empty( $nxt_pro_details[0]['status'] ) && 'unavailable' == $nxt_pro_details[0]['status'] ) {
+							include L_THEPLUS_PATH . 'includes/notices/class-tp-nexter-notice.php';
+						}
 					}
 				}
 
 				/** Install TPAE Pro notice*/
-				if ( ! empty( $tpae_pro_details[0]['status'] ) && 'unavailable' === $tpae_pro_details[0]['status'] ) {
-					include L_THEPLUS_PATH . 'includes/notices/class-tp-tpaepro-notice.php';
+				if ( ! get_option( 'tpae_pro_promo_notice' ) ) {
+					if ( ! empty( $tpae_pro_details[0]['status'] ) && 'unavailable' === $tpae_pro_details[0]['status'] ) {
+						include L_THEPLUS_PATH . 'includes/notices/class-tp-tpaepro-notice.php';
+					}
 				}
 
 				/** Activate License*/
 				if ( ! empty( $tpae_pro_details[0]['status'] ) && 'active' === $tpae_pro_details[0]['status'] ) {
-					if ( empty( $license_data ) && empty( $license_data['license_key'] ) ) {
-						include L_THEPLUS_PATH . 'includes/notices/class-tp-activate-license-notice.php';
+					
+					if ( ! get_option( 'tpae_activate_license_notice' ) ) {
+						if ( empty( $license_data ) && empty( $license_data['license_key'] ) ) {
+							include L_THEPLUS_PATH . 'includes/notices/class-tp-activate-license-notice.php';
+						}
 					}
 
 					/** License Expired*/
@@ -234,10 +254,14 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 				}
 
 				/** Ask for Review*/
-				include L_THEPLUS_PATH . 'includes/notices/class-tp-ask-review-notice.php';
+				if ( ! get_option( 'tpae_ask_review_notice' ) ) {
+					include L_THEPLUS_PATH . 'includes/notices/class-tp-ask-review-notice.php';
+				}
 
 				/** Join Community Discord*/
-				include L_THEPLUS_PATH . 'includes/notices/class-tp-join-community-notice.php';
+				if ( ! get_option( 'tpae_join_community_notice' ) ) {
+					include L_THEPLUS_PATH . 'includes/notices/class-tp-join-community-notice.php';
+				}
 
 				/** Allow Data Tracking*/
 				// include L_THEPLUS_PATH . 'includes/notices/class-tp-data-tracking-notice.php';
@@ -346,17 +370,6 @@ if ( ! class_exists( 'Tp_Notices_Main' ) ) {
 
 				return get_plugins();
 			}
-		}
-
-		/**
-		 * Delete notice keys which notice removed from plugin
-		 *
-		 * @since 6.5.6
-		 */		
-		public function tp_delete_removed_notice_keys() {
-			delete_option( 'tpae_bfsale_notice_dismissed' );
-			delete_option( 'tpae_cmsale_notice_dismissed' );
-			delete_option( 'tpae_wintersale_notice_dismissed' );
 		}
 	}
 

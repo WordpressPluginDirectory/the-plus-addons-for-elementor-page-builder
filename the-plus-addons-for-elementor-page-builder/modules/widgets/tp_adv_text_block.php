@@ -205,18 +205,27 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 		$this->add_control(
 			'display_count',
 			array(
-				'label'     => wp_kses_post(
-					sprintf(
-						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
-						esc_html__( 'Description Limit', 'tpebl' ),
-						esc_url( $this->tp_doc ) . 'limit-wordcount-text-widget-elementor?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget'
-					)
-				),
+				'label'     => esc_html__( 'Description Limit', 'tpebl' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'no',
 				'separator' => 'before',
+			)
+		);
+		$this->add_control(
+			'display_count_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
+						esc_html__( 'Enable this option to limit the amount of text shown in the content.', 'tpebl' ),
+						esc_url( $this->tp_doc . 'limit-wordcount-text-widget-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
+						esc_html__( 'Learn More', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 			)
 		);
 		$this->add_control(
@@ -248,6 +257,22 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'display_count_input_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Set the maximum number of characters or words to display.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition'   => array(
+					'display_count' => 'yes',
+				),
+			)
+		);
+		$this->add_control(
 			'display_3_dots',
 			array(
 				'label'     => esc_html__( 'Display Dots', 'tpebl' ),
@@ -256,6 +281,22 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'yes',
 				'condition' => array(
+					'display_count' => 'yes',
+				),
+			)
+		);
+		$this->add_control(
+			'display_dots_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Show ellipsis (...) at the end of the text.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
+				'condition'   => array(
 					'display_count' => 'yes',
 				),
 			)
@@ -328,7 +369,7 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 					'options'   => $global_options,
 					'default'   => '',
 					'condition' => array(
-						'text_animations' => 'tp_global',
+						'text_animations'       => 'tp_global',
 						'enable_text_animation' => 'yes',
 					),
 				)
@@ -623,15 +664,15 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 		$this->add_control(
 			'text_animation_controls_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Customize animation timing behavior', 'tpebl' )
 					)
 				),
 				'label_block' => true,
-				'condition'    => array(
+				'condition'   => array(
 					'enable_text_animation' => 'yes',
 					'text_animations!'      => 'tp_global',
 				),
@@ -678,24 +719,6 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 				),
 			)
 		);
-		// $this->add_control(
-		// 	'text_repeat_yoyo',
-		// 	array(
-		// 		'label'        => esc_html__( 'YoYo', 'tpebl' ),
-		// 		'type'         => \Elementor\Controls_Manager::SWITCHER,
-		// 		'label_on'     => esc_html__( 'Yes', 'tpebl' ),
-		// 		'label_off'    => esc_html__( 'No', 'tpebl' ),
-		// 		'return_value' => 'yes',
-		// 		'default'      => 'no',
-		// 		'condition'    => array(
-		// 			'enable_text_animation' => 'yes',
-		// 			'text_repeat'           => 'yes',
-		// 			'text_animation_type!'  => 'typing',
-		// 			'text_animations!'      => 'tp_global',
-		// 			'text_animation_type!'  => 'scramble',
-		// 		),
-		// 	)
-		// );
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -866,7 +889,6 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 								'tp_stagger'         => ! empty( $ani['text_stagger'] ) ? $ani['text_stagger'] : 0.04,
 								'tp_ease'            => $ani['text_ease'] ?? 'power3.out',
 								'tp_repeat'          => $ani['text_repeat'] ?? 'no',
-								// 'tp_repeat_yoyo'     => $ani['text_repeat_yoyo'] ?? 'no',
 								'tp_scrub'           => $ani['tp_scrub'] ?? '',
 
 								// Transform Options
@@ -896,7 +918,6 @@ class ThePlus_Adv_Text_Block extends Widget_Base {
 					'tp_stagger'         => ! empty( $settings['text_stagger'] ) ? $settings['text_stagger'] : 0.04,
 					'tp_ease'            => $settings['text_ease'] ?? 'power3.out',
 					'tp_repeat'          => $settings['text_repeat'] ?? 'no',
-					// 'tp_repeat_yoyo'     => $settings['text_repeat_yoyo'] ?? 'no',
 					'tp_scrub'           => $settings['tp_scrub'] ?? '',
 
 					'transform_toggle'   => $settings['tp_tansformtion_toggel'] ?? 'no',

@@ -113,18 +113,18 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 	public function get_upsale_data() {
 		$val = false;
 
-		if( ! defined( 'THEPLUS_VERSION' ) ) {
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
 			$val = true;
 		}
 
-		return [
-			'condition' => $val,
-			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
 			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		];
+		);
 	}
 
 	/**
@@ -135,7 +135,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register controls.
 	 *
@@ -171,11 +171,11 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'type'        => Controls_Manager::VISUAL_CHOICE,
 				'default'     => 'horizontal',
 				'options'     => array(
-					'horizontal'     => array(
+					'horizontal' => array(
 						'title' => esc_html__( 'Horizontal Menu', 'tpebl' ),
 						'image' => L_THEPLUS_ASSETS_URL . 'images/widget-style/nav-menu-lite/horizontal-menu.svg',
 					),
-					'vertical'  => array(
+					'vertical'   => array(
 						'title' => esc_html__( 'Vertical Menu', 'tpebl' ),
 						'image' => L_THEPLUS_ASSETS_URL . 'images/widget-style/nav-menu-lite/vertical-menu.svg',
 					),
@@ -312,7 +312,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				),
 				'label_block' => true,
 				'conditions'  => array(
-					'relation' => 'or',										
+					'relation' => 'or',
 					'terms'    => array(
 						array(
 							'terms' => array(
@@ -348,7 +348,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '0',
 				'options'     => L_theplus_get_templates(),
-				'classes'    => 'tp-template-create-btn',
+				'classes'     => 'tp-template-create-btn',
 				'label_block' => 'true',
 				'condition'   => array(
 					'depth'     => '1',
@@ -532,7 +532,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Title', 'tpebl' ),
 				'type'        => Controls_Manager::TEXT,
-				'ai'          => false,  
+				'ai'          => false,
 				'default'     => esc_html__( 'New', 'tpebl' ),
 				'dynamic'     => array(
 					'active' => true,
@@ -602,7 +602,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'label'     => esc_html__( 'Upload Icon Image', 'tpebl' ),
 				'type'      => Controls_Manager::MEDIA,
 				'ai'        => false,
-   				'default'   => array(
+				'default'   => array(
 					'url' => Utils::get_placeholder_image_src(),
 				),
 				'dynamic'   => array( 'active' => true ),
@@ -789,7 +789,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			array(
 				'label'       => esc_html__( 'Description', 'tpebl' ),
 				'type'        => Controls_Manager::TEXTAREA,
-				'ai'          => false, 
+				'ai'          => false,
 				'rows'        => 3,
 				'default'     => '',
 				'placeholder' => esc_html__( 'Enter Description', 'tpebl' ),
@@ -1063,7 +1063,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 				'type'        => Controls_Manager::SELECT,
 				'default'     => '0',
 				'options'     => L_theplus_get_templates(),
-				'classes'    => 'tp-template-create-btn',
+				'classes'     => 'tp-template-create-btn',
 				'label_block' => 'true',
 				'condition'   => array(
 					'show_mobile_menu' => 'yes',
@@ -1140,10 +1140,10 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 			$this->add_control(
 				'tpae_theme_builder',
 				array(
-					'type'   => 'tpae_theme_builder',
-					'notice' => 'We recommend using this widget in the Header Template to display your site menu across all pages.',
+					'type'        => 'tpae_theme_builder',
+					'notice'      => 'We recommend using this widget in the Header Template to display your site menu across all pages.',
 					'button_text' => esc_html__( 'Create Header Template', 'tpebl' ),
-					'page_type'   => 'tp_header'
+					'page_type'   => 'tp_header',
 				)
 			);
 			$this->end_controls_section();
@@ -1828,14 +1828,14 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 		$this->add_control(
 			'mobile_nav_toggle_options',
 			array(
-				'label'     => __( 'Toggle Navigation Style', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
+				'label' => __( 'Toggle Navigation Style', 'tpebl' ),
+				'type'  => Controls_Manager::HEADING,
 			)
 		);
 		$this->add_control(
 			'mobile_nav_toggle_height',
 			array(
-				'label'      => __( 'Toggle Height', 'tpebl' ),	
+				'label'      => __( 'Toggle Height', 'tpebl' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array(
@@ -1875,7 +1875,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 					'{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu-content' => 'margin-top: {{SIZE}}{{UNIT}};',
 				),
 			)
-		);		
+		);
 		$this->add_responsive_control(
 			'mobile_menu_border_main',
 			array(
@@ -1894,7 +1894,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 					'{{WRAPPER}} .plus-navigation-wrap .plus-mobile-menu .navbar-nav li a' => 'border-width: {{SIZE}}{{UNIT}};',
 				),
 			)
-		); 
+		);
 		$this->start_controls_tabs( 'tab_toggle_nav_style' );
 		$this->start_controls_tab(
 			'tab_toggle_nav_normal',
@@ -2456,7 +2456,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 						$template_status = get_post_status( $mobile_navbar_template );
 
 						if ( 'template-menu' === $menu_content && ! empty( $mobile_navbar_template ) ) {
-							if( 'publish' === $template_status ) {
+							if ( 'publish' === $template_status ) {
 								echo '<div class="plus-content-editor">' . L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( $mobile_navbar_template ) . '</div>';
 							} else {
 								echo '<div class="tab-preview-template-notice"><div class="preview-temp-notice-heading">' . esc_html__( 'Unauthorized Access', 'tpebl' ) . '</b></div><div class="preview-temp-notice-desc"><b>' . esc_html__( 'Note :', 'tpebl' ) . '</b> ' . esc_html__( 'You need to upgrade your permissions to Editor or Administrator level to update this option.', 'tpebl' ) . '</div></div>';
@@ -2487,7 +2487,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 	}
 
 	/**
-	 * Tp Mega Menu 
+	 * Tp Mega Menu
 	 *
 	 * @since 5.5.4
 	 * @version 5.5.4
@@ -2496,8 +2496,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 
 		$CustomMenu = '';
 		$stylecss   = '';
-
-		
 
 		if ( ! empty( $settings['ItemMenu'] ) ) {
 			$CustomMenu .= '<ul class="nav navbar-nav ' . ( $settings['main_menu_hover_style'] == 'style-1' ? 'menu-hover-style-1' : ( $settings['main_menu_hover_style'] == 'style-2' ? 'menu-hover-style-2' : '' ) ) . ' ">';
@@ -2565,7 +2563,7 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 
 				// Get Page Url from id
 				$current_active = '';
-				$itemTarget = '';
+				$itemTarget     = '';
 				if ( ! empty( $item['LinkFilter']['url'] ) ) {
 					$itemUrl      = $item['LinkFilter']['url'];
 					$itemTarget   = ! empty( $item['LinkFilter']['is_external'] ) ? ' target="_blank"' : '';
@@ -2617,7 +2615,6 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 					if ( $NextMenu != '' && $NextMenu['megaMType'] == 'default' && isset( $NextMenu['megaMAlign'] ) && $NextMenu['megaMAlign'] == 'center' ) {
 						$MegaMenuClass .= ' plus-dropdown-' . esc_attr( $NextMenu['megaMAlign'] );
 					}
-
 				}
 				$start_Li = "<li class='menu-item depth-" . esc_attr( $depth ) . ' ' . esc_attr( $dropdownClass ) . ' ' . esc_attr( $MegaMenuClass ) . ' ' . ( ! empty( $item['classTxt'] ) ? $item['classTxt'] : '' ) . ' elementor-repeater-item-' . esc_attr( $item['_id'] ) . $current_active . "' >";
 
@@ -2625,14 +2622,14 @@ class ThePlus_Navigation_Menu_Lite extends Widget_Base {
 					if ( empty( $sett ) || empty( $item['moblieMmenu'] && $item['moblieMmenu'] == 'no' ) ) {
 						$start_Li .= '<div class="plus-megamenu-content">';
 						// if ( ( $item['blockTemp'] ) && $item['blockTemp'] != '0' ) {
-						if ( ( $item['blockTemp'] ) && ! empty ( $item['blockTemp'] ) ) {
+						if ( ( $item['blockTemp'] ) && ! empty( $item['blockTemp'] ) ) {
 
 							if ( has_filter( 'wpml_object_id' ) ) {
-								$item['blockTemp'] = apply_filters( 'wpml_object_id', $item['blockTemp'], get_post_type( $item['blockTemp'] ), true);
+								$item['blockTemp'] = apply_filters( 'wpml_object_id', $item['blockTemp'], get_post_type( $item['blockTemp'] ), true );
 							}
 
 							$template_status = get_post_status( $item['blockTemp'] );
-							if( 'publish' === $template_status ) {
+							if ( 'publish' === $template_status ) {
 								$start_Li .= '<div class="plus-content-editor">' . L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( $item['blockTemp'] ) . '</div>';
 							} else {
 								$start_Li .= '<div class="tab-preview-template-notice"><div class="preview-temp-notice-heading">' . esc_html__( 'Unauthorized Access', 'tpebl' ) . '</b></div><div class="preview-temp-notice-desc"><b>' . esc_html__( 'Note :', 'tpebl' ) . '</b> ' . esc_html__( 'You need to upgrade your permissions to Editor or Administrator level to update this option.', 'tpebl' ) . '</div></div>';

@@ -42,7 +42,7 @@ if ( ! class_exists( 'Tp_Tpaepro_Notice' ) ) {
 		 * Ensures only one instance of the class is loaded or can be loaded.
 		 *
 		 * @since 6.3.11
-		 * 
+		 *
 		 * @return instance of the class.
 		 */
 		public static function instance() {
@@ -66,12 +66,14 @@ if ( ! class_exists( 'Tp_Tpaepro_Notice' ) ) {
 			$saved_time = get_option( 'tpae_install_time' );
 
 			$saved_timestamp   = strtotime( $saved_time );
-    		$current_timestamp = current_time( 'timestamp' );
+			$current_timestamp = current_time( 'timestamp' );
 
 			$days_passed = floor( ( $current_timestamp - $saved_timestamp ) / DAY_IN_SECONDS );
 
 			if ( $days_passed >= 2 ) {
-				add_action( 'admin_notices', array( $this, 'theplus_pro_promo_install_plugin' ) );
+				if ( ! get_option( 'tpae_pro_promo_notice' ) ) {
+					add_action( 'admin_notices', array( $this, 'theplus_pro_promo_install_plugin' ) );
+				}
 			}
 		}
 
@@ -82,10 +84,10 @@ if ( ! class_exists( 'Tp_Tpaepro_Notice' ) ) {
 		 */
 		public function theplus_pro_promo_install_plugin() {
 
-            $nonce  = wp_create_nonce( 'tpae-pro-notice' );
+			$nonce  = wp_create_nonce( 'tpae-pro-notice' );
 			$screen = get_current_screen();
 
-			$et_plugin_status = apply_filters( 'tpae_get_plugin_status','template-kit-import/template-kit-import.php' );
+			$et_plugin_status = apply_filters( 'tpae_get_plugin_status', 'template-kit-import/template-kit-import.php' );
 
 			$allowed_parents = array( 'index', 'elementor', 'themes', 'edit', 'plugins' );
 
@@ -99,27 +101,25 @@ if ( ! class_exists( 'Tp_Tpaepro_Notice' ) ) {
 				return;
 			}
 
-            if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-				if ( ! get_option( 'tpae_pro_promo_notice' ) ) {
-                    echo '<div class="notice notice-error is-dismissible tpae-notice-show tpae-pro-promo" style="border-left-color: #6660EF;">
-                            <div class="tp-notice-wrap" style="display: flex; column-gap: 12px; align-items: flex-start; padding: 15px 10px; position: relative; margin-left: 0;">
+			if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
+				echo '<div class="notice notice-error is-dismissible tpae-notice-show tpae-pro-promo" style="border-left-color: #6660EF;">
+					<div class="tp-notice-wrap" style="display: flex; column-gap: 12px; align-items: flex-start; padding: 15px 10px; position: relative; margin-left: 0;">
 
-                                <div class="tp-tpae-logo" style="display: flex; padding-top: 14px;">
-                                   <img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . '/assets/images/products/theplus-product.png' ) . '" alt="The Plus Addons for Elementor Promotion" />
-                                </div>
-                                <div style="margin: 0 10px; color: #000;">
-                                    <h3 style="margin: 10px 0 7px;">' . esc_html__( 'Unlock 120+ Elementor Widgets with The Plus Addons for Elementor Pro', 'tpebl' ) . '</h3>
-                                    
-                                    <p style="color: #1e1e1e;">' . esc_html__( 'The free version of The Plus Addons for Elementor gives you a great start, but Pro unlocks advanced widgets like Dynamic Listing Builder, Social Feed & Reviews, Advanced Mega Menu Menu, Login/Register Form, and many more.', 'tpebl' ) . '</p>
-                                    
-                                    <div class="tp-tpae-button" style="margin-top: 10px;">
-                                        <a href="https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=banner&utm_campaign=links" class="button" target="_blank" rel="noopener noreferrer" style="margin-right: 10px; background: #6660EF; color: #fff;">' . esc_html__( 'Upgrade Now', 'tpebl' ) . '</a>
-                                        <a href="https://theplusaddons.com/free-vs-pro/?utm_source=wpbackend&utm_medium=banner&utm_campaign=links" class="button" target="_blank" rel="noopener noreferrer" style="margin-right: 10px; color: #6660EF; background: #fff; border: #6660EF 1px solid">' . esc_html__( 'Compare Free vs Pro', 'tpebl' ) . '</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
-				}
+						<div class="tp-tpae-logo" style="display: flex; padding-top: 14px;">
+							<img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . 'assets/images/products/theplus-product.png' ) . '" alt="' . esc_attr__( 'The Plus Addons for Elementor Promotion', 'tpebl' ) . '" />
+						</div>
+						<div style="margin: 0 10px; color: #000;">
+							<h3 style="margin: 10px 0 7px;">' . esc_html__( 'Unlock 120+ Elementor Widgets with The Plus Addons for Elementor Pro', 'tpebl' ) . '</h3>
+							
+							<p style="color: #1e1e1e;">' . esc_html__( 'The free version of The Plus Addons for Elementor gives you a great start, but Pro unlocks advanced widgets like Dynamic Listing Builder, Social Feed & Reviews, Advanced Mega Menu Menu, Login/Register Form, and many more.', 'tpebl' ) . '</p>
+							
+							<div class="tp-tpae-button" style="margin-top: 10px;">
+								<a href="https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=banner&utm_campaign=links" class="button" target="_blank" rel="noopener noreferrer" style="margin-right: 10px; background: #6660EF; color: #fff;">' . esc_html__( 'Upgrade Now', 'tpebl' ) . '</a>
+								<a href="https://theplusaddons.com/free-vs-pro/?utm_source=wpbackend&utm_medium=banner&utm_campaign=links" class="button" target="_blank" rel="noopener noreferrer" style="margin-right: 10px; color: #6660EF; background: #fff; border: #6660EF 1px solid">' . esc_html__( 'Compare Free vs Pro', 'tpebl' ) . '</a>
+							</div>
+						</div>
+					</div>
+				</div>';
 			}
 
 			?>

@@ -76,7 +76,7 @@ if ( ! class_exists( 'Tp_Dashboard_Overview' ) ) {
 			}
 
 			return self::$instance;
-		}	
+		}
 
 		/**
 		 * Constructor
@@ -121,9 +121,9 @@ if ( ! class_exists( 'Tp_Dashboard_Overview' ) ) {
 				$data = json_decode( $body, true );
 
 				if ( ! is_array( $data ) ) {
-					return [];
+					return array();
 				}
-				
+
 				$this->overview_data = array(
 					'HTTP_CODE' => $status_code,
 					'success'   => 1,
@@ -131,7 +131,7 @@ if ( ! class_exists( 'Tp_Dashboard_Overview' ) ) {
 					'data'      => $data,
 				);
 
-				set_transient( $this->transient_key, $this->overview_data, 4 * DAY_IN_SECONDS  );
+				set_transient( $this->transient_key, $this->overview_data, 4 * DAY_IN_SECONDS );
 
 			} else {
 				$this->overview_data = $data;

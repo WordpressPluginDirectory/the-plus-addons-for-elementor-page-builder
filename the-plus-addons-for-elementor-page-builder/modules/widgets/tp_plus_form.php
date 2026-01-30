@@ -153,13 +153,13 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 17872,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 17872,
+				'label_block' => true,
+			)
+		);
 		$this->add_control(
 			'form_title',
 			array(
@@ -178,8 +178,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'plusform_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s </a></i></p>',
 						esc_html__( 'Add new form fields below and choose the ones you want to include in your form.', 'tpebl' ),
@@ -223,8 +223,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$repeater->add_control(
 			'connection_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Use this option for short, single-line responses like names or titles. If you need to collect multi-line responses such as feedback or messages, select the Long Text option instead.', 'tpebl' )
@@ -239,8 +239,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$repeater->add_control(
 			'number_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can use this option when you need numeric input such as age, quantity, or any other number-based field. If your goal is to collect phone numbers, choose the Phone Number option instead for a better experience.', 'tpebl' )
@@ -255,8 +255,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$repeater->add_control(
 			'textarea_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'This option is for longer, multi-line responses such as messages, feedback, or addresses', 'tpebl' )
@@ -271,8 +271,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$repeater->add_control(
 			'hidden_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Use this to add a field that stays invisible on the form but still stores data in the backend, such as form IDs, tracking values, or default information.', 'tpebl' )
@@ -287,8 +287,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$repeater->add_control(
 			'honeypot_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Adds a hidden field that real users won’t see but bots will try to fill, helping you block spam submissions automatically.', 'tpebl' )
@@ -766,8 +766,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'submitactions_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can select one or more actions here to decide what happens after someone submits the form.', 'tpebl' )
@@ -812,8 +812,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'email_set_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'To make sure you receive every form submission in your email, please set up SMTP on your site. SMTP ensures your emails are delivered reliably instead of going to spam. You can also do this using the Nexter Extension.', 'tpebl' ),
@@ -835,8 +835,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'email_to_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can add the email address here where you want to receive all form submissions, so every new entry instantly notifies you.', 'tpebl' )
@@ -870,8 +870,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'email_cc_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can add additional email here, so others also stay notified whenever a form is submitted.', 'tpebl' )
@@ -905,8 +905,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'email_bcc_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can add hidden email here, so they receive the form submissions without being visible to receivers.', 'tpebl' )
@@ -1008,8 +1008,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'email_from_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can set the sender email here. If you leave this empty, the emails will be sent from your admin email.', 'tpebl' )
@@ -1034,8 +1034,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'email_from_name_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can add the name here, so the email is received from this name.', 'tpebl' )
@@ -1060,8 +1060,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'email_reply_to_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can add the reply-to email address here, so when the person who receives the form submission replies, their response will go directly to this address instead of the default admin email. This makes it easier to manage replies.', 'tpebl' )
@@ -1103,8 +1103,8 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 		$this->add_control(
 			'redirect_to_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can add a URL here, so after submitting the form, the person will be redirected to this page', 'tpebl' )
@@ -2273,7 +2273,7 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 						'size' => 0,
 					),
 					'render_type' => 'ui',
-					'selectors' => array(
+					'selectors'   => array(
 						'{{WRAPPER}} .tpae-form .tpae-form-button' => 'background: linear-gradient({{SIZE}}{{UNIT}}, {{form_btn_gradient_color1.VALUE}} {{form_btn_gradient_color1_control.SIZE}}{{form_btn_gradient_color1_control.UNIT}}, {{form_btn_gradient_color2.VALUE}} {{form_btn_gradient_color2_control.SIZE}}{{form_btn_gradient_color2_control.UNIT}})',
 					),
 					'condition'   => array(
@@ -2305,7 +2305,7 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 						'size' => 100,
 					),
 					'render_type' => 'ui',
-					'selectors' => array(
+					'selectors'   => array(
 						'{{WRAPPER}} .tpae-form .tpae-form-button' => 'background: linear-gradient({{SIZE}}{{UNIT}}, {{form_btn_gradient_color1.VALUE}} {{form_btn_gradient_color1_control.SIZE}}{{form_btn_gradient_color1_control.UNIT}}, {{form_btn_gradient_color2.VALUE}} {{form_btn_gradient_color2_control.SIZE}}{{form_btn_gradient_color2_control.UNIT}})',
 					),
 					'condition'   => array(
@@ -2342,11 +2342,11 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 							'step' => 10,
 						),
 					),
-					'selectors' => array(
+					'selectors'  => array(
 						'{{WRAPPER}} .tpae-form .tpae-form-button' => 'background: linear-gradient({{SIZE}}{{UNIT}}, {{form_btn_gradient_color1.VALUE}} {{form_btn_gradient_color1_control.SIZE}}{{form_btn_gradient_color1_control.UNIT}}, {{form_btn_gradient_color2.VALUE}} {{form_btn_gradient_color2_control.SIZE}}{{form_btn_gradient_color2_control.UNIT}})',
 					),
 					'condition'  => array(
-						'form_btn_bg_type' => 'gradient',
+						'form_btn_bg_type'        => 'gradient',
 						'form_btn_gradient_style' => array( 'linear' ),
 					),
 					'of_type'    => 'gradient',
@@ -2363,7 +2363,7 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 						'{{WRAPPER}} .tpae-form .tpae-form-button' => 'background: radial-gradient(at {{VALUE}}, {{form_btn_gradient_color1.VALUE}} {{form_btn_gradient_color1_control.SIZE}}{{form_btn_gradient_color1_control.UNIT}}, {{form_btn_gradient_color2.VALUE}} {{form_btn_gradient_color2_control.SIZE}}{{form_btn_gradient_color2_control.UNIT}})',
 					),
 					'condition' => array(
-						'form_btn_bg_type' => 'gradient',
+						'form_btn_bg_type'        => 'gradient',
 						'form_btn_gradient_style' => array( 'radial' ),
 					),
 					'of_type'   => 'gradient',
@@ -2523,7 +2523,7 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 						'size' => 0,
 					),
 					'render_type' => 'ui',
-					'selectors' => array(
+					'selectors'   => array(
 						'{{WRAPPER}} .tpae-form .tpae-form-button:hover' => 'background: linear-gradient({{SIZE}}{{UNIT}}, {{form_btn_hvr_gradient_color1.VALUE}} {{form_btn_hvr_gradient_color1_control.SIZE}}{{form_btn_hvr_gradient_color1_control.UNIT}}, {{form_btn_hvr_gradient_color2.VALUE}} {{form_btn_hvr_gradient_color2_control.SIZE}}{{form_btn_hvr_gradient_color2_control.UNIT}})',
 					),
 					'condition'   => array(
@@ -2555,7 +2555,7 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 						'size' => 100,
 					),
 					'render_type' => 'ui',
-					'selectors' => array(
+					'selectors'   => array(
 						'{{WRAPPER}} .tpae-form .tpae-form-button:hover' => 'background: linear-gradient({{SIZE}}{{UNIT}}, {{form_btn_hvr_gradient_color1.VALUE}} {{form_btn_hvr_gradient_color1_control.SIZE}}{{form_btn_hvr_gradient_color1_control.UNIT}}, {{form_btn_hvr_gradient_color2.VALUE}} {{form_btn_hvr_gradient_color2_control.SIZE}}{{form_btn_hvr_gradient_color2_control.UNIT}})',
 					),
 					'condition'   => array(
@@ -2592,11 +2592,11 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 							'step' => 10,
 						),
 					),
-					'selectors' => array(
+					'selectors'  => array(
 						'{{WRAPPER}} .tpae-form .tpae-form-button:hover' => 'background: linear-gradient({{SIZE}}{{UNIT}}, {{form_btn_hvr_gradient_color1.VALUE}} {{form_btn_hvr_gradient_color1_control.SIZE}}{{form_btn_hvr_gradient_color1_control.UNIT}}, {{form_btn_hvr_gradient_color2.VALUE}} {{form_btn_hvr_gradient_color2_control.SIZE}}{{form_btn_hvr_gradient_color2_control.UNIT}})',
 					),
 					'condition'  => array(
-						'form_btn_hvr_bg_type' => 'gradient',
+						'form_btn_hvr_bg_type'        => 'gradient',
 						'form_btn_hvr_gradient_style' => array( 'linear' ),
 					),
 					'of_type'    => 'gradient',
@@ -2613,7 +2613,7 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 						'{{WRAPPER}} .tpae-form .tpae-form-button:hover' => 'background: radial-gradient(at {{VALUE}}, {{form_btn_hvr_gradient_color1.VALUE}} {{form_btn_hvr_gradient_color1_control.SIZE}}{{form_btn_hvr_gradient_color1_control.UNIT}}, {{form_btn_hvr_gradient_color2.VALUE}} {{form_btn_hvr_gradient_color2_control.SIZE}}{{form_btn_hvr_gradient_color2_control.UNIT}})',
 					),
 					'condition' => array(
-						'form_btn_hvr_bg_type' => 'gradient',
+						'form_btn_hvr_bg_type'        => 'gradient',
 						'form_btn_hvr_gradient_style' => array( 'radial' ),
 					),
 					'of_type'   => 'gradient',
@@ -2669,10 +2669,10 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 				'label'      => esc_html__( 'Spinner Size', 'tpebl' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', 'em', '%' ),
-				'default'    => [
-						'size' => 18,
-						'unit' => 'px',
-					],
+				'default'    => array(
+					'size' => 18,
+					'unit' => 'px',
+				),
 				'range'      => array(
 					'px' => array(
 						'min'  => 10,
@@ -3119,12 +3119,12 @@ class L_ThePlus_Plus_Form extends Widget_Base {
 
 					$form_markup .= '<button id="' . esc_attr( $button_id ) . '" type="submit" class="tpae-form-submit tpae-form-button ' . esc_attr( $icon_position_class ) . '">';
 
-						if ( 'before' === $icon_position ) {
-							$form_markup .= '<span class="tpae-button-text">' . $button_icon . ' ' . esc_html( $submit_button ) . '</span>';
-						} else {
-							$form_markup .= '<span class="tpae-button-text">' . esc_html( $submit_button ) . ' ' . $button_icon . ' </span>';
-						}
-						
+		if ( 'before' === $icon_position ) {
+			$form_markup .= '<span class="tpae-button-text">' . $button_icon . ' ' . esc_html( $submit_button ) . '</span>';
+		} else {
+			$form_markup .= '<span class="tpae-button-text">' . esc_html( $submit_button ) . ' ' . $button_icon . ' </span>';
+		}
+
 						$form_markup .= '<span class="tpae-button-loader" style="display:none;"><span class="tpae-spinner"></span></span>';
 
 					$form_markup .= '</button>';

@@ -285,7 +285,7 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 			)
 		);
 		$this->end_controls_section();
-		
+
 		$this->start_controls_section(
 			'heading_title_extra_section',
 			array(
@@ -512,7 +512,7 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 					'options'   => $global_options,
 					'default'   => '',
 					'condition' => array(
-						'text_animations' => 'tp_global',
+						'text_animations'       => 'tp_global',
 						'enable_text_animation' => 'yes',
 					),
 				)
@@ -808,15 +808,15 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 		$this->add_control(
 			'text_animation_controls_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Customize animation timing behavior', 'tpebl' )
 					)
 				),
 				'label_block' => true,
-				'condition'    => array(
+				'condition'   => array(
 					'enable_text_animation' => 'yes',
 					'text_animations'       => 'tp_basic',
 				),
@@ -864,23 +864,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				),
 			)
 		);
-		// $this->add_control(
-		// 	'text_repeat_yoyo',
-		// 	array(
-		// 		'label'        => esc_html__( 'YoYo', 'tpebl' ),
-		// 		'type'         => \Elementor\Controls_Manager::SWITCHER,
-		// 		'label_on'     => esc_html__( 'Yes', 'tpebl' ),
-		// 		'label_off'    => esc_html__( 'No', 'tpebl' ),
-		// 		'return_value' => 'yes',
-		// 		'default'      => 'no',
-		// 		'condition'    => array(
-		// 			'enable_text_animation' => 'yes',
-		// 			'text_repeat'           => 'yes',
-		// 			'text_animation_type!'  => 'typing',
-		// 			'text_animations'       => 'tp_basic',
-		// 		),
-		// 	)
-		// );
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'tpebl_animated_text_sub_txt',
@@ -948,7 +931,7 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 					'options'   => $sub_global_options,
 					'default'   => '',
 					'condition' => array(
-						'sub_text_animations' => 'tp_global',
+						'sub_text_animations'           => 'tp_global',
 						'enable_text_animation_sub_txt' => 'yes',
 					),
 				)
@@ -1245,15 +1228,15 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 		$this->add_control(
 			'sub_text_animation_controls_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Customize animation timing behavior', 'tpebl' )
 					)
 				),
 				'label_block' => true,
-				'condition'    => array(
+				'condition'   => array(
 					'enable_text_animation_sub_txt' => 'yes',
 					'sub_text_animations'           => 'tp_basic',
 				),
@@ -1300,23 +1283,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 				),
 			)
 		);
-		// $this->add_control(
-		// 	'text_repeat_yoyo_sub_txt',
-		// 	array(
-		// 		'label'        => esc_html__( 'YoYo', 'tpebl' ),
-		// 		'type'         => \Elementor\Controls_Manager::SWITCHER,
-		// 		'label_on'     => esc_html__( 'Yes', 'tpebl' ),
-		// 		'label_off'    => esc_html__( 'No', 'tpebl' ),
-		// 		'return_value' => 'yes',
-		// 		'default'      => 'no',
-		// 		'condition'    => array(
-		// 			'enable_text_animation_sub_txt' => 'yes',
-		// 			'text_repeat_sub_txt'           => 'yes',
-		// 			'text_animation_type_sub_txt!'  => 'typing',
-		// 			'sub_text_animations'           => 'tp_basic',
-		// 		),
-		// 	)
-		// );
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2619,7 +2585,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 							'tp_stagger'         => ! empty( $ani['text_stagger'] ) ? $ani['text_stagger'] : 0.04,
 							'tp_ease'            => $ani['text_ease'] ?? 'power3.out',
 							'tp_repeat'          => $ani['text_repeat'] ?? 'no',
-							// 'tp_repeat_yoyo'     => $ani['text_repeat_yoyo'] ?? 'no',
 							'tp_scrub'           => $ani['tp_scrub'] ?? '',
 
 							// Transform Options
@@ -2649,7 +2614,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 					'tp_stagger'         => ! empty( $settings['text_stagger'] ) ? $settings['text_stagger'] : 0.04,
 					'tp_ease'            => $settings['text_ease'] ?? 'power3.out',
 					'tp_repeat'          => $settings['text_repeat'] ?? 'no',
-					// 'tp_repeat_yoyo'     => $settings['text_repeat_yoyo'] ?? 'no',
 					'tp_scrub'           => $settings['tp_scrub'] ?? '',
 
 					// Transform Options
@@ -2702,7 +2666,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 							'tp_stagger_sub_txt'         => ! empty( $ani['text_stagger'] ) ? $ani['text_stagger'] : 0.04,
 							'tp_ease_sub_txt'            => $ani['text_ease'] ?? 'power3.out',
 							'tp_repeat_sub_txt'          => $ani['text_repeat'] ?? 'no',
-							// 'tp_repeat_yoyo_sub_txt'     => $ani['text_repeat_yoyo'] ?? 'no',
 							'tp_scrub_sub_txt'           => $ani['tp_scrub'] ?? '',
 
 							// Transform Options
@@ -2733,7 +2696,6 @@ class L_Theplus_Ele_Heading_Title extends Widget_Base {
 					'tp_stagger_sub_txt'         => ! empty( $settings['text_stagger_sub_txt'] ) ? $settings['text_stagger_sub_txt'] : 0.04,
 					'tp_ease_sub_txt'            => $settings['text_ease_sub_txt'] ?? 'power3.out',
 					'tp_repeat_sub_txt'          => $settings['text_repeat_sub_txt'] ?? 'no',
-					// 'tp_repeat_yoyo_sub_txt'     => $settings['text_repeat_yoyo_sub_txt'] ?? 'no',
 					'tp_scrub_sub_txt'           => $settings['tp_scrub_sub_txt'] ?? '',
 
 					'transform_toggle_sub_txt'   => $settings['tp_tansformtion_toggel_sub_txt'] ?? 'no',

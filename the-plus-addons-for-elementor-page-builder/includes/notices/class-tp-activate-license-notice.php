@@ -42,7 +42,7 @@ if ( ! class_exists( 'Tp_Activate_License_Notice' ) ) {
 		 * Ensures only one instance of the class is loaded or can be loaded.
 		 *
 		 * @since 6.3.11
-		 * 
+		 *
 		 * @return instance of the class.
 		 */
 		public static function instance() {
@@ -61,7 +61,10 @@ if ( ! class_exists( 'Tp_Activate_License_Notice' ) ) {
 		 * @since 6.3.11
 		 */
 		public function __construct() {
-			add_action( 'admin_notices', array( $this, 'theplus_activate_license_notice' ) );
+
+			if ( ! get_option( 'tpae_activate_license_notice' ) ) {
+				add_action( 'admin_notices', array( $this, 'theplus_activate_license_notice' ) );
+			}
 			add_action( 'wp_ajax_theplus_actlicense_notice_dismiss', array( $this, 'theplus_act_license_notice_dismiss' ) );
 		}
 
@@ -72,10 +75,10 @@ if ( ! class_exists( 'Tp_Activate_License_Notice' ) ) {
 		 */
 		public function theplus_activate_license_notice() {
 
-            $nonce  = wp_create_nonce( 'tpae-activate-license' );
+			$nonce  = wp_create_nonce( 'tpae-activate-license' );
 			$screen = get_current_screen();
 
-			$et_plugin_status = apply_filters( 'tpae_get_plugin_status','template-kit-import/template-kit-import.php' );
+			$et_plugin_status = apply_filters( 'tpae_get_plugin_status', 'template-kit-import/template-kit-import.php' );
 
 			$allowed_parents = array( 'index', 'elementor', 'themes', 'edit', 'plugins' );
 
@@ -95,25 +98,23 @@ if ( ! class_exists( 'Tp_Activate_License_Notice' ) ) {
 				$activate_url = $this->l_theplus_dashboard_url( 'theplus_welcome_page#/activate_pro' );
 			}
 
-            if ( ! get_option( 'tpae_activate_license_notice' ) ) {
-                echo '<div class="notice notice-error is-dismissible tpae-notice-show tpae-activate-license-promo" style="border-left-color: #6660EF;">
-                        <div class="tp-notice-wrap" style="display: flex; column-gap: 12px; align-items: flex-start; padding: 15px 10px; position: relative; margin-left: 0;">
+			echo '<div class="notice notice-error is-dismissible tpae-notice-show tpae-activate-license-promo" style="border-left-color: #6660EF;">
+				<div class="tp-notice-wrap" style="display: flex; column-gap: 12px; align-items: flex-start; padding: 15px 10px; position: relative; margin-left: 0;">
 
-                            <div class="tp-tpae-logo" style="display: flex; padding-top: 14px;">
-                                <img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . '/assets/images/products/theplus-product.png' ) . '" alt="The Plus Addons for Elementor Promotion" />
-                            </div>
-                            <div style="margin: 0 10px; color: #000;">
-                                <h3 style="margin: 10px 0 7px;">' . esc_html__( 'Activate The Plus Addons for Elementor Pro License for Updates & Support', 'tpebl' ) . '</h3>
-                                
-                                <p style="color: #1e1e1e;">' . esc_html__( 'Your Pro version is installed, now activate your license for active updates and support access.', 'tpebl' ) . '</p>
-                                
-                                <div class="tp-tpae-button" style="margin-top: 10px;">
-                                    <a href="' . esc_url( $activate_url ) . '" class="button" style="margin-right: 10px; background: #6660EF; color: #fff;">' . esc_html__( 'Activate License', 'tpebl' ) . '</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
-            }
+					<div class="tp-tpae-logo" style="display: flex; padding-top: 14px;">
+						<img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . 'assets/images/products/theplus-product.png' ) . '" alt="' . esc_attr__( 'The Plus Addons for Elementor Promotion', 'tpebl' ) . '" />
+					</div>
+					<div style="margin: 0 10px; color: #000;">
+						<h3 style="margin: 10px 0 7px;">' . esc_html__( 'Activate The Plus Addons for Elementor Pro License for Updates & Support', 'tpebl' ) . '</h3>
+						
+						<p style="color: #1e1e1e;">' . esc_html__( 'Your Pro version is installed, now activate your license for active updates and support access.', 'tpebl' ) . '</p>
+						
+						<div class="tp-tpae-button" style="margin-top: 10px;">
+							<a href="' . esc_url( $activate_url ) . '" class="button" style="margin-right: 10px; background: #6660EF; color: #fff;">' . esc_html__( 'Activate License', 'tpebl' ) . '</a>
+						</div>
+					</div>
+				</div>
+			</div>';
 
 			?>
 			<script>
@@ -161,22 +162,22 @@ if ( ! class_exists( 'Tp_Activate_License_Notice' ) ) {
 			wp_send_json_success();
 		}
 
-        
-        /**
-         * Redirect Dashboard Page
-         * 
-         * @since 5.5.6
-         */
-        public function l_theplus_dashboard_url( $slug ){
-            $plugin_page_url = add_query_arg(
-                array(
-                    'page' => $slug
-                ),
-                admin_url('admin.php')
-            );
 
-            return $plugin_page_url;
-        }
+		/**
+		 * Redirect Dashboard Page
+		 *
+		 * @since 5.5.6
+		 */
+		public function l_theplus_dashboard_url( $slug ) {
+			$plugin_page_url = add_query_arg(
+				array(
+					'page' => $slug,
+				),
+				admin_url( 'admin.php' )
+			);
+
+			return $plugin_page_url;
+		}
 	}
 
 	Tp_Activate_License_Notice::instance();

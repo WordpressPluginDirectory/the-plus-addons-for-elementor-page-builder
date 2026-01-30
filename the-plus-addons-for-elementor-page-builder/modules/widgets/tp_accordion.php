@@ -158,18 +158,18 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 17409,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 17409,
+				'label_block' => true,
+			)
+		);
 		$this->add_control(
 			'repeater_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'You can add repeaters here and include the content inside each of them.', 'tpebl' ),
@@ -210,8 +210,8 @@ class L_ThePlus_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'content_source_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'If you want to write text directly inside the tab, keep the type as Content. To display other widgets or designs, create an Elementor template, design it as you like, then select Page Template and choose that template here.', 'tpebl' ),
@@ -283,8 +283,8 @@ class L_ThePlus_Accordion extends Widget_Base {
 				'default'   => 'no',
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'condition' => array( 
-					'content_source' => 'page_template' 
+				'condition' => array(
+					'content_source' => 'page_template',
 				),
 			)
 		);
@@ -299,8 +299,8 @@ class L_ThePlus_Accordion extends Widget_Base {
 						esc_html__( 'If disabled, Template will not visible/load in the backend for better page loading performance.', 'tpebl' ),
 					)
 				),
-				'condition' => array( 
-					'content_source' => 'page_template'
+				'condition' => array(
+					'content_source' => 'page_template',
 				),
 			)
 		);
@@ -321,19 +321,19 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
-            'display_icon_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'display_icon_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_icon' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tabs',
 			array(
-				'label'       => 'Accordions',
+				'label'     => esc_html__( 'Accordions', 'tpebl' ),
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $repeater->get_controls(),
 				'default'     => array(
@@ -517,16 +517,16 @@ class L_ThePlus_Accordion extends Widget_Base {
 			);
 		$this->end_popover();
 		$this->add_control(
-            'icons_mind_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'icons_mind_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'display_icon' => 'yes',
 					'icon_style'   => 'icon_mind',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'title_html_tag',
 			array(
@@ -580,15 +580,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'on_hover_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'on_hover_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'on_hover_accordion' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'horizontal_popover',
 			array(
@@ -609,15 +609,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'horizontal_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'horizontal_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'horizontal_popover' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'tabs_autoplay',
 			array(
@@ -630,15 +630,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'autoplay_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'autoplay_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'tabs_autoplay' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'expand_collapse_popover',
 			array(
@@ -656,15 +656,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'expand_collapse_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'expand_collapse_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'expand_collapse_popover' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'search_bar_popover',
 			array(
@@ -682,15 +682,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'search_bar_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'search_bar_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'search_bar_popover' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'slider_accordion_popover',
 			array(
@@ -699,7 +699,6 @@ class L_ThePlus_Accordion extends Widget_Base {
 						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> <i class="eicon-help-o"></i></a>',
 						esc_html__( 'Slider & Pagination', 'tpebl' ),
 						esc_url( $this->tp_doc . 'elementor-accordion-pagination/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' )
-						
 					)
 				),
 				'type'      => Controls_Manager::POPOVER_TOGGLE,
@@ -709,15 +708,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'slider_accordion_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'slider_accordion_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'slider_accordion_popover' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'extra_content_section',
@@ -758,15 +757,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'scroll_top_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'scroll_top_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'accordion_scroll_top' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'schema_accordion',
 			array(
@@ -786,15 +785,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'schema_accordion_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'schema_accordion_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'schema_accordion' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'accordion_stager',
 			array(
@@ -814,15 +813,15 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'accordion_stager_section',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'accordion_stager_section',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'condition'   => array(
 					'accordion_stager' => 'yes',
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1636,12 +1635,12 @@ class L_ThePlus_Accordion extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'section_hover_styling_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
-            )
-        );
+			'section_hover_styling_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(

@@ -177,6 +177,16 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 			'plus_display_rules',
 			'plus_event_tracker',
 			'plus_custom_css',
+			'plus_dynamic_tag',
+			'plus_continuous_animation',
+			'plus_magic_scroll',
+			'plus_mouse_move_parallax',
+			'plus_overlay_effect',
+			'plus_tilt_parallax',
+			'plus_tooltip',
+			'plus_text_global_animation',
+			'plus_image_global_animation',
+			'plus_adv_scroll_interactions',
 		);
 
 		/**
@@ -444,6 +454,51 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 				update_option( 'theplus_options', $theplus_options );
 			}
 
+			/** For the Caching file create*/
+			$plus_widget_settings = l_theplus_library()->get_plus_widget_settings();
+			if ( has_filter( 'plus_widget_setting' ) ) {
+				$plus_widget_settings = apply_filters( 'plus_widget_setting', $plus_widget_settings );
+			}
+
+			l_theplus_generator()->plus_generate_scripts( $plus_widget_settings );
+
+			if ( l_theplus_generator()->check_cache_files() ) {
+				$css_file = L_THEPLUS_ASSET_URL . '/theplus.min.css';
+				$js_file  = L_THEPLUS_ASSET_URL . '/theplus.min.js';
+			} else {
+				$tp_url = L_THEPLUS_URL;
+				if ( defined( 'THEPLUS_VERSION' ) ) {
+					$tp_url = THEPLUS_URL;
+				}
+				$css_file = $tp_url . '/assets/css/main/general/theplus.min.css';
+				$js_file  = $tp_url . '/assets/js/main/general/theplus.min.js';
+			}
+
+			$tpae_backend_cache = get_option( 'tpae_backend_cache' );
+			if ( false === $tpae_backend_cache ) {
+				update_option( 'tpae_backend_cache', time() );
+			}
+
+			wp_enqueue_style(
+				'plus-wdkit-editor-css',
+				$this->pathurl_security( $css_file ),
+				false,
+				time()
+			);
+
+			wp_enqueue_script(
+				'plus-wdkit-editor-js',
+				$this->pathurl_security( $js_file ),
+				array( 'jquery' ),
+				time(),
+				true
+			);
+
+			// l_theplus_generator()->load_inline_script();
+
+			do_action( 'theplus/after_enqueue_scripts', l_theplus_generator()->check_cache_files() );
+			/** For the Caching file create*/
+
 			return $this->tpae_set_response( true, 'success.', 'success.' );
 		}
 
@@ -528,10 +583,10 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 
 		/**
 		 * Get Plugin Status
-		 * 
+		 *
 		 * @since 6.3.17
 		 */
-		public function tpae_get_plugin_status ($plugin_slug) {
+		public function tpae_get_plugin_status( $plugin_slug ) {
 
 			if ( ! function_exists( 'get_plugins' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -551,15 +606,14 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 		}
 
 		/**
-		 * Plugin Install 
-		 * 
+		 * Plugin Install
+		 *
 		 * @since 6.4.1
 		 */
-		public function tpae_plugin_install ($args){
+		public function tpae_plugin_install( $args ) {
 
-			$tp_slug            = !empty ( $args['tp_slug'] ) ? $args['tp_slug'] : '';
-			$tp_plugin_basename = !empty ( $args['tp_plugin_basename'] ) ? $args['tp_plugin_basename'] : '';
-
+			$tp_slug            = ! empty( $args['tp_slug'] ) ? $args['tp_slug'] : '';
+			$tp_plugin_basename = ! empty( $args['tp_plugin_basename'] ) ? $args['tp_plugin_basename'] : '';
 
 			$installed_plugins = get_plugins();
 
@@ -602,7 +656,7 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 				// $this->tpae_wdkit_hook();
 
 				$success = null === $activation_result;
-				$result  = $this->tpae_set_response( $success,'', '' );
+				$result  = $this->tpae_set_response( $success, 'Plugin Install Success.', 'Plugin Install Success.' );
 
 			} elseif ( isset( $installed_plugins[ $tp_plugin_basename ] ) ) {
 
@@ -610,11 +664,11 @@ if ( ! class_exists( 'Tpae_Hooks' ) ) {
 				// $this->tpae_wdkit_hook();
 
 				$success = null === $activation_result;
-				$result  = $this->tpae_set_response( $success,'', '' );
+				$result  = $this->tpae_set_response( $success, 'Plugin Activated', 'Plugin Activated' );
 
 			}
 
-			return $this->tpae_set_response( $result);
+			return $this->tpae_set_response( $result );
 		}
 
 

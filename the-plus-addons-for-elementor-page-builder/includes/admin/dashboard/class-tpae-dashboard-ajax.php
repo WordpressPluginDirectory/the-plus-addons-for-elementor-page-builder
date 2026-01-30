@@ -682,7 +682,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			$skin     = new \Automatic_Upgrader_Skin();
 			$upgrader = new \Plugin_Upgrader( $skin );
 
-			if( 'nexter-extension' === $slug ) {
+			if ( 'nexter-extension' === $slug ) {
 				$slug = 'nexter-extension/nexter-extension.php';
 			}
 
@@ -698,7 +698,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 				}
 
 				$success = null === $activation_result;
-				$result  = $this->tpae_set_response( $success, 'Successfully Install', 'Successfully Install', '' );
+				$result  = $this->tpae_set_response( $success, 'Successfully Install', 'Successfully Install');
 
 			} elseif ( isset( $installed_plugins[ $plugin_basename ] ) ) {
 
@@ -709,7 +709,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 				}
 
 				$success = null === $activation_result;
-				$result  = $this->tpae_set_response( $success, 'Successfully Activate', 'Successfully Activate', '' );
+				$result  = $this->tpae_set_response( $success, 'Successfully Activate', 'Successfully Activate');
 
 			}
 
@@ -768,7 +768,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			if ( is_wp_error( $response ) ) {
 				$error_message = $response->get_error_message();
 
-				$result = $this->tpae_set_response( false, 'oops', 'oops', '' );
+				$result = $this->tpae_set_response( false, 'oops', 'oops');
 			} else {
 				$theme_info    = unserialize( $response['body'] );
 				$theme_name    = $theme_info->name;
@@ -796,7 +796,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 
 				$wp_filesystem->delete( WP_CONTENT_DIR . '/themes/' . $theme_slug . '.zip' );
 
-				$result = $this->tpae_set_response( true, "Success $name", "Success $name", '' );
+				$result = $this->tpae_set_response( true, "Success $name", "Success $name");
 			}
 
 			return $result;
@@ -1028,9 +1028,9 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			do_action( 'wdkit_active_settings', $my_array, $builder );
 
 			if ( $onboarding ) {
-				$response = $this->tpae_set_response( true, 'Onboarding Setup', 'Onboarding Setup', '' );
+				$response = $this->tpae_set_response( true, 'Onboarding Setup', 'Onboarding Setup');
 			} else {
-				$response = $this->tpae_set_response( false, 'Onboarding Setup Failed', 'Onboarding Setup Failed', '' );
+				$response = $this->tpae_set_response( false, 'Onboarding Setup Failed', 'Onboarding Setup Failed');
 			}
 
 			update_option( 'tpae_onboarding_time', current_time( 'mysql' ) );
@@ -1048,11 +1048,12 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 		public function tpae_whats_new_close() {
 
 			$updated = update_option( 'tpae_whats_new_notification', TPAE_WHATS_NEW_NOTIFICETIONS );
+			update_option( 'tpae_menu_notification', TPAE_MENU_NOTIFICETIONS );
 
 			if ( $updated ) {
-				$response = $this->tpae_set_response(true,'Whats New Closed','Whats New notification status updated successfully.', '',);
+				$response = $this->tpae_set_response( true, 'Whats New Closed', 'Whats New notification status updated successfully.');
 			} else {
-				$response = $this->tpae_set_response(false,'Onboarding Setup Failed','Failed to update Whats New notification option.','');
+				$response = $this->tpae_set_response( false, 'Onboarding Setup Failed', 'Failed to update Whats New notification option.');
 			}
 
 			wp_send_json( $response );

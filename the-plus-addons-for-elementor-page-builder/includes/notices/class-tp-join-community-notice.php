@@ -42,7 +42,7 @@ if ( ! class_exists( 'Tp_Join_Community_Notice' ) ) {
 		 * Ensures only one instance of the class is loaded or can be loaded.
 		 *
 		 * @since 6.3.11
-		 * 
+		 *
 		 * @return instance of the class.
 		 */
 		public static function instance() {
@@ -66,12 +66,14 @@ if ( ! class_exists( 'Tp_Join_Community_Notice' ) ) {
 			$saved_time = get_option( 'tpae_install_time' );
 
 			$saved_timestamp   = strtotime( $saved_time );
-    		$current_timestamp = current_time( 'timestamp' );
+			$current_timestamp = current_time( 'timestamp' );
 
 			$days_passed = floor( ( $current_timestamp - $saved_timestamp ) / DAY_IN_SECONDS );
 
 			if ( $days_passed >= 30 ) {
-				add_action( 'admin_notices', array( $this, 'theplus_join_community_notice' ) );
+				if ( ! get_option( 'tpae_join_community_notice' ) ) {
+					add_action( 'admin_notices', array( $this, 'theplus_join_community_notice' ) );
+				}
 			}
 		}
 
@@ -82,10 +84,10 @@ if ( ! class_exists( 'Tp_Join_Community_Notice' ) ) {
 		 */
 		public function theplus_join_community_notice() {
 
-            $nonce  = wp_create_nonce( 'tpae-join-community' );
+			$nonce  = wp_create_nonce( 'tpae-join-community' );
 			$screen = get_current_screen();
 
-			$et_plugin_status = apply_filters( 'tpae_get_plugin_status','template-kit-import/template-kit-import.php' );
+			$et_plugin_status = apply_filters( 'tpae_get_plugin_status', 'template-kit-import/template-kit-import.php' );
 
 			$allowed_parents = array( 'index', 'elementor', 'themes', 'edit', 'plugins' );
 
@@ -99,26 +101,24 @@ if ( ! class_exists( 'Tp_Join_Community_Notice' ) ) {
 				return;
 			}
 
-            if ( ! get_option( 'tpae_join_community_notice' ) ) {
-                echo '<div class="notice notice-error is-dismissible tpae-notice-show tpae-join-community" style="border-left-color: #6660EF;">
-                        <div class="tp-nexter-werp" style="display: flex; column-gap: 12px; align-items: flex-start; padding: 15px 10px; position: relative; margin-left: 0;">
+			echo '<div class="notice notice-error is-dismissible tpae-notice-show tpae-join-community" style="border-left-color: #6660EF;">
+				<div class="tp-nexter-werp" style="display: flex; column-gap: 12px; align-items: flex-start; padding: 15px 10px; position: relative; margin-left: 0;">
 
-                            <div class="tp-notice-wrap" style="display: flex; padding-top: 14px;">
-                                <img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . '/assets/images/products/theplus-product.png' ) . '" alt="The Plus Addons for Elementor Promotion" />
-                            </div>
-                            <div style="margin: 0 10px; color: #000;">
-                                <h3 style="margin: 10px 0 7px;">' . esc_html__( 'Join The Plus Addons for Elementor Community – Learn, Share & Grow', 'tpebl' ) . '</h3>
+					<div class="tp-notice-wrap" style="display: flex; padding-top: 14px;">
+						<img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . 'assets/images/products/theplus-product.png' ) . '" alt="' . esc_attr__( 'The Plus Addons for Elementor Promotion', 'tpebl' ) . '" />
+					</div>
+					<div style="margin: 0 10px; color: #000;">
+						<h3 style="margin: 10px 0 7px;">' . esc_html__( 'Join The Plus Addons for Elementor Community – Learn, Share & Grow', 'tpebl' ) . '</h3>
 
-                                <p style="color: #1e1e1e;">' . esc_html__( 'Get early access to features, share ideas, and connect with other Elementor creators.', 'tpebl' ) . '</p>
+						<p style="color: #1e1e1e;">' . esc_html__( 'Get early access to features, share ideas, and connect with other Elementor creators.', 'tpebl' ) . '</p>
 
-                                <div class="tp-tpae-button" style="margin-top: 10px;">
-                                    <a href="https://go.posimyth.com/plus-elementor-discord" class="button" target="_blank" rel="noopener noreferrer" style="margin-right: 10px; background: #6660EF; color: #fff;">' . esc_html__( 'Join Discord', 'tpebl' ) . '</a>
-                                    <a href="https://www.facebook.com/groups/theplus4elementor" class="button" target="_blank" rel="noopener noreferrer" style="margin-right: 10px; background: #6660EF; color: #fff;">' . esc_html__( 'Join Facebook Group', 'tpebl' ) . '</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>';
-            }
+						<div class="tp-tpae-button" style="margin-top: 10px;">
+							<a href="https://go.posimyth.com/plus-elementor-discord" class="button" target="_blank" rel="noopener noreferrer" style="margin-right: 10px; background: #6660EF; color: #fff;">' . esc_html__( 'Join Discord', 'tpebl' ) . '</a>
+							<a href="https://www.facebook.com/groups/theplus4elementor" class="button" target="_blank" rel="noopener noreferrer" style="margin-right: 10px; background: #6660EF; color: #fff;">' . esc_html__( 'Join Facebook Group', 'tpebl' ) . '</a>
+						</div>
+					</div>
+				</div>
+			</div>';
 
 			?>
 			<script>
@@ -166,22 +166,22 @@ if ( ! class_exists( 'Tp_Join_Community_Notice' ) ) {
 			wp_send_json_success();
 		}
 
-        
-        /**
-         * Redirect Dashboard Page
-         * 
-         * @since 5.5.6
-         */
-        public function l_theplus_dashboard_url( $slug ){
-            $plugin_page_url = add_query_arg(
-                array(
-                    'page' => $slug
-                ),
-                admin_url('admin.php')
-            );
 
-            return $plugin_page_url;
-        }
+		/**
+		 * Redirect Dashboard Page
+		 *
+		 * @since 5.5.6
+		 */
+		public function l_theplus_dashboard_url( $slug ) {
+			$plugin_page_url = add_query_arg(
+				array(
+					'page' => $slug,
+				),
+				admin_url( 'admin.php' )
+			);
+
+			return $plugin_page_url;
+		}
 	}
 
 	Tp_Join_Community_Notice::instance();

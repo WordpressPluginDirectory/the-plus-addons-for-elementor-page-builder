@@ -152,30 +152,30 @@ class ThePlus_Post_Navigation extends Widget_Base {
 		$this->add_control(
 			'style',
 			array(
-				'label'        => esc_html__( 'Style', 'tpebl' ),
-				'label_block'  => true,
-				'type'         => Controls_Manager::VISUAL_CHOICE,
-				'default'      => 'style-1',
-				'options'      => array(
+				'label'       => esc_html__( 'Style', 'tpebl' ),
+				'label_block' => true,
+				'type'        => Controls_Manager::VISUAL_CHOICE,
+				'default'     => 'style-1',
+				'options'     => array(
 					'style-1' => array(
 						'title' => esc_html__( 'Style 1', 'tpebl' ),
-						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/post-navigation/style-1.svg'),
+						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/post-navigation/style-1.svg' ),
 					),
 					'style-2' => array(
 						'title' => esc_html__( 'Style 2', 'tpebl' ),
-						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/post-navigation/style-2.svg'),
+						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/post-navigation/style-2.svg' ),
 					),
 					'style-3' => array(
 						'title' => esc_html__( 'Style 3', 'tpebl' ),
-						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/post-navigation/style-3.svg'),
+						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/post-navigation/style-3.svg' ),
 					),
 					'style-4' => array(
 						'title' => esc_html__( 'Style 4', 'tpebl' ),
-						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/post-navigation/style-4.svg'),
+						'image' => esc_url( L_THEPLUS_URL . 'assets/images/widget-style/post-navigation/style-4.svg' ),
 					),
 				),
-				'columns'      => 2,
-				'classes'      => 'tpae-visual_choice',
+				'columns'     => 2,
+				'classes'     => 'tpae-visual_choice',
 			)
 		);
 		$this->add_control(
@@ -186,6 +186,19 @@ class ThePlus_Post_Navigation extends Widget_Base {
 				'label_on'  => esc_html__( 'Show', 'tpebl' ),
 				'label_off' => esc_html__( 'Hide', 'tpebl' ),
 				'default'   => 'no',
+			)
+		);
+		$this->add_control(
+			'showcsttexonomy_label',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Enable this to show previous and next posts from the same taxonomy.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 			)
 		);
 		$this->add_control(
@@ -284,10 +297,10 @@ class ThePlus_Post_Navigation extends Widget_Base {
 			$this->add_control(
 				'tpae_theme_builder',
 				array(
-					'type'   => 'tpae_theme_builder',
-					'notice' => 'We recommend using this widget in the Post Single Page Template to allow users to move between posts.',
+					'type'        => 'tpae_theme_builder',
+					'notice'      => 'We recommend using this widget in the Post Single Page Template to allow users to move between posts.',
 					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
-					'page_type'   => 'tp_singular_page'
+					'page_type'   => 'tp_singular_page',
 				)
 			);
 			$this->end_controls_section();
@@ -1316,7 +1329,7 @@ class ThePlus_Post_Navigation extends Widget_Base {
 			} else {
 				$prevpostimg .= '<div class="post-image">';
 
-					$prevpostimg .= '<img src="' . L_THEPLUS_URL . '/assets/images/placeholder-grid.jpg" class="tp-nav-trans" />';
+					$prevpostimg .= '<img src="' . L_THEPLUS_URL . 'assets/images/tp-placeholder.jpg" class="tp-nav-trans" />';
 
 				$prevpostimg .= '</div>';
 			}
@@ -1376,7 +1389,7 @@ class ThePlus_Post_Navigation extends Widget_Base {
 			} else {
 				$nextpostimg .= '<div class="post-image">';
 
-					$nextpostimg .= '<img src="' . L_THEPLUS_URL . '/assets/images/placeholder-grid.jpg" class="tp-nav-trans" />';
+					$nextpostimg .= '<img src="' . L_THEPLUS_URL . 'assets/images/tp-placeholder.jpg" class="tp-nav-trans" />';
 
 				$nextpostimg .= '</div>';
 			}

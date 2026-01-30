@@ -42,7 +42,7 @@ if ( ! class_exists( 'Tp_Ask_Review_Notice' ) ) {
 		 * Ensures only one instance of the class is loaded or can be loaded.
 		 *
 		 * @since 6.3.11
-		 * 
+		 *
 		 * @return instance of the class.
 		 */
 		public static function instance() {
@@ -66,18 +66,18 @@ if ( ! class_exists( 'Tp_Ask_Review_Notice' ) ) {
 			$saved_time = get_option( 'tpae_install_time' );
 
 			$saved_timestamp   = strtotime( $saved_time );
-    		$current_timestamp = current_time( 'timestamp' );
+			$current_timestamp = current_time( 'timestamp' );
 
 			$days_passed = floor( ( $current_timestamp - $saved_timestamp ) / DAY_IN_SECONDS );
-			
-            if ( ! get_option( 'tpae_ask_review_notice' ) ) {
+
+			if ( ! get_option( 'tpae_ask_review_notice' ) ) {
 				if ( get_option( 'tpae_review_show_later' ) ) {
 					$show_later_time = get_option( 'tpae_review_show_later' );
 
 					$showlater_timestamp = strtotime( $show_later_time );
-					$days_passed = floor( ( $current_timestamp - $showlater_timestamp ) / DAY_IN_SECONDS );
+					$days_passed         = floor( ( $current_timestamp - $showlater_timestamp ) / DAY_IN_SECONDS );
 
-					if( $days_passed >= 30 ) {
+					if ( $days_passed >= 30 ) {
 						add_action( 'admin_notices', array( $this, 'theplus_ask_review_notice' ) );
 					}
 				} elseif ( $days_passed >= 14 ) {
@@ -93,10 +93,10 @@ if ( ! class_exists( 'Tp_Ask_Review_Notice' ) ) {
 		 */
 		public function theplus_ask_review_notice() {
 
-            $nonce  = wp_create_nonce( 'tpae-ask-review' );
+			$nonce  = wp_create_nonce( 'tpae-ask-review' );
 			$screen = get_current_screen();
 
-			$et_plugin_status = apply_filters( 'tpae_get_plugin_status','template-kit-import/template-kit-import.php' );
+			$et_plugin_status = apply_filters( 'tpae_get_plugin_status', 'template-kit-import/template-kit-import.php' );
 
 			$allowed_parents = array( 'index', 'elementor', 'themes', 'edit', 'plugins' );
 
@@ -114,7 +114,7 @@ if ( ! class_exists( 'Tp_Ask_Review_Notice' ) ) {
 					<div class="tp-nexter-werp" style="display: flex; column-gap: 12px; align-items: flex-start; padding: 15px 10px; position: relative; margin-left: 0;">
 
 						<div class="tp-notice-wrap" style="display: flex; padding-top: 14px;">
-							<img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . '/assets/images/products/theplus-product.png' ) . '" alt="The Plus Addons for Elementor Promotion" />
+							<img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . 'assets/images/products/theplus-product.png' ) . '" alt="' . esc_attr__( 'The Plus Addons for Elementor Promotion', 'tpebl' ) . '" />
 						</div>
 						<div style="margin: 0 10px; color: #000;">
 							<h3 style="margin: 10px 0 7px;">' . esc_html__( 'Has The Plus Addons for Elementor Helped You Build Faster?', 'tpebl' ) . '</h3>
@@ -196,10 +196,10 @@ if ( ! class_exists( 'Tp_Ask_Review_Notice' ) ) {
 
 			$get_type = ! empty( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : '';
 
-			if( 'tpae_review_notice_later' === $get_type ) {
+			if ( 'tpae_review_notice_later' === $get_type ) {
 				$saved_time = current_time( 'mysql' );
 				update_option( 'tpae_review_show_later', $saved_time );
-			} elseif( 'tpae_ask_review_notice' === $get_type ) {
+			} elseif ( 'tpae_ask_review_notice' === $get_type ) {
 				update_option( 'tpae_ask_review_notice', true );
 			}
 
@@ -208,22 +208,22 @@ if ( ! class_exists( 'Tp_Ask_Review_Notice' ) ) {
 			wp_send_json_success();
 		}
 
-        
-        /**
-         * Redirect Dashboard Page
-         * 
-         * @since 5.5.6
-         */
-        public function l_theplus_dashboard_url( $slug ){
-            $plugin_page_url = add_query_arg(
-                array(
-                    'page' => $slug
-                ),
-                admin_url('admin.php')
-            );
 
-            return $plugin_page_url;
-        }
+		/**
+		 * Redirect Dashboard Page
+		 *
+		 * @since 5.5.6
+		 */
+		public function l_theplus_dashboard_url( $slug ) {
+			$plugin_page_url = add_query_arg(
+				array(
+					'page' => $slug,
+				),
+				admin_url( 'admin.php' )
+			);
+
+			return $plugin_page_url;
+		}
 	}
 
 	Tp_Ask_Review_Notice::instance();

@@ -111,13 +111,13 @@ class L_ThePlus_Button extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 16452,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 16452,
+				'label_block' => true,
+			)
+		);
 		$this->add_control(
 			'button_style',
 			array(

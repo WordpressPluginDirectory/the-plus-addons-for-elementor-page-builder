@@ -42,7 +42,7 @@ if ( ! class_exists( 'Tp_Data_Tracking_Notice' ) ) {
 		 * Ensures only one instance of the class is loaded or can be loaded.
 		 *
 		 * @since 6.3.11
-		 * 
+		 *
 		 * @return instance of the class.
 		 */
 		public static function instance() {
@@ -72,7 +72,7 @@ if ( ! class_exists( 'Tp_Data_Tracking_Notice' ) ) {
 		 */
 		public function theplus_data_tracking_notice() {
 
-            $nonce  = wp_create_nonce( 'tpae-data-tracking' );
+			$nonce  = wp_create_nonce( 'tpae-data-tracking' );
 			$screen = get_current_screen();
 
 			$allowed_parents = array( 'index', 'elementor', 'themes', 'edit', 'plugins' );
@@ -87,12 +87,12 @@ if ( ! class_exists( 'Tp_Data_Tracking_Notice' ) ) {
 				return;
 			}
 
-            if ( ! get_option( 'tpae_ask_review_notice' ) ) {
-                echo '<div class="notice notice-error is-dismissible tpae-notice-show tpae-data-tracking" style="border-left-color: #6660EF;">
+			if ( ! get_option( 'tpae_ask_review_notice' ) ) {
+				echo '<div class="notice notice-error is-dismissible tpae-notice-show tpae-data-tracking" style="border-left-color: #6660EF;">
                         <div class="tp-nexter-werp" style="display: flex; column-gap: 12px; align-items: flex-start; padding: 15px 10px; position: relative; margin-left: 0;">
 
                             <div class="tp-notice-wrap" style="display: flex; padding-top: 14px;">
-                                <img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . '/assets/images/products/theplus-product.png' ) . '" alt="The Plus Addons for Elementor Promotion" />
+                                <img style="max-width: 28px; max-height: 28px; border-radius: 5px;" src="' . esc_url( L_THEPLUS_URL . 'assets/images/products/theplus-product.png' ) . '" alt="' . esc_attr__( 'The Plus Addons for Elementor Promotion', 'tpebl' ) . '" />
                             </div>
                             <div style="margin: 0 10px; color: #000;">
                                 <h3 style="margin: 10px 0 7px;">' . esc_html__( 'Help Us Improve The Plus Addons for Elementor', 'tpebl' ) . '</h3>
@@ -106,7 +106,7 @@ if ( ! class_exists( 'Tp_Data_Tracking_Notice' ) ) {
                             </div>
                         </div>
                     </div>';
-            }
+			}
 
 			?>
 			<script>
@@ -154,22 +154,22 @@ if ( ! class_exists( 'Tp_Data_Tracking_Notice' ) ) {
 			wp_send_json_success();
 		}
 
-        
-        /**
-         * Redirect Dashboard Page
-         * 
-         * @since 5.5.6
-         */
-        public function l_theplus_dashboard_url( $slug ){
-            $plugin_page_url = add_query_arg(
-                array(
-                    'page' => $slug
-                ),
-                admin_url('admin.php')
-            );
 
-            return $plugin_page_url;
-        }
+		/**
+		 * Redirect Dashboard Page
+		 *
+		 * @since 5.5.6
+		 */
+		public function l_theplus_dashboard_url( $slug ) {
+			$plugin_page_url = add_query_arg(
+				array(
+					'page' => $slug,
+				),
+				admin_url( 'admin.php' )
+			);
+
+			return $plugin_page_url;
+		}
 	}
 
 	Tp_Data_Tracking_Notice::instance();

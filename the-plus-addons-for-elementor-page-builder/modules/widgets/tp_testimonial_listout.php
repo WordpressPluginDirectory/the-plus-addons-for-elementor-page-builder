@@ -128,18 +128,18 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 	public function get_upsale_data() {
 		$val = false;
 
-		if( ! defined( 'THEPLUS_VERSION' ) ) {
+		if ( ! defined( 'THEPLUS_VERSION' ) ) {
 			$val = true;
 		}
 
-		return [
-			'condition' => $val,
-			'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt' => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title' => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url' => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
+		return array(
+			'condition'    => $val,
+			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
+			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
+			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
+			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
 			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		];
+		);
 	}
 
 	/**
@@ -150,7 +150,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 	public function has_widget_inner_wrapper(): bool {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
-	
+
 	/**
 	 * Register controls.
 	 *
@@ -167,21 +167,21 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'tpae_preset_controller',
-            array(
-                'type'        => 'tpae_preset_button',
-                'temp_id'     => 17737,
-                'label_block' => true,
-            )
-        );
+			'tpae_preset_controller',
+			array(
+				'type'        => 'tpae_preset_button',
+				'temp_id'     => 17737,
+				'label_block' => true,
+			)
+		);
 		$this->add_control(
 			'style',
 			array(
-				'label'     => esc_html__( 'Style', 'tpebl' ),
-				'label_block'  => true,
-				'type'         => Controls_Manager::VISUAL_CHOICE,
-				'default'      => 'style-1',
-				'options'      => array(
+				'label'       => esc_html__( 'Style', 'tpebl' ),
+				'label_block' => true,
+				'type'        => Controls_Manager::VISUAL_CHOICE,
+				'default'     => 'style-1',
+				'options'     => array(
 					'style-1' => array(
 						'title' => esc_html__( 'Style-1', 'tpebl' ),
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/testimonial/style-1.svg' ),
@@ -199,21 +199,21 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/testimonial/style-4.svg' ),
 					),
 				),
-				'columns'      => 4,
-				'classes'      => 'tpae-visual_choice',
+				'columns'     => 4,
+				'classes'     => 'tpae-visual_choice',
 			)
 		);
 		$this->add_control(
-            'style_pro_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'style_pro_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'style!' => array( 'style-1', 'style-2', 'style-4' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'layout',
 			array(
@@ -222,11 +222,11 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 				'type'        => Controls_Manager::VISUAL_CHOICE,
 				'default'     => 'carousel',
 				'options'     => array(
-					'grid' => array(
+					'grid'     => array(
 						'title' => esc_html__( 'Grid', 'tpebl' ),
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/listing-layout/grid.svg' ),
 					),
-					'masonry' => array(
+					'masonry'  => array(
 						'title' => esc_html__( 'Masonry', 'tpebl' ),
 						'image' => esc_url( L_THEPLUS_ASSETS_URL . 'images/widget-style/listing-layout/masonry.svg' ),
 					),
@@ -236,13 +236,13 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 					),
 				),
 				'columns'     => 3,
-				'classes'      => 'tpae-visual_choice',
+				'classes'     => 'tpae-visual_choice',
 			)
 		);
 		$this->add_control(
 			'how_it_works_grid',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s <i class="eicon-help-o"></i></a>',
 						esc_url( $this->tp_doc . 'show-testimonials-in-grid-layout-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
@@ -258,7 +258,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'how_it_works_Masonry',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s <i class="eicon-help-o"></i></a>',
 						esc_url( $this->tp_doc . 'show-testimonials-in-masonry-grid-layout-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
@@ -274,7 +274,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'how_it_works_carousel',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s <i class="eicon-help-o"></i></a>',
 						esc_url( $this->tp_doc . 'add-a-testimonial-carousel-slider-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
@@ -325,8 +325,8 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'tlContentFrom_label',
 			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Choose how you want to display testimonials, fetch them dynamically from a Post Type or add them manually using the Repeater option for full control over each testimonial.', 'tpebl' ),
@@ -338,7 +338,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'how_it_works_Post_Type',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'<a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s <i class="eicon-help-o"></i></a>',
 						esc_url( $this->tp_doc . 'add-testimonials-with-custom-post-type-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
@@ -358,7 +358,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 				'label'       => esc_html__( 'Testimonial Content', 'tpebl' ),
 				'type'        => Controls_Manager::WYSIWYG,
 				'default'     => '',
-				'ai'          => false,                     
+				'ai'          => false,
 				'placeholder' => esc_html__( 'Enter Testimonial Content', 'tpebl' ),
 				'dynamic'     => array( 'active' => true ),
 			)
@@ -401,7 +401,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Author Image', 'tpebl' ),
 				'type'    => Controls_Manager::MEDIA,
-				'ai'      => false,  
+				'ai'      => false,
 				'dynamic' => array( 'active' => true ),
 			)
 		);
@@ -568,19 +568,19 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'post_offset',
 			array(
-				'label'       => esc_html__( 'Offset Posts', 'tpebl' ),
-				'type'        => Controls_Manager::NUMBER,
-				'min'         => 0,
-				'max'         => 50,
-				'step'        => 1,
-				'default'     => '',
+				'label'   => esc_html__( 'Offset Posts', 'tpebl' ),
+				'type'    => Controls_Manager::NUMBER,
+				'min'     => 0,
+				'max'     => 50,
+				'step'    => 1,
+				'default' => '',
 			)
 		);
 		$this->add_control(
 			'post_offset_note',
 			array(
-				'type' => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Hide posts from the beginning of listing.', 'tpebl' ),
@@ -628,7 +628,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'display_thumbnail',
 			array(
-				'label' => wp_kses_post(
+				'label'     => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="%s" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Display Image Size', 'tpebl' ),
@@ -643,16 +643,16 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'display_thumbnail_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'display_thumbnail_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'display_thumbnail' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'caroByheight',
 			array(
@@ -673,15 +673,15 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'caroByheight_label',
 			array(
-				'type' => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'You can limit your content to keep all testimonials visually balanced, choose whether to restrict by text length or section height for a cleaner layout.', 'tpebl' ),
 					)
 				),
 				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'tlContentFrom' => 'tlrepeater',
 					'layout'        => 'carousel',
 				),
@@ -691,7 +691,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			'contentHei',
 			array(
 				'type'        => Controls_Manager::SLIDER,
-				'label'      => wp_kses_post(
+				'label'       => wp_kses_post(
 					sprintf(
 						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
 						esc_html__( 'Content Height (px)', 'tpebl' ),
@@ -838,7 +838,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'descByLimit',
 			array(
-				'label' => wp_kses_post(
+				'label'      => wp_kses_post(
 					sprintf(
 						'%s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"><i class="eicon-help-o"></i></a>',
 						esc_html__( 'Excerpt Limit', 'tpebl' ),
@@ -1809,10 +1809,10 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$this->add_control(
 			'steps_slide',
 			array(
-				'label'     => esc_html__( 'Next Previous', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => '1',
-				'options'   => array(
+				'label'   => esc_html__( 'Next Previous', 'tpebl' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => '1',
+				'options' => array(
 					'1' => esc_html__( 'One Column', 'tpebl' ),
 					'2' => esc_html__( 'All Visible Columns (PRO)', 'tpebl' ),
 				),
@@ -1829,7 +1829,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 					)
 				),
 				'label_block' => true,
-				'separator' => 'after',
+				'separator'   => 'after',
 			)
 		);
 		$this->add_responsive_control(
@@ -1876,16 +1876,16 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'multi_drag_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'multi_drag_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'multi_drag' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'slider_infinite',
 			array(
@@ -1907,16 +1907,16 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'slider_pause_hover_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'slider_pause_hover_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'slider_pause_hover' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->add_control(
 			'slider_adaptive_height',
 			array(
@@ -2132,16 +2132,16 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'slider_center_mode_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'slider_center_mode_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'slider_center_mode' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_tab();
 		$this->start_controls_tab(
 			'tab_carousel_tablet',
@@ -2190,7 +2190,7 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 				),
 			)
 		);
-		
+
 		$this->end_controls_tab();
 		$this->end_controls_tabs();
 		$this->end_controls_section();
@@ -2213,16 +2213,16 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			)
 		);
 		$this->add_control(
-            'messy_column_options',
-            array(
-                'type'        => 'tpae_pro_feature',
-                'label_block' => true,
+			'messy_column_options',
+			array(
+				'type'        => 'tpae_pro_feature',
+				'label_block' => true,
 				'default'     => '',
 				'condition'   => array(
 					'messy_column' => array( 'yes' ),
 				),
-            )
-        );
+			)
+		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2466,8 +2466,8 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 			} else {
 				$data_class .= ' list-carousel-slick ';
 			}
-		} 
-		
+		}
+
 		$data_class .= ' testimonial-' . $style;
 
 		$read_attr = array();
@@ -2676,16 +2676,16 @@ class L_ThePlus_Testimonial_ListOut extends Widget_Base {
 		$data_slider  .= ' data-slider_arrows="' . esc_attr( $slider_arrows ) . '"';
 		$data_slider  .= ' data-slider_arrows_style="' . esc_attr( $settings['slider_arrows_style'] ) . '" ';
 
-		if( !empty( $settings['arrow_icon_color'] ) ){
-			$data_slider  .= ' data-arrow_icon_color="' . esc_attr( $settings['arrow_icon_color'] ) . '" ';
+		if ( ! empty( $settings['arrow_icon_color'] ) ) {
+			$data_slider .= ' data-arrow_icon_color="' . esc_attr( $settings['arrow_icon_color'] ) . '" ';
 		}
 
-		if( !empty( $settings['arrow_hover_bg_color'] ) ){
-			$data_slider  .= ' data-arrow_hover_bg_color="' . esc_attr( $settings['arrow_hover_bg_color'] ) . '" ';
+		if ( ! empty( $settings['arrow_hover_bg_color'] ) ) {
+			$data_slider .= ' data-arrow_hover_bg_color="' . esc_attr( $settings['arrow_hover_bg_color'] ) . '" ';
 		}
 
-		if( !empty( $settings['arrow_hover_icon_color'] ) ){
-			$data_slider  .= ' data-arrow_hover_icon_color="' . esc_attr( $settings['arrow_hover_icon_color'] ) . '" ';
+		if ( ! empty( $settings['arrow_hover_icon_color'] ) ) {
+			$data_slider .= ' data-arrow_hover_icon_color="' . esc_attr( $settings['arrow_hover_icon_color'] ) . '" ';
 		}
 
 		/** For Tablet*/

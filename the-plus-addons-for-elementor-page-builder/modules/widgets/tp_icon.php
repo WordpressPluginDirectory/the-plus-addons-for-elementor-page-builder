@@ -138,8 +138,8 @@ class ThePlus_Icon extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
-				'type'    => 'tpae_need_help',
+				'label' => __( 'Need Help', 'tpebl' ),
+				'type'  => 'tpae_need_help',
 			)
 		);
 		$this->end_controls_section();
