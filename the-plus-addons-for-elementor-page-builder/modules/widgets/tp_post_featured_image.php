@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
@@ -22,18 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus_Featured_Image
  */
-class ThePlus_Featured_Image extends Widget_Base {
-
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @since 1.0.1
-	 * @version 5.4.2
-	 *
-	 * @var TpDoc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
-
+class ThePlus_Featured_Image extends Plus_Widget_Base {
 	/**
 	 * Get Widget Name.
 	 *
@@ -83,54 +72,14 @@ class ThePlus_Featured_Image extends Widget_Base {
 	public function get_keywords() {
 		return array( 'Tp Post Featured Image', 'Featured Image', 'Image Widget', 'Image Gallery', 'Image Slider', 'Image Carousel', 'Image Grid', 'Image Showcase', 'Image Viewer', 'Image Display', 'Image Preview', 'Image Thumbnail', 'Image Container', 'Image Box', 'Image Block', 'Image Frame', 'Image Holder', 'Image Wrapper', 'Image Placeholder', 'Image Slider Widget', 'Image Carousel Widget', 'Image Grid Widget', 'Image Showcase Widget', 'Image Viewer Widget', 'Image Display Widget', 'Image Preview Widget', 'Image Thumbnail Widget', 'Image Container Widget', 'Image Box Widget', 'Image Block' );
 	}
-
 	/**
-	 * Get Custom Url.
+	 * It is use for widget add in catch or not.
 	 *
-	 * @since 1.0.1
-	 * @version 5.4.2
+	 * @since 6.4.13
 	 */
-	public function get_custom_help_url() {
-		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			$help_url = L_THEPLUS_HELP;
-		} else {
-			$help_url = THEPLUS_HELP;
-		}
-
-		return esc_url( $help_url );
+	public function is_dynamic_content(): bool {
+		return true;
 	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
-
 	/**
 	 * Get Widget Custom Help Url.
 	 *
@@ -148,56 +97,42 @@ class ThePlus_Featured_Image extends Widget_Base {
 		$this->add_control(
 			'pfi_type',
 			array(
-				'label'   => esc_html__( 'Type', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'pfi-default',
-				'options' => array(
+				'label'       => esc_html__( 'Type', 'tpebl' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'pfi-default',
+				'options'     => array(
 					'pfi-default'    => esc_html__( 'Standard Image', 'tpebl' ),
 					'pfi-background' => esc_html__( 'As a Background', 'tpebl' ),
 				),
-			)
-		);
-		$this->add_control(
-			'pfi_type_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Choose how you want to display the featured image, either as a normal image inside your layout or as a background behind your content.', 'tpebl' ),
+						esc_html__( 'Choose how you want to display the featured image, either as a normal image inside your layout or as a background behind your content.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'bg_in',
 			array(
-				'type'      => Controls_Manager::SELECT,
-				'label'     => esc_html__( 'Location', 'tpebl' ),
-				'default'   => 'tp-fibg-section',
-				'options'   => array(
+				'type'        => Controls_Manager::SELECT,
+				'label'       => esc_html__( 'Location', 'tpebl' ),
+				'default'     => 'tp-fibg-section',
+				'options'     => array(
 					'tp-fibg-section'       => esc_html__( 'Section', 'tpebl' ),
 					'tp-fibg-inner-section' => esc_html__( 'Inner Section', 'tpebl' ),
 					'tp-fibg-container'     => esc_html__( 'Container', 'tpebl' ),
 					'tp-fibg-column'        => esc_html__( 'Column', 'tpebl' ),
 				),
-				'condition' => array(
-					'pfi_type' => 'pfi-background',
-				),
-			)
-		);
-		$this->add_control(
-			'bg_in_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Select where the featured image should appear.', 'tpebl' ),
+						esc_html__( 'Select where the featured image should appear.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
+				'condition'   => array(
+					'pfi_type' => 'pfi-background',
+				),
 			)
 		);
 		$this->add_control(
@@ -309,7 +244,7 @@ class ThePlus_Featured_Image extends Widget_Base {
 				'tpae_theme_builder',
 				array(
 					'type'        => 'tpae_theme_builder',
-					'notice'      => 'We recommend placing this widget in the Post Single Page Template to show the featured image of the post.',
+					'notice'      => esc_html__( 'We recommend placing this widget in the Post Single Page Template to show the featured image of the post.', 'tpebl' ),
 					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
 					'page_type'   => 'tp_singular_page',
 				)

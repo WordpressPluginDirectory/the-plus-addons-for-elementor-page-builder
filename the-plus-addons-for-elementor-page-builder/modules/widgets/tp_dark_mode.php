@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Border;
@@ -26,16 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus_Dark_Mode
  */
-class ThePlus_Dark_Mode extends Widget_Base {
-
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @since 5.3.3
-	 *
-	 * @var tp_doc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
+class ThePlus_Dark_Mode extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name.
@@ -82,22 +73,6 @@ class ThePlus_Dark_Mode extends Widget_Base {
 		return array( 'Tp Dark Mode Toggle', 'Night Mode Switcher', 'Mix Blend Dark Mode', 'Global Color Dark Theme', 'Dark Theme', 'Night Theme' );
 	}
 
-
-	/**
-	 * Show need help URL for user.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_custom_help_url() {
-		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			$help_url = L_THEPLUS_HELP;
-		} else {
-			$help_url = THEPLUS_HELP;
-		}
-
-		return esc_url( $help_url );
-	}
-
 	/**
 	 * It is use for widget add in catch or not.
 	 *
@@ -105,37 +80,6 @@ class ThePlus_Dark_Mode extends Widget_Base {
 	 */
 	public function is_dynamic_content(): bool {
 		return false;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**
@@ -172,12 +116,6 @@ class ThePlus_Dark_Mode extends Widget_Base {
 				'type'        => Controls_Manager::RAW_HTML,
 				'raw'         => wp_kses_post(
 					sprintf(
-						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Creates a dark mode effect by inverting colors using CSS blend modes. Best for quick dark mode setups without manually redefining colors.', 'tpebl' ),
-					)
-				),
-				'raw'         => wp_kses_post(
-					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'Creates a dark mode effect by inverting colors using CSS blend modes. Best for quick dark mode setups without manually redefining colors.', 'tpebl' ),
 						esc_url( $this->tp_doc . 'mix-blend-dark-mode-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
@@ -185,7 +123,7 @@ class ThePlus_Dark_Mode extends Widget_Base {
 					)
 				),
 				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'dm_type' => 'dm_type_mb',
 				),
 			)
@@ -201,7 +139,7 @@ class ThePlus_Dark_Mode extends Widget_Base {
 					)
 				),
 				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'dm_type' => 'dm_type_gc',
 				),
 			)
@@ -240,10 +178,10 @@ class ThePlus_Dark_Mode extends Widget_Base {
 		$this->add_control(
 			'dm_mix_blend_mode',
 			array(
-				'type'      => Controls_Manager::SELECT,
-				'label'     => esc_html__( 'Mix Blend Mode', 'tpebl' ),
-				'default'   => 'difference',
-				'options'   => array(
+				'type'        => Controls_Manager::SELECT,
+				'label'       => esc_html__( 'Mix Blend Mode', 'tpebl' ),
+				'default'     => 'difference',
+				'options'     => array(
 					'difference'  => esc_html__( 'Difference', 'tpebl' ),
 					'multiply'    => esc_html__( 'multiply', 'tpebl' ),
 					'screen'      => esc_html__( 'screen', 'tpebl' ),
@@ -256,29 +194,18 @@ class ThePlus_Dark_Mode extends Widget_Base {
 					'hue'         => esc_html__( 'hue', 'tpebl' ),
 					'saturation'  => esc_html__( 'saturation', 'tpebl' ),
 				),
-				'condition' => array(
-					'dm_type!' => 'dm_type_gc',
-					'dm_style' => 'tp_dm_style2',
-				),
-				'selectors' => array(
-					'body .darkmode-layer' => 'mix-blend-mode: {{VALUE}};',
-				),
-			)
-		);
-		$this->add_control(
-			'dm_mix_blend_mode_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Applies the Difference blend mode, which inverts colors based on the background, creating a high-contrast and eye-catching effect.', 'tpebl' ),
+						esc_html__( 'Applies the Difference blend mode, which inverts colors based on the background, creating a high-contrast and eye-catching effect.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'dm_type!' => 'dm_type_gc',
 					'dm_style' => 'tp_dm_style2',
+				),
+				'selectors'   => array(
+					'body .darkmode-layer' => 'mix-blend-mode: {{VALUE}};',
 				),
 			)
 		);
@@ -318,14 +245,6 @@ class ThePlus_Dark_Mode extends Widget_Base {
 			)
 		);
 		$this->start_popover();
-			$this->add_control(
-				'right_offset_options',
-				array(
-					'label'     => esc_html__( 'Right Offset', 'tpebl' ),
-					'type'      => Controls_Manager::HEADING,
-					'separator' => 'after',
-				)
-			);
 		$this->add_responsive_control(
 			'dm_right_offset',
 			array(
@@ -364,14 +283,6 @@ class ThePlus_Dark_Mode extends Widget_Base {
 			)
 		);
 		$this->start_popover();
-			$this->add_control(
-				'bottom_offset_options',
-				array(
-					'label'     => esc_html__( 'Bottom Offset', 'tpebl' ),
-					'type'      => Controls_Manager::HEADING,
-					'separator' => 'after',
-				)
-			);
 		$this->add_responsive_control(
 			'dm_bottom_offset',
 			array(
@@ -463,96 +374,65 @@ class ThePlus_Dark_Mode extends Widget_Base {
 		$this->add_control(
 			'dm_save_in_cookies',
 			array(
-				'label'   => esc_html__( 'Save in Cookies', 'tpebl' ),
-				'type'    => Controls_Manager::SWITCHER,
-				'default' => 'no',
-			)
-		);
-		$this->add_control(
-			'dm_save_in_cookies_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Save in Cookies', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'default'     => 'no',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Enable this to remember the user’s selected theme mode and keep it the same on future visits.', 'tpebl' ),
+						esc_html__( 'Enable this to remember the user’s selected theme mode and keep it the same on future visits.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'dm_auto_match_os_theme',
 			array(
-				'label'     => esc_html__( 'Auto Match OS Theme', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'yes',
-				'separator' => 'before',
-			)
-		);
-		$this->add_control(
-			'dm_auto_match_os_theme_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Auto Match OS Theme', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'default'     => 'yes',
+				'separator'   => 'before',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Automatically applies light or dark mode based on the visitor’s device or system theme settings.', 'tpebl' ),
+						esc_html__( 'Automatically applies light or dark mode based on the visitor’s device or system theme settings.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'dm_ignore_class',
 			array(
-				'label'     => esc_html__( 'Ignore Dark Mode ', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Yes', 'tpebl' ),
-				'label_off' => esc_html__( 'No', 'tpebl' ),
-				'separator' => 'before',
-			)
-		);
-		$this->add_control(
-			'dm_ignore_class_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Ignore Dark Mode ', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Yes', 'tpebl' ),
+				'label_off'   => esc_html__( 'No', 'tpebl' ),
+				'separator'   => 'before',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'Enable this to prevent the selected element from being affected by Dark Mode styling.', 'tpebl' ),
 						esc_url( $this->tp_doc . 'exclude-elements-from-dark-mode-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
-						esc_html__( 'Learn More', 'tpebl' ),
+						esc_html__( 'Learn More', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'dm_ignore',
 			array(
-				'label'       => __( 'Ignore Dark Mode Classes', 'tpebl' ),
+				'label'       => esc_html__( 'Ignore Dark Mode Classes', 'tpebl' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 10,
 				'ai'          => false,
-				'placeholder' => __( 'Enter All Classes with Comma to ignore those in Dark Mode', 'tpebl' ),
-				'condition'   => array(
-					'dm_ignore_class' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'dm_ignore_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'placeholder' => esc_html__( 'Enter All Classes with Comma to ignore those in Dark Mode', 'tpebl' ),
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s<br/>%s</i></p>',
 						esc_html__( 'Add specific CSS class names here to exclude only those elements from Dark Mode.', 'tpebl' ),
-						esc_html__( 'Use commas to separate multiple classes.', 'tpebl' ),
+						esc_html__( 'Use commas to separate multiple classes.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 				'condition'   => array(
 					'dm_ignore_class' => 'yes',
 				),
@@ -561,28 +441,18 @@ class ThePlus_Dark_Mode extends Widget_Base {
 		$this->add_control(
 			'dm_ignore_pre_class',
 			array(
-				'label'     => esc_html__( 'The Plus Ignore Class Default', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'separator' => 'before',
-				'label_on'  => esc_html__( 'Yes', 'tpebl' ),
-				'label_off' => esc_html__( 'No', 'tpebl' ),
-				'default'   => 'true',
-				'condition' => array(
-					'dm_ignore_class' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'dm_ignore_pre_class_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'The Plus Ignore Class Default', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'separator'   => 'before',
+				'label_on'    => esc_html__( 'Yes', 'tpebl' ),
+				'label_off'   => esc_html__( 'No', 'tpebl' ),
+				'default'     => 'true',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Turn this on to apply The Plus Addons’ default ignore rules for Dark Mode automatically.', 'tpebl' ),
+						esc_html__( 'Turn this on to apply The Plus Addons’ default ignore rules for Dark Mode automatically.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 				'condition'   => array(
 					'dm_ignore_class' => 'yes',
 				),
@@ -600,15 +470,15 @@ class ThePlus_Dark_Mode extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/dark-mode/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=gvA8Y2D4DSk',
 					),
 				),
@@ -628,7 +498,7 @@ class ThePlus_Dark_Mode extends Widget_Base {
 				'tpae_theme_builder',
 				array(
 					'type'        => 'tpae_theme_builder',
-					'notice'      => 'We recommend using this widget to the Header or Footer Template to load dark mode toggle on all pages.',
+					'notice'      => esc_html__( 'We recommend using this widget to the Header or Footer Template to load dark mode toggle on all pages.', 'tpebl' ),
 					'button_text' => esc_html__( 'Create Header Template', 'tpebl' ),
 					'page_type'   => 'tp_header',
 				)
@@ -929,7 +799,7 @@ class ThePlus_Dark_Mode extends Widget_Base {
 		$this->add_control(
 			'si_switch_normal_border_color',
 			array(
-				'label'     => esc_html__( 'Box Shadow color', 'tpebl' ),
+				'label'     => esc_html__( 'Box Shadow Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'.tp_dm_style2 .darkmode-toggle .tp-dark-mode-slider' => 'box-shadow:0 0 1px {{VALUE}};',
@@ -1205,7 +1075,7 @@ class ThePlus_Dark_Mode extends Widget_Base {
 				jQuery( "' . esc_js( $dm_ingnor ) . '" ).addClass( "theplus-darkmode-ignore" );
 			});';
 
-			echo wp_print_inline_script_tag( $dm_ignore_js );
+			wp_print_inline_script_tag( $dm_ignore_js );
 		}
 
 		if ( 'yes' === $ignore_class ) {
@@ -1213,7 +1083,7 @@ class ThePlus_Dark_Mode extends Widget_Base {
 				jQuery( ".theplus-hotspot,.pt-plus-animated-image-wrapper .pt_plus_animated_image,.elementor-image img,.elementor-widget-image img,.elementor-image, .animated-image-parallax,.pt_plus_before_after,.pt_plus_animated_image,.team-list-content .post-content-image,.product-list .product-content-image,.gallery-list .gallery-list-content,.bss-list,.blog-list.list-isotope-metro,.blog-list .post-content-image,.blog-list-content:hover .post-content-image,.blog-list.blog-style-1 .grid-item" ).addClass( "theplus-darkmode-ignore" );
 			});';
 
-			echo wp_print_inline_script_tag( $ignore_js );
+			wp_print_inline_script_tag( $ignore_js );
 		}
 
 		echo '</div>';

@@ -23,7 +23,11 @@ if ( ! class_exists( 'L_Theplus_Elements_Integration' ) ) {
 		 * @since 1.0.0
 		 */
 		public function init() {
-			add_action( 'elementor/controls/controls_registered', array( $this, 'add_controls' ), 10 );
+			// 'elementor/controls/controls_registered' is deprecated
+			// since Elementor 3.1. Both old and new hooks pass the
+			// Controls_Manager instance to the callback, so the existing
+			// add_controls() method continues to work unchanged.
+			add_action( 'elementor/controls/register', array( $this, 'add_controls' ), 10 );
 		}
 
 		/**
@@ -62,13 +66,19 @@ if ( ! class_exists( 'L_Theplus_Elements_Integration' ) ) {
 		 */
 		public function include_plus_control( $control_id, $grouped = false ) {
 
-			$filename = sprintf( 'modules/controls/' . $control_id . '.php' );
-
-			if ( ! file_exists( L_THEPLUS_PATH . $filename ) ) {
+			$control_id = preg_replace( '/[^a-zA-Z0-9_-]/', '', (string) $control_id );
+			if ( '' === $control_id ) {
 				return false;
 			}
 
-			include L_THEPLUS_PATH . $filename;
+			$base = wp_normalize_path( L_THEPLUS_PATH . 'modules/controls/' );
+			$path = wp_normalize_path( $base . $control_id . '.php' );
+
+			if ( 0 !== strpos( $path, $base ) || ! file_exists( $path ) ) {
+				return false;
+			}
+
+			include $path;
 
 			return true;
 		}

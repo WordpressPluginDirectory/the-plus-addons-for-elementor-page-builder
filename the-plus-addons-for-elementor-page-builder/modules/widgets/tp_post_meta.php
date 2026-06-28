@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
@@ -25,15 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus_Post_Meta
  */
-class ThePlus_Post_Meta extends Widget_Base {
-
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @var tp_doc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
-
+class ThePlus_Post_Meta extends Plus_Widget_Base {
 	/**
 	 * Get Widget Name.
 	 *
@@ -83,54 +75,14 @@ class ThePlus_Post_Meta extends Widget_Base {
 	public function get_keywords() {
 		return array( 'Tp Post Meta', 'Post Content', 'Blog Content', 'Dynamic Post Content', 'Post Excerpt' );
 	}
-
 	/**
-	 * Get Widget categories.
+	 * It is use for widget add in catch or not.
 	 *
-	 * @since 1.0.1
-	 * @version 6.1.0
+	 * @since 6.4.13
 	 */
-	public function get_custom_help_url() {
-		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			$help_url = L_THEPLUS_HELP;
-		} else {
-			$help_url = THEPLUS_HELP;
-		}
-
-		return esc_url( $help_url );
+	public function is_dynamic_content(): bool {
+		return true;
 	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
-
 	/**
 	 * Register controls.
 	 *
@@ -412,7 +364,7 @@ class ThePlus_Post_Meta extends Widget_Base {
 				'tpae_theme_builders',
 				array(
 					'type'        => 'tpae_theme_builder',
-					'notice'      => 'We recommend using this widget in the Post Single Page Template to display date, category, author, and other meta details. ',
+					'notice'      => esc_html__( 'We recommend using this widget in the Post Single Page Template to display date, category, author, and other meta details.', 'tpebl' ),
 					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
 					'page_type'   => 'tp_singular_page',
 				)
@@ -1757,8 +1709,10 @@ class ThePlus_Post_Meta extends Widget_Base {
 
 						$category_taxonomies = ! empty( $item['category_taxonomies'] ) ? $item['category_taxonomies'] : 'category';
 
+						$category_prefix = ! empty( $settings['catePrefix'] ) ? $settings['catePrefix'] : '';
+
 						if ( 'pttext' === $cate_prefix_type ) {
-							$cate_prefix = $settings['catePrefix'];
+							$cate_prefix = esc_html( $category_prefix );
 						} elseif ( 'pticon' === $cate_prefix_type ) {
 							ob_start();
 							\Elementor\Icons_Manager::render_icon( $settings['catePrefixIcon'], array( 'aria-hidden' => 'true' ) );
@@ -1804,7 +1758,7 @@ class ThePlus_Post_Meta extends Widget_Base {
 
 						$output .= '<span class="tp-meta-category ' . esc_attr( $cate_style ) . '" >';
 						if ( ! empty( $cate_prefix ) ) {
-							$output .= '<span class="tp-meta-category-label tp-meta-label">' . esc_html( $cate_prefix ) . '</span>';
+							$output .= '<span class="tp-meta-category-label tp-meta-label">' . $cate_prefix . '</span>';
 						}
 						$output .= '<span class="tp-meta-category-list">' . $category_list . '</span></span>';
 					}

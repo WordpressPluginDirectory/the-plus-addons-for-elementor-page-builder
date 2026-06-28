@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus_Heading_Animation
  */
-class ThePlus_Heading_Animation extends Widget_Base {
+class ThePlus_Heading_Animation extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name.
@@ -74,58 +74,12 @@ class ThePlus_Heading_Animation extends Widget_Base {
 	}
 
 	/**
-	 * Get Widget Custom Help Url.
-	 *
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			$help_url = L_THEPLUS_HELP;
-		} else {
-			$help_url = THEPLUS_HELP;
-		}
-
-		return esc_url( $help_url );
-	}
-
-	/**
 	 * It is use for widget add in catch or not.
 	 *
 	 * @since 6.0.6
 	 */
 	public function is_dynamic_content(): bool {
 		return false;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**
@@ -200,19 +154,12 @@ class ThePlus_Heading_Animation extends Widget_Base {
 				'dynamic'     => array(
 					'active' => true,
 				),
-			)
-		);
-		$this->add_control(
-			'prefix_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Add text that appears before the animated heading and stays visible at all times.', 'tpebl' ),
+						esc_html__( 'Add text that appears before the animated heading and stays visible at all times.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
@@ -227,19 +174,12 @@ class ThePlus_Heading_Animation extends Widget_Base {
 				'dynamic'     => array(
 					'active' => true,
 				),
-			)
-		);
-		$this->add_control(
-			'ani_title_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Add the text that will animate in this heading. You can enter multiple lines, each line will animate one by one. Use Ctrl + Enter or Shift + Enter to add a new line.', 'tpebl' ),
+						esc_html__( 'Add the text that will animate in this heading. You can enter multiple lines, each line will animate one by one. Use Ctrl + Enter or Shift + Enter to add a new line.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
@@ -263,19 +203,12 @@ class ThePlus_Heading_Animation extends Widget_Base {
 				'dynamic'     => array(
 					'active' => true,
 				),
-			)
-		);
-		$this->add_control(
-			'postfix_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Add text that appears after the animated heading and remains visible once the animation plays.', 'tpebl' ),
+						esc_html__( 'Add text that appears after the animated heading and remains visible once the animation plays.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_responsive_control(
@@ -314,15 +247,15 @@ class ThePlus_Heading_Animation extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/heading-animation/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=LTgDD_v8ioA',
 					),
 				),

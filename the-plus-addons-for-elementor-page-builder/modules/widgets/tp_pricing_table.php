@@ -10,12 +10,17 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use ThePlusAddons\Elementor\ButtonStyle\TP_Global_Button_Style_Helper;
+
+if ( ! trait_exists( '\ThePlusAddons\Elementor\ButtonStyle\TP_Global_Button_Style_Helper' ) ) {
+	include_once L_THEPLUS_PATH . 'modules/extensions/global-control/class-tp-global-button-style-helper.php';
+}
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,22 +30,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Pricing_Table
  */
-class L_ThePlus_Pricing_Table extends Widget_Base {
-
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @var tp_doc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
-
+class L_ThePlus_Pricing_Table extends Plus_Widget_Base {
+	use TP_Global_Button_Style_Helper;
 	/**
 	 * Get Widget Name.
 	 *
@@ -70,19 +61,6 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 	public function get_icon() {
 		return 'theplus-i-pricing-table tpae-editor-logo';
 	}
-
-	/**
-	 * Get Custom url.
-	 *
-	 * @since 1.0.0
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
 	/**
 	 * Get Widget categories.
 	 *
@@ -110,37 +88,6 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 	 */
 	public function is_dynamic_content(): bool {
 		return false;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**
@@ -324,14 +271,6 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 		);
 		$this->start_popover();
 		$this->add_control(
-			'icon_fsoptions',
-			array(
-				'label'     => esc_html__( 'Font Awesome', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
-		$this->add_control(
 			'icon_fontawesome',
 			array(
 				'label'     => esc_html__( 'Icon Library', 'tpebl' ),
@@ -360,14 +299,6 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			)
 		);
 		$this->start_popover();
-		$this->add_control(
-			'icon_f5_options',
-			array(
-				'label'     => esc_html__( 'Font Awesome 5', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
 		$this->add_control(
 			'icon_fontawesome_5',
 			array(
@@ -678,14 +609,6 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 		);
 		$repeater->start_popover();
 		$repeater->add_control(
-			'iconfs_options',
-			array(
-				'label'     => esc_html__( 'Font Awesome', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
-		$repeater->add_control(
 			'list_icon_fontawesome',
 			array(
 				'label'     => esc_html__( 'Icon Library', 'tpebl' ),
@@ -809,6 +732,41 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'button_type_switch',
+			array(
+				'label'     => esc_html__( 'Button Type', 'tpebl' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'default'   => 'basic',
+				'options'   => array(
+					'basic'  => array(
+						'title' => esc_html__( 'Basic', 'tpebl' ),
+						'icon'  => 'eicon-button',
+					),
+					'global' => array(
+						'title' => esc_html__( 'Global', 'tpebl' ),
+						'icon'  => 'eicon-globe',
+					),
+				),
+				'toggle'    => false,
+				'condition' => array(
+					'display_button' => 'yes',
+				),
+			)
+		);
+		$this->add_control(
+			'button_global_style_preset',
+			array(
+				'label'     => esc_html__( 'Global Style', 'tpebl' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => $this->get_global_button_style_options(),
+				'default'   => '',
+				'condition' => array(
+					'display_button'     => 'yes',
+					'button_type_switch' => 'global',
+				),
+			)
+		);
+		$this->add_control(
 			'button_style',
 			array(
 				'label'       => esc_html__( 'Style', 'tpebl' ),
@@ -831,6 +789,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				),
 				'condition'   => array(
 					'display_button' => 'yes',
+					'button_type_switch' => 'basic',
 				),
 				'columns'     => 3,
 				'classes'     => 'tpae-visual_choice',
@@ -843,6 +802,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'label_block' => true,
 				'condition'   => array(
 					'display_button' => 'yes',
+					'button_type_switch' => 'basic',
 					'button_style!'  => 'style-8',
 				),
 			)
@@ -913,14 +873,6 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			)
 		);
 		$this->start_popover();
-		$this->add_control(
-			'icon_fs_options',
-			array(
-				'label'     => esc_html__( 'Font Awesome', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
 		$this->add_control(
 			'button_icon',
 			array(
@@ -2972,6 +2924,9 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 					'left'     => '35',
 					'isLinked' => false,
 				),
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 				'selectors'  => array(
 					'{{WRAPPER}} .pt_plus_button .button-link-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
@@ -3059,6 +3014,9 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			'tab_button_normal',
 			array(
 				'label' => esc_html__( 'Normal', 'tpebl' ),
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 
@@ -3067,6 +3025,9 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Text Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_button .button-link-wrap' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .pt_plus_button.button-style-7 .button-link-wrap:after' => 'border-color: {{VALUE}};',
@@ -3082,6 +3043,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'separator' => 'after',
 				'condition' => array(
 					'button_style!' => array( 'style-7', 'style-9' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3103,6 +3065,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				),
 				'condition' => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3125,6 +3088,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'condition'  => array(
 					'button_style'         => array( 'style-8' ),
 					'button_border_style!' => 'none',
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3141,6 +3105,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'condition' => array(
 					'button_style'         => array( 'style-8' ),
 					'button_border_style!' => 'none',
+					'button_type_switch' => 'basic',
 				),
 				'separator' => 'after',
 			)
@@ -3157,6 +3122,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				),
 				'condition'  => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3168,6 +3134,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 							   {{WRAPPER}} .pt_plus_button.button-style-8 .button-link-wrap',
 				'condition' => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3176,6 +3143,9 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			'tab_button_box_hover',
 			array(
 				'label' => esc_html__( 'Box Hover', 'tpebl' ),
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 		$this->add_control(
@@ -3183,6 +3153,9 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Text Hover Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 				'selectors' => array(
 					'{{WRAPPER}} .plus-pricing-table:hover .button-link-wrap' => 'color: {{VALUE}};',
 				),
@@ -3197,6 +3170,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'separator' => 'after',
 				'condition' => array(
 					'button_style!' => array( 'style-7', 'style-9' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3212,6 +3186,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'condition' => array(
 					'button_style'         => array( 'style-8' ),
 					'button_border_style!' => 'none',
+					'button_type_switch' => 'basic',
 				),
 				'separator' => 'after',
 			)
@@ -3227,6 +3202,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				),
 				'condition'  => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3237,6 +3213,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'selector'  => '{{WRAPPER}} .plus-pricing-table:hover .pt_plus_button.button-style-8 .button-link-wrap',
 				'condition' => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3245,6 +3222,9 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			'tab_button_hover',
 			array(
 				'label' => esc_html__( 'Hover', 'tpebl' ),
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 		$this->add_control(
@@ -3252,6 +3232,9 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Text Hover Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_button .button-link-wrap:hover' => 'color: {{VALUE}};',
 				),
@@ -3266,6 +3249,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'separator' => 'after',
 				'condition' => array(
 					'button_style!' => array( 'style-7', 'style-9' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3281,6 +3265,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'condition' => array(
 					'button_style'         => array( 'style-8' ),
 					'button_border_style!' => 'none',
+					'button_type_switch' => 'basic',
 				),
 				'separator' => 'after',
 			)
@@ -3297,6 +3282,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				),
 				'condition'  => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3307,6 +3293,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				'selector'  => '{{WRAPPER}} .pt_plus_button.button-style-8 .button-link-wrap:hover',
 				'condition' => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -3691,147 +3678,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_animation_styling',
-			array(
-				'label' => esc_html__( 'On Scroll View Animation', 'tpebl' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-		$this->add_control(
-			'animation_effects',
-			array(
-				'label'   => esc_html__( 'Choose Animation Effect', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'no-animation',
-				'options' => l_theplus_get_animation_options(),
-			)
-		);
-		$this->add_control(
-			'animation_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_duration_default',
-			array(
-				'label'     => esc_html__( 'Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animate_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'         => 'no-animation',
-					'animation_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_effects',
-			array(
-				'label'     => esc_html__( 'Out Animation Effect', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'no-animation',
-				'options'   => l_theplus_get_out_animation_options(),
-				'separator' => 'before',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Out Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration_default',
-			array(
-				'label'     => esc_html__( 'Out Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'             => 'no-animation',
-					'animation_out_effects!'         => 'no-animation',
-					'animation_out_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->end_controls_section();
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation.php';
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
 	}
@@ -3876,9 +3723,15 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			$pimg_url = ! empty( $settings['select_image'] ) ? $settings['select_image'] : '';
 
 			$img_src = '';
-			if ( ! empty( $pimg_url ) ) {
+			if ( ! empty( $pimg_url['url'] ) ) {
 				$image_id = $pimg_url['id'];
-				$img_src  = tp_get_image_rander( $image_id, 'full', array( 'class' => 'pricing-icon-img' ) );
+
+				if ( ! empty( $image_id ) ) {
+					$img_src = tp_get_image_rander( $image_id, 'full', array( 'class' => 'pricing-icon-img' ) );
+				} else {
+					$image_alt = ! empty( $pimg_url['alt'] ) ? $pimg_url['alt'] : '';
+					$img_src   = '<img src="' . esc_url( $pimg_url['url'] ) . '" class="pricing-icon-img" alt="' . esc_attr( $image_alt ) . '">';
+				}
 			}
 
 			$icons_content = '<div class="pricing-icon">' . $img_src . '</div>';
@@ -4035,6 +3888,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 		$price_content .= '</div>';
 
 		$the_button = '';
+		$global_button_css = '';
 
 		$btn_on   = ! empty( $settings['display_button'] ) ? $settings['display_button'] : '';
 		$btn_link = ! empty( $settings['button_link'] ) ? $settings['button_link'] : '';
@@ -4056,10 +3910,20 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			$this->add_render_attribute( 'button', 'class', 'button-link-wrap' . $btn_bg );
 			$this->add_render_attribute( 'button', 'role', 'button' );
 
-			$button_style = ! empty( $settings['button_style'] ) ? $settings['button_style'] : '';
-			$button_text  = $settings['button_text'];
+			$button_type_switch        = ! empty( $settings['button_type_switch'] ) ? $settings['button_type_switch'] : 'basic';
+			$button_global_style_preset = ! empty( $settings['button_global_style_preset'] ) ? $settings['button_global_style_preset'] : '';
+			$button_style              = ! empty( $settings['button_style'] ) ? $settings['button_style'] : 'style-8';
+			$button_text               = $settings['button_text'];
 
 			$btn_uid = uniqid( 'btn' );
+
+			if ( 'global' === $button_type_switch ) {
+				$button_style = 'style-8';
+			}
+
+			if ( 'global' === $button_type_switch && ! empty( $button_global_style_preset ) ) {
+				$global_button_css = $this->build_global_button_style_css( $button_global_style_preset, '#' . $btn_uid );
+			}
 
 			$data_class  = $btn_uid;
 			$data_class .= ' button-' . $button_style . ' ';
@@ -4068,7 +3932,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 
 			$the_button .= '<div class="button_parallax">';
 
-				$the_button .= '<div class="ts-button">';
+				$the_button .= '<div id="' . esc_attr( $btn_uid ) . '" class="ts-button">';
 
 					$the_button .= '<div class="pt_plus_button ' . esc_attr( $data_class ) . '">';
 
@@ -4087,6 +3951,10 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 				$the_button .= '</div>';
 
 			$the_button .= '</div>';
+
+			if ( ! empty( $global_button_css ) ) {
+				$the_button .= '<style>' . $global_button_css . '</style>';
+			}
 
 			$the_button .= '</div>';
 		}
@@ -4132,38 +4000,7 @@ class L_ThePlus_Pricing_Table extends Widget_Base {
 			$pricing_output .= '<div class="pricing-overlay-color"></div>';
 		}
 
-		$animate_duration  = ! empty( $settings['animate_duration']['size'] ) ? $settings['animate_duration']['size'] : 50;
-		$animation_effects = ! empty( $settings['animation_effects'] ) ? $settings['animation_effects'] : '';
-
-		$out_duration    = ! empty( $settings['animation_out_duration_default'] ) ? $settings['animation_out_duration_default'] : '';
-		$animation_delay = ! empty( $settings['animation_delay']['size'] ) ? $settings['animation_delay']['size'] : 50;
-
-		$ani_duration = ! empty( $settings['animation_duration_default'] ) ? $settings['animation_duration_default'] : '';
-		$out_effect   = ! empty( $settings['animation_out_effects'] ) ? $settings['animation_out_effects'] : '';
-		$out_delay    = ! empty( $settings['animation_out_delay']['size'] ) ? $settings['animation_out_delay']['size'] : 50;
-		$out_speed    = ! empty( $settings['animation_out_duration']['size'] ) ? $settings['animation_out_duration']['size'] : 50;
-
-		if ( 'no-animation' === $animation_effects ) {
-			$animated_class = '';
-			$animation_attr = '';
-		} else {
-			$animate_offset  = '85%';
-			$animated_class  = 'animate-general';
-			$animation_attr  = ' data-animate-type="' . esc_attr( $animation_effects ) . '" data-animate-delay="' . esc_attr( $animation_delay ) . '"';
-			$animation_attr .= ' data-animate-offset="' . esc_attr( $animate_offset ) . '"';
-
-			if ( 'yes' === $ani_duration ) {
-				$animation_attr .= ' data-animate-duration="' . esc_attr( $animate_duration ) . '"';
-			}
-
-			if ( 'no-animation' !== $out_effect ) {
-				$animation_attr .= ' data-animate-out-type="' . esc_attr( $out_effect ) . '" data-animate-out-delay="' . esc_attr( $out_delay ) . '"';
-
-				if ( 'yes' === $out_duration ) {
-					$animation_attr .= ' data-animate-out-duration="' . esc_attr( $out_speed ) . '"';
-				}
-			}
-		}
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation-attr.php';
 
 		$output = '<div id="plus-pricing-table" class="plus-pricing-table pricing-' . esc_attr( $pricing_style ) . ' ' . esc_attr( $animated_class ) . '" ' . $animation_attr . '>';
 

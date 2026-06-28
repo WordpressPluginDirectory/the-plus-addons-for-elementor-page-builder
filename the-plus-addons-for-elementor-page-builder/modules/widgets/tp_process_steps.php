@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Utils;
 use Elementor\Group_Control_Typography;
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Tp_Shape_Divider.
  */
-class L_ThePlus_Process_Steps extends Widget_Base {
+class L_ThePlus_Process_Steps extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name.
@@ -39,14 +39,6 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 	public function get_name() {
 		return 'tp-process-steps';
 	}
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
-
 	/**
 	 * Get Widget Title.
 	 *
@@ -86,18 +78,6 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 	public function get_keywords() {
 		return array( 'Tp Process Steps', 'Step-by-Step Flow', 'Horizontal Steps', 'Vertical Steps', 'Numbered Steps', 'Icon Steps', 'Image Steps', 'Lottie Steps', 'Interactive Process Steps', 'Custom Process Steps' );
 	}
-
-	/**
-	 * Get Widget Custom Help Url.
-	 *
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
 	/**
 	 * It is use for widget add in catch or not.
 	 *
@@ -105,40 +85,7 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 	 */
 	public function is_dynamic_content(): bool {
 		return false;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
-
-	/**
+	}	/**
 	 * Register controls.
 	 *
 	 * @since 3.0.0
@@ -501,14 +448,6 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 		);
 		$repeater->start_popover();
 		$repeater->add_control(
-			'icon_fs_popover_toggle_options',
-			array(
-				'label'     => esc_html__( 'Font Awesome', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
-		$repeater->add_control(
 			'loop_icon_fontawesome',
 			array(
 				'label'     => esc_html__( 'Icon Library', 'tpebl' ),
@@ -576,7 +515,7 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 		$repeater->add_control(
 			'sep_pre_ste_background_n_head',
 			array(
-				'label'     => 'Normal Background Option',
+				'label'     => esc_html__( 'Normal Background Option', 'tpebl' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -592,7 +531,7 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 		$repeater->add_control(
 			'sep_pre_ste_background_h_head',
 			array(
-				'label'     => 'Hover Background Option',
+				'label'     => esc_html__( 'Hover Background Option', 'tpebl' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -609,7 +548,7 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 		$repeater->add_control(
 			'dis_counter_custom_text_head',
 			array(
-				'label'     => 'Display Counter Custom Text',
+				'label'     => esc_html__( 'Display Counter Custom Text', 'tpebl' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -2159,7 +2098,12 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 						$loop_img_src1 = '';
 						if ( ! empty( $item['loop_select_image']['url'] ) ) {
 							$loop_select_image = $item['loop_select_image']['id'];
-							$loop_img_src1     = tp_get_image_rander( $loop_select_image, $item['thumbnail_size'], array( 'class' => 'tp-icon-img' ) );
+							if ( ! empty( $loop_select_image ) ) {
+								$loop_img_src1 = tp_get_image_rander( $loop_select_image, $item['thumbnail_size'], array( 'class' => 'tp-icon-img' ) );
+							} else {
+								$image_alt     = ! empty( $item['loop_select_image']['alt'] ) ? $item['loop_select_image']['alt'] : '';
+								$loop_img_src1 = '<img src="' . esc_url( $item['loop_select_image']['url'] ) . '" class="tp-icon-img" alt="' . esc_attr( $image_alt ) . '">';
+							}
 						}
 
 						$list_img = '<div class="tp-ps-icon-img tp-pro-step-icon-img" >' . $loop_img_src1 . '</div>';
@@ -2222,7 +2166,12 @@ class L_ThePlus_Process_Steps extends Widget_Base {
 				if ( ! empty( $settings['seprator_border_style_n'] ) && 'border_img_custom' === $settings['seprator_border_style_n'] ) {
 					if ( ! empty( $settings['seprator_cusom_img']['url'] ) ) {
 						$seprator_cusom_img = $settings['seprator_cusom_img']['id'];
-						$sepimg1            = tp_get_image_rander( $seprator_cusom_img, 'full', array( 'class' => 'tp-sep-custom-img-inner' ) );
+						if ( ! empty( $seprator_cusom_img ) ) {
+							$sepimg1 = tp_get_image_rander( $seprator_cusom_img, 'full', array( 'class' => 'tp-sep-custom-img-inner' ) );
+						} else {
+							$image_alt = ! empty( $settings['seprator_cusom_img']['alt'] ) ? $settings['seprator_cusom_img']['alt'] : '';
+							$sepimg1   = '<img src="' . esc_url( $settings['seprator_cusom_img']['url'] ) . '" class="tp-sep-custom-img-inner" alt="' . esc_attr( $image_alt ) . '">';
+						}
 						$dis_sep_custom_img = '<span class="separator_custom_img">' . $sepimg1 . '</span>';
 					}
 				}

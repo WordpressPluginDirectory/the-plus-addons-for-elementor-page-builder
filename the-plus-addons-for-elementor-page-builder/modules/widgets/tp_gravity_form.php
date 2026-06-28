@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
@@ -24,16 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus_Gravity_Form
  */
-class ThePlus_Gravity_Form extends Widget_Base {
-
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @var tp_doc of the class.
-	 * @since 1.0.1
-	 * @version 5.4.2
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
+class ThePlus_Gravity_Form extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name.
@@ -86,50 +77,12 @@ class ThePlus_Gravity_Form extends Widget_Base {
 	}
 
 	/**
-	 * Get Widget categories.
+	 * It is use for widget add in catch or not.
 	 *
-	 * @since 1.0.1
-	 * @version 5.4.2
+	 * @since 6.4.13
 	 */
-	public function get_custom_help_url() {
-		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			$help_url = L_THEPLUS_HELP;
-		} else {
-			$help_url = THEPLUS_HELP;
-		}
-
-		return esc_url( $help_url );
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	public function is_dynamic_content(): bool {
+		return false;
 	}
 
 	/**
@@ -162,25 +115,18 @@ class ThePlus_Gravity_Form extends Widget_Base {
 		$this->add_control(
 			'gravity_form_dm',
 			array(
-				'label'     => esc_html__( 'Select Form', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'options'   => $this->l_theplus_gravity_form_using_dm(),
-				'condition' => array(
-					'select' => 'gf_dmp',
-				),
-			)
-		);
-		$this->add_control(
-			'gravity_form_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Select Form', 'tpebl' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => $this->l_theplus_gravity_form_using_dm(),
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Create a Gravity Form first, then you’ll be able to select and display it here.', 'tpebl' ),
+						esc_html__( 'Create a Gravity Form first, then you’ll be able to select and display it here.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
+				'condition'   => array(
+					'select' => 'gf_dmp',
+				),
 			)
 		);
 		$this->add_control(
@@ -240,15 +186,15 @@ class ThePlus_Gravity_Form extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/docs/customize-gravity-forms-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=GwKuP3zfiDw',
 					),
 				),
@@ -2676,7 +2622,28 @@ class ThePlus_Gravity_Form extends Widget_Base {
 			include THEPLUS_PATH . 'modules/widgets/theplus-widgets-extra.php';
 		}
 
+		$gra_form_id = ! empty( $settings['gravity_form'] ) ? absint( $settings['gravity_form'] ) : 0;
+		$gra_ajax    = ! empty( $settings['ajax'] );
+		$gra_compat  = ! empty( $settings['select'] ) ? $settings['select'] : 'gf_default';
+
+		$gf_global_inline = '';
+		if ( 'gf_default' === $gra_compat && $gra_form_id > 0 && function_exists( 'gravity_form_enqueue_scripts' ) ) {
+			gravity_form_enqueue_scripts( $gra_form_id, $gra_ajax );
+
+			/*
+			 * Defensive: some caching/optimization plugins strip or reorder the
+			 * inline localization for `gform_gravityforms`, which causes
+			 * "gf_global is not defined" inside gravityforms.min.js.
+			 * Re-emit gf_global inline as a safety net.
+			 */
+			if ( class_exists( '\GFCommon' ) && method_exists( '\GFCommon', 'gf_global' ) ) {
+				$gf_global_js     = \GFCommon::gf_global( false, false );
+				$gf_global_inline = '<script type="text/javascript">if (typeof gf_global === "undefined") { ' . $gf_global_js . ' }</script>';
+			}
+		}
+
 		$output  = '<div class="pt_plus_gravity_form ' . esc_attr( $animated_class ) . '" ' . $animation_attr . '>';
+		$output .= $gf_global_inline;
 		$output .= do_shortcode( $this->get_shortcode() );
 		$output .= '</div>';
 

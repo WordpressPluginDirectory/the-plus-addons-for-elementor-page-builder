@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Utils;
 use Elementor\Group_Control_Typography;
@@ -26,17 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Number_Counter
  */
-class L_ThePlus_Number_Counter extends Widget_Base {
-
-	public $tp_doc = L_THEPLUS_TPDOC;
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
-
+class L_ThePlus_Number_Counter extends Plus_Widget_Base {
 	/**
 	 * Get Widget Name.
 	 *
@@ -86,13 +76,6 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 	public function get_keywords() {
 		return array( 'Tp Number Counter', 'Animated Counter', 'Milestone Counter', 'Counter Widget', 'Number Animation', 'Statistics Counter', 'Counter Animation', 'Count-Up Widget', 'KPI Counter', 'Live Counter' );
 	}
-
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
 	/**
 	 * It is use for widget add in catch or not.
 	 *
@@ -100,40 +83,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 	 */
 	public function is_dynamic_content(): bool {
 		return false;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
-
-	/**
+	}	/**
 	 * Register controls.
 	 *
 	 * @since 1.0.1
@@ -424,14 +374,6 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			)
 		);
 		$this->start_popover();
-		$this->add_control(
-			'icon_fs_options',
-			array(
-				'label'     => esc_html__( 'Font Awesome', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
 		$this->add_control(
 			'icon_fontawesome',
 			array(
@@ -1145,6 +1087,68 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);
+		$this->add_responsive_control(
+			'title_top_space',
+			array(
+				'type'            => Controls_Manager::SLIDER,
+				'label'           => esc_html__( 'Title Top Space', 'tpebl' ),
+				'range'           => array(
+					'px' => array(
+						'step' => 2,
+						'min'  => -150,
+						'max'  => 150,
+					),
+				),
+				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
+				'desktop_default' => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'tablet_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'mobile_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'render_type'     => 'ui',
+				'selectors'       => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-title' => 'margin-top : {{SIZE}}{{UNIT}}',
+				),
+			)
+		);
+		$this->add_responsive_control(
+			'title_btm_space',
+			array(
+				'type'            => Controls_Manager::SLIDER,
+				'label'           => esc_html__( 'Title Bottom Space', 'tpebl' ),
+				'range'           => array(
+					'px' => array(
+						'step' => 2,
+						'min'  => -150,
+						'max'  => 150,
+					),
+				),
+				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
+				'desktop_default' => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'tablet_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'mobile_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'render_type'     => 'ui',
+				'selectors'       => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-title' => 'margin-bottom : {{SIZE}}{{UNIT}}',
+				),
+			)
+		);
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			array(
@@ -1316,7 +1320,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->add_control(
 			'title_hover_color_option',
 			array(
-				'label'       => esc_html__( 'Title Hover Color', 'tpebl' ),
+				'label'       => esc_html__( 'Title Color', 'tpebl' ),
 				'type'        => Controls_Manager::CHOOSE,
 				'options'     => array(
 					'solid'    => array(
@@ -1335,7 +1339,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->add_control(
 			'title_hover_color',
 			array(
-				'label'     => esc_html__( 'Hover Color', 'tpebl' ),
+				'label'     => esc_html__( 'Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#3351a6',
 				'selectors' => array(
@@ -1461,74 +1465,43 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		);
 		$this->end_controls_tab();
 		$this->end_controls_tabs();
-		$this->add_responsive_control(
-			'title_top_space',
-			array(
-				'type'            => Controls_Manager::SLIDER,
-				'label'           => esc_html__( 'Title Top Space', 'tpebl' ),
-				'range'           => array(
-					'px' => array(
-						'step' => 2,
-						'min'  => -150,
-						'max'  => 150,
-					),
-				),
-				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
-				'desktop_default' => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'tablet_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'mobile_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'render_type'     => 'ui',
-				'selectors'       => array(
-					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-title' => 'margin-top : {{SIZE}}{{UNIT}}',
-				),
-			)
-		);
-		$this->add_responsive_control(
-			'title_btm_space',
-			array(
-				'type'            => Controls_Manager::SLIDER,
-				'label'           => esc_html__( 'Title Bottom Space', 'tpebl' ),
-				'range'           => array(
-					'px' => array(
-						'step' => 2,
-						'min'  => -150,
-						'max'  => 150,
-					),
-				),
-				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
-				'desktop_default' => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'tablet_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'mobile_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'render_type'     => 'ui',
-				'selectors'       => array(
-					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-title' => 'margin-bottom : {{SIZE}}{{UNIT}}',
-				),
-			)
-		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_digit_option',
 			array(
 				'label' => esc_html__( 'Digit			', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+			)
+		);
+		$this->add_responsive_control(
+			'number_top_space',
+			array(
+				'type'            => Controls_Manager::SLIDER,
+				'label'           => esc_html__( 'Number Top Space', 'tpebl' ),
+				'range'           => array(
+					'px' => array(
+						'step' => 2,
+						'min'  => -150,
+						'max'  => 150,
+					),
+				),
+				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
+				'desktop_default' => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'tablet_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'mobile_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'render_type'     => 'ui',
+				'selectors'       => array(
+					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-number' => 'margin-top : {{SIZE}}{{UNIT}}',
+				),
 			)
 		);
 		$this->add_group_control(
@@ -1905,7 +1878,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$this->add_control(
 			'hover_gradient_color2',
 			array(
-				'label'     => esc_html__( 'Color 2', 'thepltpeblus' ),
+				'label'     => esc_html__( 'Color 2', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => 'cyan',
 				'condition' => array(
@@ -2157,37 +2130,6 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 			)
 		);
 		$this->end_controls_tabs();
-		$this->add_responsive_control(
-			'number_top_space',
-			array(
-				'type'            => Controls_Manager::SLIDER,
-				'label'           => esc_html__( 'Number Top Space', 'tpebl' ),
-				'range'           => array(
-					'px' => array(
-						'step' => 2,
-						'min'  => -150,
-						'max'  => 150,
-					),
-				),
-				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
-				'desktop_default' => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'tablet_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'mobile_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'render_type'     => 'ui',
-				'selectors'       => array(
-					'{{WRAPPER}} .plus-number-counter .number-counter-inner-block .counter-number' => 'margin-top : {{SIZE}}{{UNIT}}',
-				),
-			)
-		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_bg_option_styling',
@@ -2447,151 +2389,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_animation_styling',
-			array(
-				'label' => esc_html__( 'On Scroll View Animation', 'tpebl' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-		$this->add_control(
-			'animation_effects',
-			array(
-				'label'   => esc_html__( 'Choose Animation Effect', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'no-animation',
-				'options' => l_theplus_get_animation_options(),
-			)
-		);
-		$this->add_control(
-			'animation_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_duration_default',
-			array(
-				'label'     => esc_html__( 'Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animate_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'         => 'no-animation',
-					'animation_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_effects',
-			array(
-				'label'     => esc_html__( 'Out Animation Effect', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'no-animation',
-				'options'   => l_theplus_get_out_animation_options(),
-				'separator' => 'before',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Out Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration_default',
-			array(
-				'label'     => esc_html__( 'Out Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'             => 'no-animation',
-					'animation_out_effects!'         => 'no-animation',
-					'animation_out_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->end_controls_section();
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation.php';
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
 	}
@@ -2609,16 +2407,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 
 		$alignment = 'text-' . ( ! empty( $settings['alignment'] ) ? $settings['alignment'] : '' );
 
-		$animation_effects = ! empty( $settings['animation_effects'] ) ? $settings['animation_effects'] : '';
-		$animation_delay   = ! empty( $settings['animation_delay']['size'] ) ? $settings['animation_delay']['size'] : 50;
-
-		$ani_duration     = ! empty( $settings['animation_duration_default'] ) ? $settings['animation_duration_default'] : '';
-		$animate_duration = ! empty( $settings['animate_duration']['size'] ) ? $settings['animate_duration']['size'] : 50;
-
-		$out_effect   = ! empty( $settings['animation_out_effects'] ) ? $settings['animation_out_effects'] : '';
-		$out_delay    = ! empty( $settings['animation_out_delay']['size'] ) ? $settings['animation_out_delay']['size'] : 50;
-		$out_duration = ! empty( $settings['animation_out_duration_default'] ) ? $settings['animation_out_duration_default'] : '';
-		$out_speed    = ! empty( $settings['animation_out_duration']['size'] ) ? $settings['animation_out_duration']['size'] : 50;
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation-attr.php';
 
 		$symbol       = ! empty( $settings['symbol'] ) ? $settings['symbol'] : '';
 		$max_number   = isset( $settings['max_number'] ) ? $settings['max_number'] : '';
@@ -2636,25 +2425,6 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		$icon_fontawesome   = ! empty( $settings['icon_fontawesome'] ) ? $settings['icon_fontawesome'] : 'fa fa-download';
 		$icon_fontawesome_5 = ! empty( $settings['icon_fontawesome_5'] ) ? $settings['icon_fontawesome_5'] : '';
 		$align_center       = ! empty( $settings['vertical_center'] ) ? $settings['vertical_center'] : '';
-
-		if ( 'no-animation' === $animation_effects ) {
-			$animated_class = '';
-			$animation_attr = '';
-		} else {
-			$animate_offset  = '85%';
-			$animated_class  = 'animate-general';
-			$animation_attr  = ' data-animate-type="' . esc_attr( $animation_effects ) . '" data-animate-delay="' . esc_attr( $animation_delay ) . '"';
-			$animation_attr .= ' data-animate-offset="' . esc_attr( $animate_offset ) . '"';
-			if ( 'yes' === $ani_duration ) {
-				$animation_attr .= ' data-animate-duration="' . esc_attr( $animate_duration ) . '"';
-			}
-			if ( 'no-animation' !== $out_effect ) {
-				$animation_attr .= ' data-animate-out-type="' . esc_attr( $out_effect ) . '" data-animate-out-delay="' . esc_attr( $out_delay ) . '"';
-				if ( 'yes' === $out_duration ) {
-					$animation_attr .= ' data-animate-out-duration="' . esc_attr( $out_speed ) . '"';
-				}
-			}
-		}
 
 		$hover_class  = '';
 		$hover_uniqid = uniqid( 'hover-effect' );
@@ -2723,7 +2493,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 
 			$icon_bg = tp_bg_lazyLoad( $settings['icon_background_image'], $settings['icon_hover_background_image'] );
 
-			$icon_img_ic .= '<div class="counter-icon-inner shape-icon-' . esc_attr( $icon_style ) . ' ' . $icon_bg . '">';
+			$icon_img_ic .= '<div class="counter-icon-inner shape-icon-' . esc_attr( $icon_style ) . ' ' . esc_attr( $icon_bg ) . '">';
 
 			if ( 'font_awesome_5' === $icon_font ) {
 				$icon_img_ic .= '<span class="counter-icon">' . $icons . '</span>';
@@ -2750,7 +2520,7 @@ class L_ThePlus_Number_Counter extends Widget_Base {
 		}
 
 		$icon_bg1        = tp_bg_lazyLoad( $settings['box_background_image'], $settings['box_hover_background_image'] );
-		$counter_content = '<div class="number-counter-inner-block ' . esc_attr( $vertical_center ) . ' ' . $icon_bg1 . '">';
+		$counter_content = '<div class="number-counter-inner-block ' . esc_attr( $vertical_center ) . ' ' . esc_attr( $icon_bg1 ) . '">';
 
 		if ( 'style-1' === $style ) {
 			$counter_content .= '<div class="counter-wrap-content" >';

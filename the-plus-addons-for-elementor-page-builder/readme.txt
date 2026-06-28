@@ -2,9 +2,9 @@
 Contributors: posimyththemes, nirmalkavaiya, devangvachheta, sagarpatel124
 Tags: elementor, elementor widgets, elementor addons, elementor templates, widgets for elementor
 Requires at least: 6.0
-Tested up to: 6.9
-Requires PHP: 7.0
-Stable tag: 6.4.10
+Tested up to: 7.0
+Requires PHP: 7.4
+Stable tag: 6.4.17
 
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
@@ -188,7 +188,7 @@ https://www.youtube.com/watch?v=yG_oyhz-oAY
 
 * <strong>[Animated Service Boxes, Sliding Boxes & Horizontal & Vertical Image Accordion](https://theplusaddons.com/widgets/animated-service-boxes/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong>
 
-* <strong>[Before and After Image Slider Comparison for Elementor ](hhttps://theplusaddons.com/elementor-widget/before-after-slider/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
+* <strong>[Before and After Image Slider Comparison for Elementor ](https://theplusaddons.com/elementor-widget/before-after-slider/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong>
 
 * <strong>[ Advanced Carousel Anything Slider for Elementor ](https://theplusaddons.com/widgets/elementor-carousel-slider/?utm_source=wordpress&utm_medium=readmepage&utm_campaign=widgetslinks)</strong> 
 
@@ -392,6 +392,157 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 12. Unique 22+ Elementor Extensions
 
 == Changelog ==
+
+= 6.4.17 =
+Add : Blog Listing : Style-1 (Metro layout) - Added Read More button
+Add : Video Player : Added full-height option
+Update : Dashboard : Menu icon updated
+Improvement : MCP Abilities : Free widget ability list synced and reliability improved
+Fix : Infobox : Width issue 
+Fix : Blog Listing : Style-5 - Width issue 
+Fix : Form Widget : Dropdown field values now captured in email Output
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.16 =
+Compatibility : Added compatibility with WordPress v7.0
+Improved : Dynamic Tags : Dynamic Tags enabled by default
+Improved : Core : Deprecated Elementor controls_registered hook migrated to current API
+Improved : Widgets Loader : Inline styles replaced with WordPress standard wp_add_inline_styles
+Improved : Blog Listing : Style-5 deprecated PHP timestamp function replaced with current WordPress API
+Improved : Gravity Form : Input handling improved with caching-plugin compatibility
+Improved : Unused code removed from widgets loader
+Fix : Carousel Anything : Stored Cross-Site Scripting (XSS) Security Patch (Medium Security)
+Fix : Gallery Listing : Style-2 extra text removed
+Fix : Navigation Menu : Broken layout when Blocksy theme is active fixed
+Fix : Post Listing : Isotope layout re-initialised on window load for consistent display
+Fix : Plus Copy Paste : Hardcoded strings made translatable
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.15 =
+Add : Stylish List : Added Gap & Alignment options
+Improved : Dashboard : Category switcher support added
+Improved : Security hardening for output escaping across Blog Listing, Gallery, Team Member, Table, Post Search, Video Player, Testimonials, Stylish List, Accordion, Navigation Menu Lite, Carousel Anything, Hovercard, Client Listing, Form Widget, White Label, Social Embed & Dashboard Listing
+Improved : Security enhancements for input sanitization and URL validation across Form Handler, Load More, Theme Builder Downloader, Wdkit API, Dynamic Categories & Custom CSS/JS
+Improved : Dashboard AJAX security with allowlisted option/transient keys, external API URL validation & stricter capability/nonce checks
+Improved : SVG/SVGZ upload security with malformed file rejection and capability-based MIME validation
+Improved : Capability checks across Plus Copy/Paste upload, Wdkit Preset install, Deactivation Feedback, Create Temp AJAX, Dynamic Tag notice & Theme Builder editor notice
+Improved : SQL identifier handling and query security
+Improved : Update Popup performance by removing unused frontend asset loading
+Improved : Social Embed & Meeting Scheduler script loading via WordPress standard wp_enqueue_script
+Improved : Dynamic Categories updated to latest WordPress term query API
+Improved : Translation function handling across Breadcrumbs Bar, Widget Category names & other interface strings
+Improved : Code quality cleanup with labeled error logging across Template Editor, Wdkit Preview popup, Install Elementor & Nxt Extension notices
+Fix : Dynamic Tags : Multiple tags showing wrong term on archive pages, deprecation notices and AI flag
+Fix : Dynamic Tags : Tag/Category description and post count showing wrong term on archive pages
+Fix : Global Dimensions : Preset leaks across widgets on tablet/mobile
+Fix : Dynamic Categories : Image Resolution not working
+Fix : Post Navigation : PHP Warning on missing featured image and undefined post vars
+Fix : Template Widgets : Content template CSS missing on initial load with Elementor External File CSS
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.14 =
+Add : Blog Listing : Style-5 - Added global button style option for the Submit button
+Update : Post Comment : Added global button style option for the Submit button
+Improvement : Unused code removed from the plugin
+Fix : Plus Copy Paste Button : String are not Translatable
+Fix : Dynamic Tag : Featured Image tag not working in the Container hover Background Style
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.13 =
+Add : MCP Integration : Added support to control widgets and their settings through MCP setup.
+Add : GSAP Scroll Animation : Add option for the Stagger Effect
+Add : Testimonials : Add Stagger option in the On Scroll Animation
+Improvements : TPAE Widgets causing issues sometimes while using in the loop-items Templates
+Improvements : Global Dimensions : Responsiveness and Conditions Improvements
+Improvements : On Scroll Animation : File Structure Improvements
+Improvements : Info Box : Text hover style changes - now styles applies on the hover of the box instead of the text
+Improvements : White Label : Condition Improvements
+Improvements : Accordion : Condition Improvements
+Improvements : Blog Listing : Condition Improvements
+Improvements : Hovercard : Condition Improvements
+Improvements : Navigation Menu Lite : Condition Improvements
+Improvements : Social Embed : Condition Improvements
+Fix : TPAE Widgets are not working with the Elementor Popup
+Fix : Blog Listing : Stored Cross-Site Scripting (XSS) Security Patch (Medium Security)
+Fix : Table : Stored Cross-Site Scripting (XSS) via Button Custom Attributes Security Patch (Medium Security)
+Fix : Table : Stored Cross-Site Scripting (XSS) via Mobile Heading Text Security Patch (Medium Security)
+Fix : Post Meta : Icon not showing correctly
+Fix : Testimonials : Border Radius Causing issue when Global Border Radius selected
+Fix : Accordion : Fixed security issue
+Fix : Carousel Anything : Fixed security issue
+Fix : Page Scroll : Fixed security issue
+Fix : Stylish List : Fixed security issue
+Fix : Navigation Menu Lite : Fixed security issue
+Removed : Smart Loop Builder : Removed ready preset button
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.12 =
+Add : Global option : Scroll Animation global option
+Add : Flip Box : Add option for the Global Button Styles
+Add : Info Box : Add option for the Global Button Styles
+Add : Pricing Table : Add option for the Global Button Styles
+Add : Blog Listing : Add option for the Global Button Styles in the Load More Button
+Add : Form Widget : Add option for the Global Button Styles
+Add : Blog Listing : Add option for the Global Scroll Animation
+Add : Client Listing : Add option for the Global Scroll Animation
+Add : Gallery Listing : Add option for the Global Scroll Animation
+Add : Stylish List : Add option for the Global Scroll Animation
+Add : Social Icon : Add option for the Global Scroll Animation
+Add : Team Member Listing : Add option for the Global Scroll Animation
+Add : Testimonials : Add option for the Global Scroll Animation
+Add : Social Icon : Add Stagger option in the On Scroll Animation
+Improvements : Global Button Styles : Responsive option for the Margin, Padding, Border Width and Border Radius
+Improvements : Global Button Styles : Styles Improved
+Improvements : Button : Icon Option for the global
+Improvements : On Scroll Animation : File Structure Improved
+Fix : Global Button Styles : Global color not working
+Fix : Dynamic Tag : Post featured image not working on the container
+Fix : Dynamic Tag : Improved permission handling for dismiss notice feature
+Fix : Global Box Shadow : Improved output handling for box shadow CSS values
+Fix : Global Gradient Color : Improved output handling for gradient CSS values
+Fix : Button : Improved Custom Attributes handling for better compatibility
+Fix : Countdown : Improved data attribute handling for labels
+Fix : Cross Copy Paste : Improved permission handling for live paste feature
+Fix : Heading Title : Improved output handling for title text
+Fix : Navigation Menu Lite : Stored Cross-Site Scripting (XSS) Security Patch (Medium Security)
+Fix : Table : On Scroll Animation not working
+Fix : Table : Improved output handling for header heading text
+Fix : Translation Issue : Strings are not Translatable
+Fix : Minor Bug Fixes & Performance Improvements
+
+= 6.4.11 =
+Add : Smooth Scroll : Lenis Smooth Scroll option Added
+Add : Scroll Navigation : Option to set position of the navigation dots
+Add : Testimonials : Author Image hide/show option
+Add : Global option : Box-shadow global option (Beta)
+Add : Global option : Gradient color global option (Beta)
+Add : Global option : Dimensions global option (Beta)
+Add : Global option : Button Styles global option (Beta)
+Improvement : Age Gate : Controller Improvement
+Improvement : Blog Listing : Controller Improvement
+Improvement : Button : Controller Improvement
+Improvement : Dark Mode : Controller Improvement
+Improvement : Dynamic Categories : Controller Improvement
+Improvement : Gallery Listing : Controller Improvement 
+Improvement : Icon : Controller Improvement
+Improvement : Info Box : Controller Improvement
+Improvement : Navigation Menu : Controller Improvement
+Improvement : Number Counter : Controller Improvement
+Improvement : Post Content : Controller Improvement
+Improvement : Post Prev/Next : Controller Improvement
+Improvement : Progress Bar : Controller Improvement
+Improvement : Team Member listing : Controller Improvement
+Improvement : Global Text Animation : Add labels for the options
+Improvement : Global Image Animation : Add labels for the options
+Improvement : Global GSAP Animation : Add labels for the options
+Fix : Accordion : PHP Warning
+Fix : Post Title : Title limit option not working properly
+Fix : Progress Bar : Chart fill color not working 
+Fix : Progress Bar : Icon title before/after not working
+Fix : Text Block : Alignment not working 
+Fix : Video Player : Mask Image not working
+Fix : Translation Issue : String are not Translatable
+Fix : Minor Bug Fixes & Performance Improvements
 
 = 6.4.10 =
 Fix : Progress Bar : Stored XSS Security Patch (Medium Security)
@@ -1008,5 +1159,3 @@ Improvement: Unnecessary files removed, and file structure improved
 Fix: Minor bug fixes and performance improvements
 
 For older changelog entries, please see the [additional changelog.txt file](https://plugins.svn.wordpress.org/the-plus-addons-for-elementor-page-builder/assets/changelog.txt) included with the plugin.
-
-== Upgrade Notice ==

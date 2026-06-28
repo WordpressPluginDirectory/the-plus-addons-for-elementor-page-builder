@@ -10,7 +10,8 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
+use TheplusAddons\Widgets\Base\Reload_Preview_Trait;
 use Elementor\Controls_Manager;
 use Elementor\Utils;
 use Elementor\Group_Control_Typography;
@@ -30,7 +31,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Dynamic_Categories
  */
-class L_ThePlus_Dynamic_Categories extends Widget_Base {
+class L_ThePlus_Dynamic_Categories extends Plus_Widget_Base {
+
+	use Reload_Preview_Trait;
 
 	/**
 	 * Get Widget Name
@@ -41,13 +44,6 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 	public function get_name() {
 		return 'tp-dynamic-categories';
 	}
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
 
 	/**
 	 * Get Widget Title
@@ -90,55 +86,12 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 	}
 
 	/**
-	 * Get Widget Custom Help Url.
+	 * It is use for widget add in catch or not.
 	 *
-	 * @version 5.4.2
+	 * @since 6.4.13
 	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
-	/**
-	 * is_reload_preview_required
-	 *
-	 * @since 3.0.0
-	 * @version 5.4.2
-	 */
-	public function is_reload_preview_required() {
+	public function is_dynamic_content(): bool {
 		return true;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**
@@ -340,6 +293,15 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'hide_parent_cat',
+			array(
+				'label'        => esc_html__( 'Hide Parent Categories', 'tpebl' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'default'      => 'no',
+				'return_value' => 'yes',
+			)
+		);
+		$this->add_control(
 			'hide_sub_cat',
 			array(
 				'label'        => esc_html__( 'Hide Sub Categories', 'tpebl' ),
@@ -355,7 +317,7 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 				'type'        => Controls_Manager::TEXTAREA,
 				'ai'          => false,
 				'label_block' => true,
-				'placeholder' => 'Use Terms Id,if you want to use multiple id so use comma as separator.',
+				'placeholder' => esc_html__( 'Use Terms Id,if you want to use multiple id so use comma as separator.', 'tpebl' ),
 			)
 		);
 		$this->add_control(
@@ -365,7 +327,7 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 				'type'        => Controls_Manager::TEXTAREA,
 				'label_block' => true,
 				'ai'          => false,
-				'placeholder' => 'Use Terms Id,if you want to use multiple id so use comma as separator.',
+				'placeholder' => esc_html__( 'Use Terms Id,if you want to use multiple id so use comma as separator.', 'tpebl' ),
 			)
 		);
 		$this->add_control(
@@ -621,9 +583,7 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 			array(
 				'name'      => 'thumbnail',
 				'default'   => 'full',
-				'separator' => 'none',
 				'separator' => 'after',
-				'exclude'   => array( 'custom' ),
 				'condition' => array(
 					'display_thumbnail' => 'yes',
 				),
@@ -643,16 +603,6 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 				),
 			)
 		);
-		$this->add_control(
-			'hide_parent_cat',
-			array(
-				'label'        => esc_html__( 'Hide Parent Categories', 'tpebl' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'default'      => 'no',
-				'separator'    => 'before',
-				'return_value' => 'yes',
-			)
-		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -665,15 +615,15 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/dynamic-categories/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=Atp_gVyWko8',
 					),
 				),
@@ -693,7 +643,7 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 				'tpae_theme_builder',
 				array(
 					'type'        => 'tpae_theme_builder',
-					'notice'      => 'We recommend using this widget in the Post Archive Template to display categories or tags dynamically.',
+					'notice'      => esc_html__( 'We recommend using this widget in the Post Archive Template to display categories or tags dynamically.', 'tpebl' ),
 					'button_text' => esc_html__( 'Create Archive Page', 'tpebl' ),
 					'page_type'   => 'tp_archives',
 				)
@@ -793,7 +743,6 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .dynamic-cat-list .pt-dynamic-wrapper .pt-dynamic-hover-cat-name' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-				'separator'  => 'after',
 				'condition'  => array(
 					'title_bg' => 'yes',
 				),
@@ -2477,6 +2426,12 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 
 		$thumbnail = $settings['thumbnail_size'];
 
+		if ( 'custom' === $thumbnail ) {
+			$custom_w  = ! empty( $settings['thumbnail_custom_dimension']['width'] ) ? absint( $settings['thumbnail_custom_dimension']['width'] ) : 300;
+			$custom_h  = ! empty( $settings['thumbnail_custom_dimension']['height'] ) ? absint( $settings['thumbnail_custom_dimension']['height'] ) : 300;
+			$thumbnail = array( $custom_w, $custom_h );
+		}
+
 		$post_taxonomies = ! empty( $settings['post_taxonomies'] ) ? $settings['post_taxonomies'] : 'category';
 		$hide_parent_cat = isset( $settings['hide_parent_cat'] ) ? $settings['hide_parent_cat'] : 'no';
 
@@ -2632,7 +2587,7 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 						} else {
 							$category_description = $prod_cat->description;
 						}
-						$category_product_count = $prod_cat->count;
+						$category_product_count = (int) $prod_cat->count;
 
 						if ( 'metro' === $layout ) {
 							$metro_columns = $settings['metro_column'];
@@ -2829,8 +2784,8 @@ class L_ThePlus_Dynamic_Categories extends Widget_Base {
 		$post_category_exc = $settings['post_category_exc'] ? explode( ',', $settings['post_category_exc'] ) : array();
 
 		$dynamic_categories = get_terms(
-			$post_taxonomies,
 			array(
+				'taxonomy'   => $post_taxonomies,
 				'orderby'    => $settings['post_order_by'],
 				'order'      => $settings['post_order'],
 				'number'     => $display_posts,

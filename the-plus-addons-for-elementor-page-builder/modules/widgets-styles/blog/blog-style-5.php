@@ -8,6 +8,10 @@
  * @package Theplus
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 $tp_absolute_class = '';
 $wrap_classes      = '';
 
@@ -70,7 +74,7 @@ if ( 'metro' !== $layout ) {
 
 	if ( 'yes' === $tp_meta_overflow && 'yes' === $show_author_name ) {
 				echo '<span class="tpae-blog-author">';
-					echo $author_prefix . ' ';
+					echo esc_html( $author_prefix ) . ' ';
 					echo '<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '" class="fn">';
 						echo esc_html( get_the_author() );
 					echo '</a>';
@@ -78,7 +82,7 @@ if ( 'metro' !== $layout ) {
 	}
 
 	if ( 'yes' === $show_read_time && 'yes' === $tp_post_tima_overflow ) {
-		$time_diff = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) );
+		$time_diff = human_time_diff( get_the_time( 'U' ), time() );
 		echo '<span class="tpae-blog-read-time">' . esc_html( $time_diff ) . ' ago</span>';
 	}
 
@@ -96,7 +100,7 @@ if ( 'yes' === $show_date_time && 'yes' !== $tp_date_overflow ) {
 
 if ( 'yes' === $show_author_name && 'yes' !== $tp_meta_overflow ) {
 	echo '<span class="tpae-blog-author">';
-		echo $author_prefix . ' ';
+		echo esc_html( $author_prefix ) . ' ';
 		echo '<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '" class="fn">';
 			echo esc_html( get_the_author() );
 		echo '</a>';
@@ -104,7 +108,7 @@ if ( 'yes' === $show_author_name && 'yes' !== $tp_meta_overflow ) {
 }
 
 if ( 'yes' === $show_read_time && 'yes' !== $tp_post_tima_overflow ) {
-	$time_diff = human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) );
+	$time_diff = human_time_diff( get_the_time( 'U' ), time() );
 	echo '<span class="tpae-blog-read-time">' . esc_html( $time_diff ) . ' ago</span>';
 }
 

@@ -339,7 +339,12 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 		 */
 		public function tpae_set_widget_list() {
 
-			$widget_data = json_decode( stripslashes( sanitize_text_field( wp_unslash( $_POST['widget_data'] ) ) ), true );
+			$raw         = isset( $_POST['widget_data'] ) ? wp_unslash( $_POST['widget_data'] ) : '';
+			$widget_data = is_string( $raw ) ? json_decode( $raw, true ) : null;
+
+			if ( ! is_array( $widget_data ) ) {
+				return $this->tpae_set_response( false, 'invalid_payload', 'Invalid payload.' );
+			}
 
 			$data = get_option( 'theplus_options' );
 
@@ -351,6 +356,8 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 
 			// Remove Elementor Disable Widget.
 			$elementor_disabled_elements = get_option( 'elementor_disabled_elements', false );
+			$check_elements              = isset( $widget_data['check_elements'] ) && is_array( $widget_data['check_elements'] ) ? $widget_data['check_elements'] : array();
+
 			if ( ! empty( $elementor_disabled_elements ) ) {
 				$converted = array_map(
 					function ( $widget ) {
@@ -359,7 +366,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 					$elementor_disabled_elements
 				);
 
-				$final = array_diff( $converted, $widget_data['check_elements'] );
+				$final = array_diff( $converted, $check_elements );
 				$final = array_values( $final );
 
 				update_option( 'elementor_disabled_elements', $final, '', 'on' );
@@ -456,7 +463,11 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 		public function tpae_set_custom_css_js() {
 			$theplus_styling_data = get_option( 'theplus_styling_data' );
 
-			$new_code = json_decode( stripslashes( $_POST['new_code'] ), true );
+			if ( ! isset( $_POST['new_code'] ) ) {
+				return $this->tpae_set_response( false, 'Invalid request.', 'No code provided.' );
+			}
+
+			$new_code = json_decode( wp_unslash( $_POST['new_code'] ), true );
 
 			$css = isset( $new_code['css'] ) ? $new_code['css'] : '';
 			$js  = isset( $new_code['js'] ) ? $new_code['js'] : '';
@@ -464,7 +475,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			$theplus_styling_data['theplus_custom_css_editor'] = $css;
 			$theplus_styling_data['theplus_custom_js_editor']  = $js;
 
-			if ( false == $theplus_styling_data ) {
+			if ( false === $theplus_styling_data ) {
 				add_option( 'theplus_styling_data', $theplus_styling_data, '', 'yes' );
 			} else {
 				update_option( 'theplus_styling_data', $theplus_styling_data );
@@ -484,7 +495,7 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			$listing_data = isset( $_POST['listing_data'] ) ? sanitize_text_field( wp_unslash( $_POST['listing_data'] ) ) : '';
 			$listing_data = json_decode( $listing_data, true );
 
-			if ( false == $get_listing ) {
+			if ( false === $get_listing ) {
 				add_option( 'post_type_options', $listing_data, '', 'yes' );
 			} else {
 				update_option( 'post_type_options', $listing_data );
@@ -555,6 +566,10 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 		 * @since 6.0.0
 		 */
 		public function tpae_rollback_check() {
+
+			if ( ! current_user_can( 'update_plugins' ) ) {
+				return $this->tpae_set_response( false, 'invalid_permission', 'You do not have permission to update plugins.' );
+			}
 
 			$current_ver = isset( $_POST['version'] ) ? sanitize_text_field( wp_unslash( $_POST['version'] ) ) : '';
 
@@ -655,27 +670,23 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 			include_once ABSPATH . 'wp-admin/includes/class-automatic-upgrader-skin.php';
 			include_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
 
-			$result   = array();
-			$response = wp_remote_post(
-				'http://api.wordpress.org/plugins/info/1.0/',
+			$result = array();
+
+			if ( ! function_exists( 'plugins_api' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+			}
+
+			$plugin_info = plugins_api(
+				'plugin_information',
 				array(
-					'body' => array(
-						'action'  => 'plugin_information',
-						'request' => serialize(
-							(object) array(
-								'slug'   => $name,
-								'fields' => array(
-									'version' => false,
-								),
-							)
-						),
+					'slug'   => $name,
+					'fields' => array(
+						'version' => false,
 					),
 				)
 			);
 
-			$plugin_info = unserialize( wp_remote_retrieve_body( $response ) );
-
-			if ( ! $plugin_info ) {
+			if ( is_wp_error( $plugin_info ) || ! $plugin_info ) {
 				wp_send_json_error( array( 'content' => __( 'Failed to retrieve plugin information.', 'tpebl' ) ) );
 			}
 
@@ -730,47 +741,40 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 
 			$name = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
 
-			$theme_slug    = $name;
-			$theme_api_url = 'https://api.wordpress.org/themes/info/1.0/';
+			$theme_slug = $name;
 
-			// Parameters for the request
-			$args = array(
-				'body' => array(
-					'action'  => 'theme_information',
-					'request' => serialize(
-						(object) array(
-							'slug'   => $name,
-							'fields' => array(
-								'description'     => false,
-								'sections'        => false,
-								'rating'          => true,
-								'ratings'         => false,
-								'downloaded'      => true,
-								'download_link'   => true,
-								'last_updated'    => true,
-								'homepage'        => true,
-								'tags'            => true,
-								'template'        => true,
-								'active_installs' => false,
-								'parent'          => false,
-								'versions'        => false,
-								'screenshot_url'  => true,
-								'active_installs' => false,
-							),
-						)
+			if ( ! function_exists( 'themes_api' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/theme.php';
+			}
+
+			$theme_info = themes_api(
+				'theme_information',
+				array(
+					'slug'   => $name,
+					'fields' => array(
+						'description'     => false,
+						'sections'        => false,
+						'rating'          => true,
+						'ratings'         => false,
+						'downloaded'      => true,
+						'download_link'   => true,
+						'last_updated'    => true,
+						'homepage'        => true,
+						'tags'            => true,
+						'template'        => true,
+						'active_installs' => false,
+						'parent'          => false,
+						'versions'        => false,
+						'screenshot_url'  => true,
 					),
-				),
+				)
 			);
 
-			// Make the request
-			$response = wp_remote_post( $theme_api_url, $args );
-			// Check for errors
-			if ( is_wp_error( $response ) ) {
-				$error_message = $response->get_error_message();
+			if ( is_wp_error( $theme_info ) ) {
+				$error_message = $theme_info->get_error_message();
 
 				$result = $this->tpae_set_response( false, 'oops', 'oops');
 			} else {
-				$theme_info    = unserialize( $response['body'] );
 				$theme_name    = $theme_info->name;
 				$theme_zip_url = $theme_info->download_link;
 
@@ -810,11 +814,24 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 		public function tpae_api_call() {
 
 			$method  = isset( $_POST['method'] ) ? sanitize_text_field( wp_unslash( $_POST['method'] ) ) : 'POST';
-			$api_url = isset( $_POST['api_url'] ) ? sanitize_text_field( wp_unslash( $_POST['api_url'] ) ) : '';
+			$api_url = isset( $_POST['api_url'] ) ? esc_url_raw( wp_unslash( $_POST['api_url'] ) ) : '';
 			$body    = isset( $_POST['url_body'] ) ? json_decode( wp_unslash( $_POST['url_body'] ) ) : array();
+
+			$final = array( 'HTTP_CODE' => 0 );
+
+			if ( empty( $api_url ) || ! $this->tpae_is_safe_outbound_url( $api_url ) ) {
+				$final['error'] = 'invalid_url';
+				return $final;
+			}
+
+			if ( ! in_array( $method, array( 'GET', 'POST' ), true ) ) {
+				$final['error'] = 'invalid_method';
+				return $final;
+			}
 
 			$args = array(
 				'method'  => $method,
+				'timeout' => 15,
 				'headers' => array(
 					'Content-Type' => 'application/json',
 				),
@@ -824,12 +841,13 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 				$args['body'] = wp_json_encode( $body );
 			}
 
-			if ( 'POST' === $method ) {
-				$response = wp_remote_post( $api_url, $args );
-			}
+			$response = ( 'POST' === $method )
+				? wp_remote_post( $api_url, $args )
+				: wp_remote_get( $api_url, $args );
 
-			if ( 'GET' === $method ) {
-				$response = wp_remote_get( $api_url, $args );
+			if ( is_wp_error( $response ) ) {
+				$final['error'] = 'request_failed';
+				return $final;
 			}
 
 			$statuscode = wp_remote_retrieve_response_code( $response );
@@ -846,6 +864,88 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 		}
 
 		/**
+		 * Validate outbound URL against SSRF.
+		 *
+		 * @since 6.4.15
+		 *
+		 * @param string $url URL to validate.
+		 * @return bool
+		 */
+		private function tpae_is_safe_outbound_url( $url ) {
+
+			$parts = wp_parse_url( $url );
+
+			if ( empty( $parts['scheme'] ) || empty( $parts['host'] ) ) {
+				return false;
+			}
+
+			if ( ! in_array( strtolower( $parts['scheme'] ), array( 'http', 'https' ), true ) ) {
+				return false;
+			}
+
+			if ( ! empty( $parts['user'] ) || ! empty( $parts['pass'] ) ) {
+				return false;
+			}
+
+			$host = $parts['host'];
+			$ip   = filter_var( $host, FILTER_VALIDATE_IP ) ? $host : gethostbyname( $host );
+
+			if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+				$flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+				if ( ! filter_var( $ip, FILTER_VALIDATE_IP, array( 'flags' => $flags ) ) ) {
+					return false;
+				}
+			}
+
+			return (bool) wp_http_validate_url( $url );
+		}
+
+		/**
+		 * Allowlist of TPAE-owned option/transient keys this dashboard may
+		 * read or delete.
+		 *
+		 * @since 6.5.7
+		 * @param string $key Candidate option or transient key.
+		 * @return bool
+		 */
+		private function tpae_is_allowed_storage_key( $key ) {
+
+			if ( ! is_string( $key ) || '' === $key ) {
+				return false;
+			}
+
+			$exact = array(
+				'theplus_options',
+				'theplus_api_connection_data',
+				'theplus_styling_data',
+				'theplus_performance',
+				'theplus_widgets_settings',
+				'theplus_white_label',
+				'post_type_options',
+				'tp_dashboard_overview',
+				'tpae_onbording_end',
+				'tpae_data_allow',
+				'tpae_menu_notification',
+				'tpae_whats_new_notification',
+				'tpae_onboarding_time',
+				'tpae_onboarding_version',
+			);
+
+			if ( in_array( $key, $exact, true ) ) {
+				return true;
+			}
+
+			$prefixes = array( 'tpae_', 'theplus_', 'tp_dashboard_', 'tpae_rollback_version_' );
+			foreach ( $prefixes as $p ) {
+				if ( 0 === strpos( $key, $p ) ) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/**
 		 * Manage Databash Transient
 		 *
 		 * @since 6.0.0
@@ -854,6 +954,10 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 
 			$operation = isset( $_POST['operation'] ) ? sanitize_text_field( wp_unslash( $_POST['operation'] ) ) : '';
 			$key       = isset( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : '';
+
+			if ( ! $this->tpae_is_allowed_storage_key( $key ) ) {
+				return $this->tpae_set_response( false, 'Invalid key.', 'Key not permitted.' );
+			}
 
 			if ( 'get' === $operation ) {
 				$data = get_transient( $key );
@@ -878,6 +982,10 @@ if ( ! class_exists( 'Tpae_Dashboard_Ajax' ) ) {
 		public function tpae_wp_option_manage() {
 			$operation = isset( $_POST['operation'] ) ? sanitize_text_field( wp_unslash( $_POST['operation'] ) ) : '';
 			$key       = isset( $_POST['key'] ) ? sanitize_text_field( wp_unslash( $_POST['key'] ) ) : '';
+
+			if ( ! $this->tpae_is_allowed_storage_key( $key ) ) {
+				return $this->tpae_set_response( false, 'Invalid key.', 'Key not permitted.' );
+			}
 
 			if ( 'get' === $operation ) {
 				$data = get_transient( $key );

@@ -10,11 +10,16 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
+use ThePlusAddons\Elementor\ButtonStyle\TP_Global_Button_Style_Helper;
+
+if ( ! trait_exists( '\ThePlusAddons\Elementor\ButtonStyle\TP_Global_Button_Style_Helper' ) ) {
+	include_once L_THEPLUS_PATH . 'modules/extensions/global-control/class-tp-global-button-style-helper.php';
+}
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -23,16 +28,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Button
  */
-class L_ThePlus_Button extends Widget_Base {
-
-	public $tp_doc = L_THEPLUS_TPDOC;
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
+class L_ThePlus_Button extends Plus_Widget_Base {
+	use TP_Global_Button_Style_Helper;
 
 	/**
 	 * Get Widget Name.
@@ -79,19 +76,17 @@ class L_ThePlus_Button extends Widget_Base {
 		return array( 'Tp Button', 'CTA Button', 'Hover-Text Button', 'Icon Button', 'Tooltip Button', 'Parallax Button', 'Continuous Animation Button', 'Shake Animation Button', 'Full-Width Button', 'Scroll-Animation Button' );
 	}
 
-	public function get_custom_help_url() {
-		$doc_url = $this->tp_help;
-
-		return esc_url( $doc_url );
+	/**
+	 * It is use for widget add in catch or not.
+	 *
+	 * @since 6.4.13
+	 */
+	public function is_dynamic_content(): bool {
+		return false;
 	}
 
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	protected function get_is_simple_button( $settings ) {
+		return ! empty( $settings['button_type_switch'] ) && in_array( $settings['button_type_switch'], array( 'basic' ), true );
 	}
 
 	/**
@@ -111,11 +106,51 @@ class L_ThePlus_Button extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'button_type_switch',
+			array(
+				'label'   => esc_html__( 'Button Type', 'tpebl' ),
+				'type'    => Controls_Manager::CHOOSE,
+				'default' => 'basic',
+				'options' => array(
+					'basic'  => array(
+						'title' => esc_html__( 'Basic', 'tpebl' ),
+						'icon'  => 'theplus-i-button',
+					),
+					'global' => array(
+						'title' => esc_html__( 'Global', 'tpebl' ),
+						'icon'  => 'eicon-globe',
+					),
+				),
+				'toggle'  => false,
+				'description' => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text">%s</p>',
+						esc_html__( 'Choose Basic to customize styles from the Style tab, or select Global to use a predefined button style.', 'tpebl' ),
+					)
+				),
+			)
+		);
+		$this->add_control(
+			'button_global_style_preset',
+			array(
+				'label'     => esc_html__( 'Global Style', 'tpebl' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => $this->get_global_button_style_options(),
+				'default'   => '',
+				'condition' => array(
+					'button_type_switch' => 'global',
+				),
+			)
+		);
+		$this->add_control(
 			'tpae_preset_controller',
 			array(
 				'type'        => 'tpae_preset_button',
 				'temp_id'     => 16452,
 				'label_block' => true,
+				'condition'   => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 		$this->add_control(
@@ -148,6 +183,9 @@ class L_ThePlus_Button extends Widget_Base {
 					'style-21' => esc_html__( 'Style 21', 'tpebl' ),
 					'style-22' => esc_html__( 'Style 22', 'tpebl' ),
 					'style-24' => esc_html__( 'Style 23', 'tpebl' ),
+				),
+				'condition' => array(
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -186,6 +224,7 @@ class L_ThePlus_Button extends Widget_Base {
 					'hover-bottom' => esc_html__( 'On Bottom', 'tpebl' ),
 				),
 				'condition' => array(
+					'button_type_switch' => 'basic',
 					'button_style' => array( 'style-11', 'style-13' ),
 				),
 			)
@@ -214,6 +253,7 @@ class L_ThePlus_Button extends Widget_Base {
 				'default'     => esc_html__( 'Click Here', 'tpebl' ),
 				'placeholder' => esc_html__( 'Click Here', 'tpebl' ),
 				'condition'   => array(
+					'button_type_switch' => 'basic',
 					'button_style' => 'style-24',
 				),
 			)
@@ -236,6 +276,7 @@ class L_ThePlus_Button extends Widget_Base {
 				'default'     => esc_html__( 'Click Here', 'tpebl' ),
 				'placeholder' => esc_html__( 'Click Here', 'tpebl' ),
 				'condition'   => array(
+					'button_type_switch' => 'basic',
 					'button_style' => array( 'style-4', 'style-11', 'style-14' ),
 				),
 			)
@@ -258,26 +299,30 @@ class L_ThePlus_Button extends Widget_Base {
 		$this->add_control(
 			'button_custom_attributes',
 			array(
-				'label'        => __( 'Add Custom Attributes', 'tpebl' ),
+				'label'        => esc_html__( 'Add Custom Attributes', 'tpebl' ),
 				'type'         => Controls_Manager::POPOVER_TOGGLE,
 				'label_off'    => esc_html__( 'Default', 'tpebl' ),
 				'label_on'     => esc_html__( 'Custom', 'tpebl' ),
 				'return_value' => 'yes',
 				'default'      => 'yes',
+				'condition'    => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 		$this->start_popover();
 		$this->add_control(
 			'custom_attributes',
 			array(
-				'label'       => __( 'Custom Attributes', 'tpebl' ),
+				'label'       => esc_html__( 'Custom Attributes', 'tpebl' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'ai'          => false,
 				'dynamic'     => array(
 					'active' => true,
 				),
-				'placeholder' => __( 'key=value', 'tpebl' ),
+				'placeholder' => esc_html__( 'key=value', 'tpebl' ),
 				'condition'   => array(
+					'button_type_switch' => 'basic',
 					'button_custom_attributes' => 'yes',
 				),
 			)
@@ -287,10 +332,32 @@ class L_ThePlus_Button extends Widget_Base {
 		$this->start_controls_section(
 			'section_button_icon_styling',
 			array(
-				'label'     => esc_html__( 'Icon Settings', 'tpebl' ),
-				'tab'       => Controls_Manager::TAB_CONTENT,
-				'condition' => array(
-					'button_style!' => array( 'style-3', 'style-6', 'style-7', 'style-9' ),
+				'label'      => esc_html__( 'Icon Settings', 'tpebl' ),
+				'tab'        => Controls_Manager::TAB_CONTENT,
+				'conditions' => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'     => 'button_type_switch',
+							'operator' => '==',
+							'value'    => 'global',
+						),
+						array(
+							'relation' => 'and',
+							'terms'    => array(
+								array(
+									'name'     => 'button_type_switch',
+									'operator' => '==',
+									'value'    => 'basic',
+								),
+								array(
+									'name'     => 'button_style',
+									'operator' => '!=',
+									'value'    => array( 'style-3', 'style-6', 'style-7', 'style-9' ),
+								),
+							),
+						),
+					),
 				),
 			)
 		);
@@ -342,14 +409,6 @@ class L_ThePlus_Button extends Widget_Base {
 		);
 		$this->start_popover();
 		$this->add_control(
-			'icon_fs_options',
-			array(
-				'label'     => esc_html__( 'Font Awesome', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
-		$this->add_control(
 			'button_icon',
 			array(
 				'label'       => esc_html__( 'Icon', 'tpebl' ),
@@ -378,14 +437,6 @@ class L_ThePlus_Button extends Widget_Base {
 			)
 		);
 		$this->start_popover();
-		$this->add_control(
-			'icon_f5_options',
-			array(
-				'label'     => esc_html__( 'Font Awesome 5', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
 		$this->add_control(
 			'button_icon_5',
 			array(
@@ -505,6 +556,9 @@ class L_ThePlus_Button extends Widget_Base {
 			array(
 				'label' => esc_html__( 'Extra Option', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 		$this->add_control(
@@ -535,22 +589,45 @@ class L_ThePlus_Button extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/button/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 				),
 			)
 		);
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_typography_styling',
+			array(
+				'label' => esc_html__( 'Typography', 'tpebl' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'button_type_switch' => 'global',
+				),
+			)
+		);
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'global_button_typography',
+				'selector' => '{{WRAPPER}} .pt_plus_button .button-link-wrap',
+			)
+		);
+		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'section_styling',
 			array(
 				'label' => esc_html__( 'Background Option', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 		$this->add_responsive_control(
@@ -597,7 +674,7 @@ class L_ThePlus_Button extends Widget_Base {
 			'button_svg_icon_size',
 			array(
 				'type'        => Controls_Manager::SLIDER,
-				'label'       => esc_html__( 'Svg Icon Size', 'tpebl' ),
+				'label'       => esc_html__( 'SVG Icon Size', 'tpebl' ),
 				'size_units'  => array( 'px' ),
 				'range'       => array(
 					'px' => array(
@@ -874,7 +951,7 @@ class L_ThePlus_Button extends Widget_Base {
 		$this->add_control(
 			'btn_text_hover_color',
 			array(
-				'label'     => esc_html__( 'Text Hover Color', 'tpebl' ),
+				'label'     => esc_html__( 'Text Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_button .button-link-wrap:hover,{{WRAPPER}} .pt_plus_button.button-style-17 .button-link-wrap .btn-icon,{{WRAPPER}} .pt_plus_button.button-style-22 .button-link-wrap .btn-icon' => 'color: {{VALUE}};',
@@ -887,7 +964,7 @@ class L_ThePlus_Button extends Widget_Base {
 		$this->add_control(
 			'btn_icon_color_hover',
 			array(
-				'label'     => esc_html__( 'Icon Hover Color', 'tpebl' ),
+				'label'     => esc_html__( 'Icon Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_button:hover .button-link-wrap:hover .btn-icon' => 'color: {{VALUE}};',
@@ -1035,7 +1112,7 @@ class L_ThePlus_Button extends Widget_Base {
 		$this->add_control(
 			'button_border_hover_color',
 			array(
-				'label'     => esc_html__( 'Hover Border Color', 'tpebl' ),
+				'label'     => esc_html__( 'Border Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#313131',
 				'selectors' => array(
@@ -1065,7 +1142,7 @@ class L_ThePlus_Button extends Widget_Base {
 		$this->add_responsive_control(
 			'button_hover_radius',
 			array(
-				'label'      => esc_html__( 'Hover Border Radius', 'tpebl' ),
+				'label'      => esc_html__( 'Border Radius', 'tpebl' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array(
@@ -1106,7 +1183,7 @@ class L_ThePlus_Button extends Widget_Base {
 		$this->add_control(
 			'btn_bottom_border_hover_color',
 			array(
-				'label'     => esc_html__( 'Border Hover Color', 'tpebl' ),
+				'label'     => esc_html__( 'Border Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => array(
 					'button_style' => 'style-1',
@@ -1159,6 +1236,9 @@ class L_ThePlus_Button extends Widget_Base {
 			array(
 				'label' => esc_html__( 'Special', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 		$this->add_control(
@@ -1379,6 +1459,9 @@ class L_ThePlus_Button extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
+		$is_simple_button = ! empty( $settings['button_type_switch'] ) ? $settings['button_type_switch'] : 'basic';
+		$button_global_style_preset = ! empty( $settings['button_global_style_preset'] ) ? $settings['button_global_style_preset'] : '';
+
 		/*--OnScroll View Animation ---*/
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation-attr.php';
 
@@ -1504,6 +1587,10 @@ class L_ThePlus_Button extends Widget_Base {
 		$uid        = uniqid( 'btn' );
 		$data_class = $uid;
 
+		if ( 'global' === $is_simple_button) {
+			$button_style = 'style-8';
+		}
+
 		$data_class .= ' button-' . $button_style . ' ';
 
 		if ( 'style-11' === $button_style || 'style-13' === $button_style ) {
@@ -1530,10 +1617,33 @@ class L_ThePlus_Button extends Widget_Base {
 		}
 
 		$uid_button = uniqid( 'button' );
+		$global_button_css = '';
 
-		$cst_att = '';
+		if ( 'global' === $is_simple_button && ! empty( $button_global_style_preset ) ) {
+			$global_button_css = $this->build_global_button_style_css( $button_global_style_preset, '#' . $uid_button );
+		}
+
+		$safe_custom_attrs = '';
 		if ( 'yes' === $button_custom_attributes && ! empty( $custom_attributes ) ) {
-			$cst_att = $custom_attributes;
+			$blocked_attrs = array( 'style', 'class', 'id', 'href', 'src', 'action', 'formaction', 'srcdoc', 'data' );
+			$pairs         = explode( "\n", $custom_attributes );
+
+			foreach ( $pairs as $pair ) {
+				$pair = trim( $pair );
+				if ( empty( $pair ) ) {
+					continue;
+				}
+
+				$kv  = explode( '|', $pair, 2 );
+				$key = sanitize_key( trim( $kv[0] ) );
+				$val = isset( $kv[1] ) ? esc_attr( trim( $kv[1] ) ) : '';
+
+				if ( empty( $key ) || preg_match( '/^on/i', $key ) || in_array( $key, $blocked_attrs, true ) ) {
+					continue;
+				}
+
+				$safe_custom_attrs .= ' ' . $key . '="' . $val . '"';
+			}
 		}
 
 		$the_button = '<div class="pt-plus-button-wrapper  ' . esc_attr( $button_align ) . ' ">';
@@ -1546,7 +1656,7 @@ class L_ThePlus_Button extends Widget_Base {
 
 						$the_button .= '<div class="animted-content-inner ' . esc_attr( $continuous_animation ) . '">';
 
-							$the_button .= '<a ' . $this->get_render_attribute_string( 'button' ) . ' ' . tp_senitize_js_input( $cst_att ) . ' >';
+							$the_button .= '<a ' . $this->get_render_attribute_string( 'button' ) . $safe_custom_attrs . ' >';
 
 							$the_button .= $this->render_text();
 
@@ -1561,6 +1671,10 @@ class L_ThePlus_Button extends Widget_Base {
 			$the_button .= '</div>';
 
 		$the_button .= '</div>';
+
+		if ( ! empty( $global_button_css ) ) {
+			$the_button .= '<style>' . $global_button_css . '</style>';
+		}
 
 		echo $the_button;
 	}
@@ -1583,6 +1697,8 @@ class L_ThePlus_Button extends Widget_Base {
 		$before_after = ! empty( $settings['before_after'] ) ? $settings['before_after'] : '';
 		$button_text  = ! empty( $settings['button_text'] ) ? $settings['button_text'] : '';
 		$icon_style   = ! empty( $settings['button_icon_style'] ) ? $settings['button_icon_style'] : 'font_awesome';
+
+		$is_simple_button = ! empty( $settings['button_type_switch'] ) ? $settings['button_type_switch'] : 'basic';
 
 		$icons = '';
 

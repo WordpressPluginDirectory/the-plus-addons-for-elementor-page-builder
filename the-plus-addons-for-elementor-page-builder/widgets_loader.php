@@ -18,10 +18,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * It Is load all widget and dashbord
+ * Autoload the shared widget base class and reload-preview trait on demand.
+ *
+ * Registered here (rather than in the main plugin file) so the plugin bootstrap
+ * stays clean. The callback only fires when one of the listed FQCNs is actually
+ * referenced — typically from inside a migrated widget's `extends` clause or
+ * `use` statement during `elementor/widgets/register`.
+ *
+ * @since 6.4.13
+ */
+spl_autoload_register(
+	function ( $class ) {
+		if ( 'TheplusAddons\\Widgets\\Base\\Plus_Widget_Base' === $class ) {
+			require_once L_THEPLUS_PATH . 'modules/widgets/base/class-plus-widget-base.php';
+		}
+		if ( 'TheplusAddons\\Widgets\\Base\\Reload_Preview_Trait' === $class ) {
+			require_once L_THEPLUS_PATH . 'modules/widgets/base/trait-reload-preview.php';
+		}
+	}
+);
+
+/**
+ * It Is load all widget and dashboard
  *
  * @since 1.0.0
  */
+#[\AllowDynamicProperties]
 final class L_Theplus_Element_Load {
 
 	/**
@@ -34,7 +56,7 @@ final class L_Theplus_Element_Load {
 	/**
 	 * Get Elementor Plugin Instance
 	 *
-	 * @return \Elementor\Theplus_Element_Loader
+	 * @return \Elementor\Plugin
 	 */
 	public static function elementor() {
 		return \Elementor\Plugin::$instance;
@@ -48,7 +70,7 @@ final class L_Theplus_Element_Load {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return Theplus_Element_Loader The single instance of the class.
+	 * @return L_Theplus_Element_Load The single instance of the class.
 	 */
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
@@ -109,8 +131,6 @@ final class L_Theplus_Element_Load {
 
 		if ( isset( $installed_plugins[ $plugin ] ) ) {
 			$tp_ele_btn_txt = esc_html__( 'Activate Now', 'tpebl' );
-		}else{
-			$tp_ele_btn_txt = esc_html__( 'Install Now', 'tpebl' );
 		}
 
 		echo '<div class="notice notice-error tpae-notice-show tpae-install-elementor" style="border-left-color: #6660EF;">
@@ -170,6 +190,11 @@ final class L_Theplus_Element_Load {
 		}
 
 		$this->include_widgets();
+		$tpae_s_options = get_option( 'theplus_api_connection_data' );
+		$theplus_ability_switch = ! empty( $tpae_s_options['theplus_ability_switch'] ) ? $tpae_s_options['theplus_ability_switch'] : '';
+		if('on' === $theplus_ability_switch){
+			include L_THEPLUS_PATH . 'modules/ability/class-tp-ability-main.php';
+		}
 	}
 
 	public function tpae_elementor_ajax_call() {
@@ -192,22 +217,19 @@ final class L_Theplus_Element_Load {
 
 		$installed_plugins = get_plugins();
 
-		$response = wp_remote_post(
-			'http://api.wordpress.org/plugins/info/1.0/',
+		if ( ! function_exists( 'plugins_api' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+		}
+
+		$plugin_info = plugins_api(
+			'plugin_information',
 			[
-				'body' => [
-					'action'  => 'plugin_information',
-					'request' => serialize((object) [
-						'slug'   => $tp_slug,
-						'fields' => ['version' => false],
-					]),
-				],
+				'slug'   => $tp_slug,
+				'fields' => ['version' => false],
 			]
 		);
 
-		$plugin_info = unserialize(wp_remote_retrieve_body($response));
-
-		if (!$plugin_info) {
+		if ( is_wp_error( $plugin_info ) || ! $plugin_info ) {
 			wp_send_json_error([
 				'message' => __('Failed to retrieve plugin information.', 'tpebl')
 			]);
@@ -302,7 +324,6 @@ final class L_Theplus_Element_Load {
 		include L_THEPLUS_PATH . 'includes/user-experience/class-tp-user-experience-main.php';
 		include L_THEPLUS_PATH . 'includes/admin/dashboard/class-tpae-dashboard-main.php';
 
-		include L_THEPLUS_PATH . 'includes/smart-loop-builder/class-tpae-loop-builder.php';
 		include L_THEPLUS_PATH . 'includes/preset/class-wdkit-preset.php';
 		include L_THEPLUS_PATH . 'modules/controls/theme-builder/tpae-class-nxt-download.php';
 
@@ -325,7 +346,7 @@ final class L_Theplus_Element_Load {
 		$elements    = l_theplus_get_option( 'general', 'check_elements' );
 
 		if ( ( isset( $plus_extras ) && empty( $plus_extras ) && empty( $theplus_options ) ) || ( ! empty( $plus_extras ) && in_array( 'plus_display_rules', $plus_extras ) ) ) {
-			add_action( 'wp_head', array( $this, 'print_style' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'print_style' ) );
 		}
 
 		// add_action( 'elementor/init', array( $this, 'add_elementor_category' ) );
@@ -333,6 +354,10 @@ final class L_Theplus_Element_Load {
 		add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'theplus_editor_styles' ) );
 		
 		if ( defined( 'THEPLUS_VERSION' ) && ! empty( $elements ) && is_array( $elements ) && in_array( 'tp_social_feed', $elements ) ) {
+			add_action( 'wp_enqueue_scripts', array( $this, 'theplus_frontend_styles' ) );
+		}
+
+		if(defined('THEPLUS_VERSION') && !empty($plus_extras) && is_array($plus_extras) && in_array('plus_adv_scroll_interactions', $plus_extras)) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'theplus_frontend_styles' ) );
 		}
 
@@ -408,6 +433,29 @@ final class L_Theplus_Element_Load {
 		wp_enqueue_style( 'theplus-ele-admin', L_THEPLUS_ASSETS_URL . 'css/admin/theplus-ele-admin.css', array(), L_THEPLUS_VERSION, false );
 		wp_enqueue_style( 'theplus-icons-library', L_THEPLUS_ASSETS_URL . 'fonts/style.css', array(), L_THEPLUS_VERSION, false );
 
+		if ( defined( 'THEPLUS_VERSION' ) ) {
+			$white_label_options = get_option( 'theplus_white_label', array() );
+
+			if ( is_array( $white_label_options ) ) {
+				$wl_logo = ! empty( $white_label_options['tp_plus_logo'] ) ? $white_label_options['tp_plus_logo'] : '';
+				$wl_name = ! empty( $white_label_options['tp_plugin_name'] ) ? $white_label_options['tp_plugin_name'] : '';
+				$wl_name = ! empty( $wl_name ) ? $wl_name : ( ! empty( $white_label_options['l_tp_plugin_name'] ) ? $white_label_options['l_tp_plugin_name'] : '' );
+
+				if ( ! empty( $wl_logo ) || ! empty( $wl_name ) ) {
+					$inline_css = '';
+
+					if ( ! empty( $wl_logo ) ) {
+						$wl_logo_escaped = esc_url( $wl_logo );
+						$inline_css .= '.elementor-element .icon i.tpae-editor-logo:after { background-image: url("' . $wl_logo_escaped . '"); background-size: contain; background-repeat: no-repeat; }';
+					} else {
+						$inline_css .= '.elementor-element .icon i.tpae-editor-logo:after { background-image: none; }';
+					}
+
+					wp_add_inline_style( 'theplus-ele-admin', $inline_css );
+				}
+			}
+		}
+
 		$ui_theme = SettingsManager::get_settings_managers( 'editorPreferences' )->get_model()->get_settings( 'ui_theme' );
 
 		if ( ! empty( $ui_theme ) && 'dark' === $ui_theme ) {
@@ -459,40 +507,86 @@ final class L_Theplus_Element_Load {
 	 * @since 1.0.0
 	 */
 	public function theplus_mime_types( $mimes ) {
-			$mimes['svg']  = 'image/svg+xml';
-			$mimes['svgz'] = 'image/svg+xml';
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return $mimes;
+		}
+
+		$mimes['svg']  = 'image/svg+xml';
+		$mimes['svgz'] = 'image/svg+xml';
 
 		return $mimes;
-
 	}
 
 	/**
 	 * Sanitize uploaded SVGs
-	 * 
+	 *
 	 * @since 6.3.16
 	 */
 	public function theplus_sanitize_svg_upload( $file ) {
 
 		$ext = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
 
-		if ( $ext === 'svg' ) {
-			$contents = file_get_contents( $file['tmp_name'] );
+		if ( 'svg' !== $ext && 'svgz' !== $ext ) {
+			return $file;
+		}
 
-			$bad_patterns = [
-				'/<\s*script/i',
-				'/\son[a-z]+\s*=/i',
-				'/<\s*foreignObject/i',
-				'/<\s*(iframe|embed|object)/i',
-				'/javascript:/i',
-				'/data:/i',
-			];
+		if ( ! current_user_can( 'manage_options' ) ) {
+			$file['error'] = __( 'You are not allowed to upload SVG files.', 'tpebl' );
+			return $file;
+		}
 
-			foreach ( $bad_patterns as $re ) {
-				if ( preg_match( $re, $contents ) ) {
-					$file['error'] = __( 'SVG contains unsafe content', 'tpebl' );
+		$contents = file_get_contents( $file['tmp_name'] );
 
-					return $file;
-				}
+		if ( false === $contents || '' === $contents ) {
+			$file['error'] = __( 'SVG file could not be read.', 'tpebl' );
+			return $file;
+		}
+
+		if ( 'svgz' === $ext ) {
+			if ( ! function_exists( 'gzdecode' ) ) {
+				$file['error'] = __( 'SVGZ uploads are not supported on this server (zlib unavailable).', 'tpebl' );
+				return $file;
+			}
+
+			$decoded = @gzdecode( $contents );
+
+			if ( false === $decoded || '' === $decoded ) {
+				$file['error'] = __( 'Malformed SVGZ file rejected.', 'tpebl' );
+				return $file;
+			}
+
+			$contents = $decoded;
+		}
+
+		// After decompression (if any) the payload must look like an SVG.
+		// Reject anything that doesn't start with whitespace + `<` and contain a root <svg> tag.
+		if ( ! preg_match( '/<\s*svg\b/i', $contents ) ) {
+			$file['error'] = __( 'File does not appear to be a valid SVG.', 'tpebl' );
+			return $file;
+		}
+
+		$bad_patterns = array(
+			'/<\s*script/i',
+			'/\son[a-z]+\s*=/i',
+			'/<\s*foreignObject/i',
+			'/<\s*(iframe|embed|object|frame|frameset)/i',
+			'/<\s*(animate|animateMotion|animateTransform|set)\b/i',
+			'/<\s*use\b[^>]*\b(?:xlink:)?href\s*=\s*["\']?\s*(?:https?:|\/\/|data:)/i',
+			'/<!ENTITY/i',
+			'/<!DOCTYPE[^>]*\[/i',
+			'/SYSTEM\s+["\']/i',
+			'/<\?xml-stylesheet/i',
+			'/@import\b/i',
+			'/expression\s*\(/i',
+			'/javascript\s*:/i',
+			'/vbscript\s*:/i',
+			'/data\s*:\s*(?:text\/html|application\/(?:javascript|ecmascript|xhtml))/i',
+		);
+
+		foreach ( $bad_patterns as $re ) {
+			if ( preg_match( $re, $contents ) ) {
+				$file['error'] = __( 'SVG contains unsafe content', 'tpebl' );
+				return $file;
 			}
 		}
 
@@ -502,17 +596,20 @@ final class L_Theplus_Element_Load {
 	/**
 	 * Print style.
 	 *
-	 * Adds custom CSS to the HEAD html tag. The CSS that emphasise the maintenance
-	 * mode with red colors.
+	 * Registers and attaches the small piece of CSS that hides elements
+	 * marked with the .plus-conditions--hidden class on the frontend.
 	 *
-	 * Fired by `admin_head` and `wp_head` filters.
+	 * Fired by the `wp_enqueue_scripts` action.
 	 *
 	 * @since 2.1.0
 	 */
 	public function print_style() {
-		?>
-		<style>*:not(.elementor-editor-active) .plus-conditions--hidden {display: none;}</style> 
-		<?php
+		wp_register_style( 'tpae-display-conditions', false );
+		wp_enqueue_style( 'tpae-display-conditions' );
+		wp_add_inline_style(
+			'tpae-display-conditions',
+			'*:not(.elementor-editor-active) .plus-conditions--hidden { display: none; }'
+		);
 	}
 
 	/**
@@ -541,16 +638,15 @@ final class L_Theplus_Element_Load {
 		}
 
 		$plus_categories = array(
-            'plus-essential'   => array( 'title' => 'Plus Essential', 'icon'  => 'fa fa-plug' ),
-            'plus-advanced'    => array( 'title' => 'Plus Advanced', 'icon'  => 'fa fa-plug' ),
-            'plus-creative'    => array( 'title' => 'Plus Creative', 'icon'  => 'fa fa-plug' ),
-            'plus-listing'     => array( 'title' => 'Plus Listing', 'icon'  => 'fa fa-plug' ),
-            'plus-social'      => array( 'title' => 'Plus Social', 'icon'  => 'fa fa-plug' ),
-            'plus-forms'   	   => array( 'title' => 'Plus Forms', 'icon'  => 'fa fa-plug' ),
-            'plus-woo-builder' => array( 'title' => 'Plus WooCommerce', 'icon'  => 'fa fa-plug' ),
-            'plus-depreciated' => array( 'title' => 'Plus Depreciated', 'icon'  => 'fa fa-plug' ),
-            // 'plus-header'      => array( 'title' => 'Plus Header', 'icon'  => 'fa fa-plug' ),
-        );
+			'plus-essential'   => array( 'title' => esc_html__( 'Plus Essential', 'tpebl' ), 'icon'  => 'fa fa-plug' ),
+			'plus-advanced'    => array( 'title' => esc_html__( 'Plus Advanced', 'tpebl' ), 'icon'  => 'fa fa-plug' ),
+			'plus-creative'    => array( 'title' => esc_html__( 'Plus Creative', 'tpebl' ), 'icon'  => 'fa fa-plug' ),
+			'plus-listing'     => array( 'title' => esc_html__( 'Plus Listing', 'tpebl' ), 'icon'  => 'fa fa-plug' ),
+			'plus-social'      => array( 'title' => esc_html__( 'Plus Social', 'tpebl' ), 'icon'  => 'fa fa-plug' ),
+			'plus-forms'       => array( 'title' => esc_html__( 'Plus Forms', 'tpebl' ), 'icon'  => 'fa fa-plug' ),
+			'plus-woo-builder' => array( 'title' => esc_html__( 'Plus WooCommerce', 'tpebl' ), 'icon'  => 'fa fa-plug' ),
+			'plus-depreciated' => array( 'title' => esc_html__( 'Plus Depreciated', 'tpebl' ), 'icon'  => 'fa fa-plug' ),
+		);
 
 		if ( $post_id ) {
 			$post_type = get_post_type( $post_id );
@@ -672,7 +768,7 @@ final class L_Theplus_Element_Load {
             $elementor->elements_manager->add_category(
                 $index,
                 array(
-                    'title' => esc_html__( $plus_widgets['title'], 'tpebl' ),
+                    'title' => $plus_widgets['title'],
                     'icon'  => $plus_widgets['icon'],
                 ),
                 1
@@ -682,7 +778,7 @@ final class L_Theplus_Element_Load {
 	}
 
 	/**
-	 * The Plus Addon Menu Notificetions icon
+	 * The Plus Addon Menu Notifications icon
 	 *
 	 * @since 6.4.1
 	 */

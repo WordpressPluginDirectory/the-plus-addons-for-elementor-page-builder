@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Utils;
 use Elementor\Group_Control_Typography;
@@ -28,19 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus_Post_Content
  */
-class ThePlus_Post_Content extends Widget_Base {
-
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @since 5.3.3
-	 *
-	 * @version 5.4.2
-	 *
-	 * @var TpDoc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
-
+class ThePlus_Post_Content extends Plus_Widget_Base {
 	/**
 	 * Get Widget Name.
 	 *
@@ -95,60 +83,9 @@ class ThePlus_Post_Content extends Widget_Base {
 	public function get_keywords() {
 		return array( 'Tp Post Content', 'Blog Content', 'Dynamic Post Content', 'Post Excerpt' );
 	}
-
-	/**
-	 * Get Widget Custom Help Url.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			$help_url = L_THEPLUS_HELP;
-		} else {
-			$help_url = THEPLUS_HELP;
-		}
-
-		return esc_url( $help_url );
-	}
-
 	public function is_dynamic_content(): bool {
 		return true;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
-
-	/**
+	}	/**
 	 * Register controls.
 	 *
 	 * @since 1.0.0
@@ -167,55 +104,38 @@ class ThePlus_Post_Content extends Widget_Base {
 		$this->add_control(
 			'posttype',
 			array(
-				'label'   => esc_html__( 'Post Types', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'singlepage',
-				'options' => array(
+				'label'       => esc_html__( 'Post Types', 'tpebl' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'singlepage',
+				'options'     => array(
 					'singlepage'  => esc_html__( 'Single Page', 'tpebl' ),
 					'archivepage' => esc_html__( 'Archive Page', 'tpebl' ),
 				),
-			)
-		);
-		$this->add_control(
-			'posttype_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Select Single Page to show the same content style across all single post pages, or choose Archive Page to display uniform content for all posts in listings.', 'tpebl' ),
+						esc_html__( 'Select Single Page to show the same content style across all single post pages, or choose Archive Page to display uniform content for all posts in listings.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'postContentType',
 			array(
-				'type'      => Controls_Manager::SELECT,
-				'label'     => esc_html__( 'Content Type', 'tpebl' ),
-				'default'   => 'default',
-				'options'   => array(
+				'type'        => Controls_Manager::SELECT,
+				'label'       => esc_html__( 'Content Type', 'tpebl' ),
+				'default'     => 'default',
+				'options'     => array(
 					'default' => esc_html__( 'Full Content', 'tpebl' ),
 					'excerpt' => esc_html__( 'Excerpt', 'tpebl' ),
 				),
-				'condition' => array(
-					'posttype' => 'singlepage',
-				),
-			)
-		);
-		$this->add_control(
-			'postContentType_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Choose whether to show the full post content or only a short excerpt.', 'tpebl' ),
+						esc_html__( 'Choose whether to show the full post content or only a short excerpt.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'posttype' => 'singlepage',
 				),
 			)
@@ -223,30 +143,20 @@ class ThePlus_Post_Content extends Widget_Base {
 		$this->add_control(
 			'postContentEditorType',
 			array(
-				'type'      => Controls_Manager::SELECT,
-				'label'     => esc_html__( 'Content', 'tpebl' ),
-				'default'   => 'default',
-				'options'   => array(
+				'type'        => Controls_Manager::SELECT,
+				'label'       => esc_html__( 'Content', 'tpebl' ),
+				'default'     => 'default',
+				'options'     => array(
 					'default'   => esc_html__( 'Elementor', 'tpebl' ),
 					'wordpress' => esc_html__( 'Wordpress', 'tpebl' ),
 				),
-				'condition' => array(
-					'posttype' => 'singlepage',
-				),
-			)
-		);
-		$this->add_control(
-			'postContentEditorType_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Choose whether to display post content created using Elementor or the default WordPress editor.', 'tpebl' ),
+						esc_html__( 'Choose whether to display post content created using Elementor or the default WordPress editor.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'posttype' => 'singlepage',
 				),
 			)
@@ -317,7 +227,7 @@ class ThePlus_Post_Content extends Widget_Base {
 				'tpae_theme_builder',
 				array(
 					'type'        => 'tpae_theme_builder',
-					'notice'      => 'We recommend using this widget in the Post Single Page Template to render the main content dynamically.',
+					'notice'      => esc_html__( 'We recommend using this widget in the Post Single Page Template to render the main content dynamically.', 'tpebl' ),
 					'button_text' => esc_html__( 'Create Single Page', 'tpebl' ),
 					'page_type'   => 'tp_singular_page',
 				)
@@ -341,7 +251,6 @@ class ThePlus_Post_Content extends Widget_Base {
 				'selectors'  => array(
 					'{{WRAPPER}} .tp-post-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
-				'separator'  => 'after',
 			)
 		);
 		$this->add_control(

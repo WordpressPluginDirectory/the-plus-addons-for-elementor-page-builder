@@ -47,10 +47,8 @@ if ( ! class_exists( 'Tpae_Create_Template' ) ) {
 		    add_action( 'elementor/editor/before_enqueue_scripts', array($this, 'enqueue_editor_scripts') );
 
             add_action( 'wp_ajax_tpae_template_create', array( $this, 'tpae_template_create' ) );
-			add_action( 'wp_ajax_nopriv_tpae_template_create', array( $this, 'tpae_template_create' ) );
 
 			add_action( 'wp_ajax_change_current_template_title', array( $this, 'change_current_template_title' ) );
-			add_action( 'wp_ajax_nopriv_change_current_template_title', array( $this, 'change_current_template_title' ) );            
 		}
 
 		/**
@@ -59,6 +57,26 @@ if ( ! class_exists( 'Tpae_Create_Template' ) ) {
 		 * @since 6.4.2
 		 */
         public function enqueue_editor_scripts() {
+            $white_label_options = get_option( 'theplus_white_label', array() );
+            $wl_enabled          = false;
+            $white_label_data    = array(
+                'wl_enabled' => false,
+                'wl_name'    => '',
+                'wl_logo'    => '',
+            );
+
+            if ( is_array( $white_label_options ) ) {
+                $wl_name = ! empty( $white_label_options['tp_plugin_name'] ) ? $white_label_options['tp_plugin_name'] : '';
+                $wl_name = ! empty( $wl_name ) ? $wl_name : ( ! empty( $white_label_options['l_tp_plugin_name'] ) ? $white_label_options['l_tp_plugin_name'] : '' );
+                $wl_logo = ! empty( $white_label_options['tp_plus_logo'] ) ? $white_label_options['tp_plus_logo'] : '';
+
+                $wl_enabled = ! empty( $wl_name ) || ! empty( $wl_logo );
+
+                $white_label_data['wl_enabled'] = $wl_enabled;
+                $white_label_data['wl_name']    = $wl_name;
+                $white_label_data['wl_logo']    = $wl_logo;
+            }
+
             wp_enqueue_style( 'tp-create-temp-editor-css', L_THEPLUS_URL . 'modules/widgets-feature/template-editor/tp-create-temp-editor.min.css', array(), L_THEPLUS_VERSION);
 
             wp_enqueue_script( 'tp-create-temp-editor-js', L_THEPLUS_URL . 'modules/widgets-feature/template-editor/tp-create-temp-editor.min.js', array( 'jquery', 'wp-i18n' ), L_THEPLUS_VERSION, true );
@@ -70,7 +88,8 @@ if ( ! class_exists( 'Tpae_Create_Template' ) ) {
                     'L_THEPLUS_ASSETS_URL' => L_THEPLUS_ASSETS_URL,
 
                     'ajax_url' => admin_url( 'admin-ajax.php' ),
-                    'nonce'    => wp_create_nonce('live_editor')
+                    'nonce'    => wp_create_nonce('live_editor'),
+                    'is_white_label' => $white_label_data,
                 )
             );
         }
@@ -151,34 +170,32 @@ if ( ! class_exists( 'Tpae_Create_Template' ) ) {
 		 */
 		public function change_current_template_title() {
 
-			/** Security checked wp nonce*/
-			$nonce = ! empty( $_POST['security'] ) ? sanitize_text_field( wp_unslash( $_POST['security'] ) ) : '';
-			if ( ! isset( $nonce ) || empty( $nonce ) || ! wp_verify_nonce( $nonce, 'live_editor' ) ) {
-				die( 'Security checked!' );
-			}
+			check_ajax_referer( 'live_editor', 'security' );
 
-			/** Security checked user login*/
 			if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
 				wp_send_json_error( array( 'content' => __( 'Insufficient permissions.', 'tpebl' ) ) );
 			}
 
-			$id = ! empty( $_POST['id'] ) ? sanitize_text_field( wp_unslash( $_POST['id'] ) ) : '';
-
+			$id            = ! empty( $_POST['id'] ) ? absint( wp_unslash( $_POST['id'] ) ) : 0;
 			$updated_title = ! empty( $_POST['updated_title'] ) ? sanitize_text_field( wp_unslash( $_POST['updated_title'] ) ) : '';
 
-			$res = wp_update_post(
+			if ( $id <= 0 || ! current_user_can( 'edit_post', $id ) ) {
+				wp_send_json_error( array( 'content' => __( 'Invalid template.', 'tpebl' ) ) );
+			}
+
+			wp_update_post(
 				array(
 					'ID'         => $id,
 					'post_title' => $updated_title,
 				)
 			);
 
-			$dev = array(
-				'ID'         => $id,
-				'post_title' => $updated_title,
+			wp_send_json_success(
+				array(
+					'ID'         => $id,
+					'post_title' => $updated_title,
+				)
 			);
-
-			wp_send_json_success( $dev );
 		}
 	}
 

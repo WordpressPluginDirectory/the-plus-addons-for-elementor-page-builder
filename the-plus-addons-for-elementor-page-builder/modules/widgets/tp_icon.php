@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Icons_Manager;
 use Elementor\Group_Control_Background;
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus Icon
  */
-class ThePlus_Icon extends Widget_Base {
+class ThePlus_Icon extends Plus_Widget_Base {
 
 	/**
 	 * Get widget name.
@@ -52,21 +52,6 @@ class ThePlus_Icon extends Widget_Base {
 	}
 
 	/**
-	 * Get Widget Custom Help Url.
-	 *
-	 * @since 6.3.11
-	 */
-	public function get_custom_help_url() {
-		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			$help_url = L_THEPLUS_HELP;
-		} else {
-			$help_url = THEPLUS_HELP;
-		}
-
-		return esc_url( $help_url );
-	}
-
-	/**
 	 * Get widget category.
 	 *
 	 * @since 6.3.11
@@ -85,12 +70,12 @@ class ThePlus_Icon extends Widget_Base {
 	}
 
 	/**
-	 * Disable default inner wrapper.
+	 * It is use for widget add in catch or not.
 	 *
-	 * @since 6.3.11
+	 * @since 6.4.13
 	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	public function is_dynamic_content(): bool {
+		return false;
 	}
 
 	/**
@@ -138,7 +123,7 @@ class ThePlus_Icon extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label' => __( 'Need Help', 'tpebl' ),
+				'label' => esc_html__( 'Need Help', 'tpebl' ),
 				'type'  => 'tpae_need_help',
 			)
 		);
@@ -149,6 +134,24 @@ class ThePlus_Icon extends Widget_Base {
 			array(
 				'label' => esc_html__( 'Icon Style', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+			)
+		);
+		$this->add_responsive_control(
+			'tp_icon_padding',
+			array(
+				'label'      => esc_html__( 'Padding', 'tpebl' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%', 'em' ),
+				'default'    => array(
+					'top'    => 10,
+					'right'  => 10,
+					'bottom' => 10,
+					'left'   => 10,
+					'unit'   => 'px',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .tp-icon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
 			)
 		);
 		$this->add_responsive_control(
@@ -215,24 +218,6 @@ class ThePlus_Icon extends Widget_Base {
 				),
 				'selectors'      => array(
 					'{{WRAPPER}} .tp-icon svg' => 'transform: rotate({{SIZE}}{{UNIT}});',
-				),
-			)
-		);
-		$this->add_responsive_control(
-			'tp_icon_padding',
-			array(
-				'label'      => esc_html__( 'Padding', 'tpebl' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%', 'em' ),
-				'default'    => array(
-					'top'    => 10,
-					'right'  => 10,
-					'bottom' => 10,
-					'left'   => 10,
-					'unit'   => 'px',
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .tp-icon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);

@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Utils;
 use Elementor\Group_Control_Typography;
@@ -29,22 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Carousel_Anything
  */
-class L_ThePlus_Carousel_Anything extends Widget_Base {
-
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @var tp_doc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
-
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
+class L_ThePlus_Carousel_Anything extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name.
@@ -77,18 +62,6 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 	}
 
 	/**
-	 * Get custom URL.
-	 *
-	 * @since 1.2.0
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
-	/**
 	 * Get categories.
 	 *
 	 * @since 1.2.0
@@ -116,37 +89,6 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 	// public function is_dynamic_content(): bool {
 	// return false;
 	// }
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
 
 	/**
 	 * Register controls.
@@ -229,7 +171,7 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 			'liveeditor',
 			array(
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => '<a class="tp-live-editor" id="tp-live-editor-button">Edit Template</a>',
+				'raw'             => '<a class="tp-live-editor" id="tp-live-editor-button">' . esc_html__( 'Edit Template', 'tpebl' ) . '</a>',
 				'content_classes' => 'tp-live-editor-btn',
 				'label_block'     => true,
 				'condition'       => array(
@@ -242,7 +184,7 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 			'create',
 			array(
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => '<a class="tp-live-create" id="tp-live-create-button">Create Template</a>',
+				'raw'             => '<a class="tp-live-create" id="tp-live-create-button">' . esc_html__( 'Create Template', 'tpebl' ) . '</a>',
 				'content_classes' => 'tp-live-create-btn',
 				'label_block'     => true,
 				'condition'       => array(
@@ -328,50 +270,36 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 		$this->add_control(
 			'slide_overflow_hidden',
 			array(
-				'label'     => esc_html__( 'Overflow Hidden', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'On', 'tpebl' ),
-				'label_off' => esc_html__( 'Off', 'tpebl' ),
-				'default'   => 'no',
-				'separator' => 'before',
-			)
-		);
-		$this->add_control(
-			'overflow_hidden_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Overflow Hidden', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'On', 'tpebl' ),
+				'label_off'   => esc_html__( 'Off', 'tpebl' ),
+				'default'     => 'no',
+				'separator'   => 'before',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Enable this if any part of your content goes outside the carousel section or overlaps with other elements. It keeps your design neat and visually contained.', 'tpebl' ),
+						esc_html__( 'Enable this if any part of your content goes outside the carousel section or overlaps with other elements. It keeps your design neat and visually contained.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'carousel_unique_id',
 			array(
-				'label'     => esc_html__( 'Unique Carousel ID', 'tpebl' ),
-				'type'      => Controls_Manager::TEXT,
-				'default'   => '',
-				'ai'        => false,
-				'separator' => 'before',
-			)
-		);
-		$this->add_control(
-			'unique_id_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Unique Carousel ID', 'tpebl' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => '',
+				'ai'          => false,
+				'separator'   => 'before',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'Add a unique ID here if you want to connect this carousel with the Carousel Remote widget for synced navigation.', 'tpebl' ),
 						esc_url( $this->tp_doc . 'connect-infobox-with-carousel-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
-						esc_html__( 'Learn More', 'tpebl' ),
+						esc_html__( 'Learn More', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->end_controls_section();
@@ -385,15 +313,15 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/carousel-anything/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=yszLgc0TJPA',
 					),
 				),
@@ -541,26 +469,19 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 		$this->add_control(
 			'steps_slide',
 			array(
-				'label'   => esc_html__( 'Next Previous', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => '1',
-				'options' => array(
+				'label'       => esc_html__( 'Next Previous', 'tpebl' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => '1',
+				'options'     => array(
 					'1' => esc_html__( 'One Column', 'tpebl' ),
 					'2' => esc_html__( 'All Visible Columns', 'tpebl' ),
 				),
-			)
-		);
-		$this->add_control(
-			'steps_slide_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Choose how many columns move per navigation click.', 'tpebl' ),
+						esc_html__( 'Choose how many columns move per navigation click.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_responsive_control(
@@ -585,50 +506,36 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 		$this->add_control(
 			'slider_draggable',
 			array(
-				'label'     => esc_html__( 'Draggable', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'yes',
-			)
-		);
-		$this->add_control(
-			'slider_draggable_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Draggable', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Show', 'tpebl' ),
+				'label_off'   => esc_html__( 'Hide', 'tpebl' ),
+				'default'     => 'yes',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Allow users to drag slides manually.', 'tpebl' ),
+						esc_html__( 'Allow users to drag slides manually.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'multi_drag',
 			array(
-				'label'     => esc_html__( 'Multi Drag', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'no',
-				'condition' => array(
-					'slider_draggable' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'multi_drag_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Multi Drag', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Show', 'tpebl' ),
+				'label_off'   => esc_html__( 'Hide', 'tpebl' ),
+				'default'     => 'no',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Let users drag multiple slides at once.', 'tpebl' ),
+						esc_html__( 'Let users drag multiple slides at once.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
+				'condition'   => array(
+					'slider_draggable' => 'yes',
+				),
 			)
 		);
 		$this->add_control(
@@ -700,24 +607,17 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 		$this->add_control(
 			'slider_adaptive_height',
 			array(
-				'label'     => esc_html__( 'Adaptive Height', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'no',
-			)
-		);
-		$this->add_control(
-			'adaptive_height_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Adaptive Height', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Show', 'tpebl' ),
+				'label_off'   => esc_html__( 'Hide', 'tpebl' ),
+				'default'     => 'no',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
-						esc_html__( 'Adjust slide height automatically based on content.', 'tpebl' ),
+						esc_html__( 'Adjust slide height automatically based on content.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
@@ -1241,6 +1141,7 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 		$data_slider .= ' data-slider_animation="' . esc_attr( $slider_animation ) . '"';
 
 		$carousel_direction = ! empty( $settings['carousel_direction'] ) ? $settings['carousel_direction'] : 'ltr';
+		$carousel_direction = in_array( $carousel_direction, array( 'ltr', 'rtl' ), true ) ? $carousel_direction : 'ltr';
 
 		$carousel_slider = '';
 
@@ -1284,7 +1185,7 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 		}
 		?>
  
-		<div id="<?php echo esc_attr( $uid ); ?>" class="theplus-carousel-anything-wrapper <?php echo esc_attr( $isotope ); ?> <?php echo esc_attr( $arrow_class ); ?> <?php echo esc_attr( $data_carousel ); ?> <?php echo esc_attr( $uid ); ?> "data-id="<?php echo esc_attr( $uid ); ?>" data-connection="<?php echo esc_attr( $tab_id ); ?>" <?php echo $carousel_slider; ?> dir=<?php echo esc_attr( $carousel_direction ); ?> <?php echo $data_slider; ?> <?php echo $carousel_bg_conn; ?>>
+		<div id="<?php echo esc_attr( $uid ); ?>" class="theplus-carousel-anything-wrapper <?php echo esc_attr( $isotope ); ?> <?php echo esc_attr( $arrow_class ); ?> <?php echo esc_attr( $data_carousel ); ?> <?php echo esc_attr( $uid ); ?> "data-id="<?php echo esc_attr( $uid ); ?>" data-connection="<?php echo esc_attr( $tab_id ); ?>" <?php echo $carousel_slider; ?> dir="<?php echo esc_attr( $carousel_direction ); ?>"<?php echo $data_slider; ?> <?php echo $carousel_bg_conn; ?>>
 			<div class="plus-carousel-inner post-inner-loop">
 			<?php
 			if ( ! empty( $settings['carousel_content'] ) ) {
@@ -1311,7 +1212,7 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 
 								$template_status = $this->get_elementor_template_status( $content_template_id );
 								if ( 'publish' === $template_status ) {
-									echo '<div class="plus-content-editor">' . L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( substr( $item['content_template_id'], 24, -2 ) ) . '</div>';
+									echo '<div class="plus-content-editor">' . L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( substr( $item['content_template_id'], 24, -2 ), true ) . '</div>';
 								} else {
 									echo '<div class="tab-preview-template-notice"><div class="preview-temp-notice-heading">' . esc_html__( 'Unauthorized Access', 'tpebl' ) . '</b></div><div class="preview-temp-notice-desc"><b>' . esc_html__( 'Note :', 'tpebl' ) . '</b> ' . esc_html__( 'You need to upgrade your permissions to Editor or Administrator level to update this option.', 'tpebl' ) . '</div></div>';
 								}
@@ -1331,7 +1232,7 @@ class L_ThePlus_Carousel_Anything extends Widget_Base {
 									$template_status = get_post_status( $content_template );
 
 									if ( 'publish' === $template_status ) {
-										echo '<div class="plus-content-editor">' . L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( $content_template ) . '</div>';
+										echo '<div class="plus-content-editor">' . L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( $content_template, true ) . '</div>';
 									} else {
 										echo '<div class="tab-preview-template-notice"><div class="preview-temp-notice-heading">' . esc_html__( 'Unauthorized Access', 'tpebl' ) . '</b></div><div class="preview-temp-notice-desc"><b>' . esc_html__( 'Note :', 'tpebl' ) . '</b> ' . esc_html__( 'You need to upgrade your permissions to Editor or Administrator level to update this option.', 'tpebl' ) . '</div></div>';
 									}

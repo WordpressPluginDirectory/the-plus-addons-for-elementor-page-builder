@@ -1,16 +1,18 @@
 jQuery(document).on("click", ".tpae-ele-btn", function (e) {
     e.preventDefault();
 
+    const { __ } = wp.i18n;
+
     let btn = jQuery(this);
     let slug = btn.data("slug");
     let name = btn.data("name");
 
     let currentText = btn.text().trim();
 
-    if (currentText === "Install Now") {
-        btn.text("Installing...");
-    } else if (currentText === "Activate Now") {
-        btn.text("Activating...");
+    if (currentText === __("Install Now", "tpebl")) {
+        btn.text(__("Installing...", "tpebl"));
+    } else if (currentText === __("Activate Now", "tpebl")) {
+        btn.text(__("Activating...", "tpebl"));
     }
 
     jQuery.ajax({
@@ -27,12 +29,12 @@ jQuery(document).on("click", ".tpae-ele-btn", function (e) {
             if (response.success) {
                 location.reload();
             } else {
-                console.log(response.data?.message || "Failed!");
+                console.error('TPAE Elementor install failed:', response?.data?.message || __("Failed!", "tpebl"));
                 btn.text(currentText);
             }
         },
-        error: function () {
-            console.log("Something went wrong!");
+        error: function (xhr, status, error) {
+            console.error('TPAE Elementor install request error:', status, error);
             btn.text(currentText);
         }
     });

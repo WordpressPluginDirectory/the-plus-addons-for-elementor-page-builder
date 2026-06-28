@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Utils;
 use Elementor\Group_Control_Typography;
@@ -30,21 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus_Data_Table
  */
-class L_ThePlus_Data_Table extends Widget_Base {
-
-	/**
-	 * Document Link For Need help
-	 *
-	 * @var tp_doc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
+class L_ThePlus_Data_Table extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name
@@ -77,18 +63,6 @@ class L_ThePlus_Data_Table extends Widget_Base {
 	}
 
 	/**
-	 * Get Custom URL
-	 *
-	 * @since 1.4.0
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
-	/**
 	 * Get Widget Categories
 	 *
 	 * @since 1.4.0
@@ -116,37 +90,6 @@ class L_ThePlus_Data_Table extends Widget_Base {
 	// public function is_dynamic_content(): bool {
 	// return false;
 	// }
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
 
 	/**
 	 * Register controls.
@@ -2917,147 +2860,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_animation_styling',
-			array(
-				'label' => esc_html__( 'On Scroll View Animation', 'tpebl' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-		$this->add_control(
-			'animation_effects',
-			array(
-				'label'   => esc_html__( 'In Animation Effect', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'no-animation',
-				'options' => l_theplus_get_animation_options(),
-			)
-		);
-		$this->add_control(
-			'animation_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_duration_default',
-			array(
-				'label'     => esc_html__( 'Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animate_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'         => 'no-animation',
-					'animation_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_effects',
-			array(
-				'label'     => esc_html__( 'Out Animation Effect', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'no-animation',
-				'options'   => l_theplus_get_out_animation_options(),
-				'separator' => 'before',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Out Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration_default',
-			array(
-				'label'     => esc_html__( 'Out Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'             => 'no-animation',
-					'animation_out_effects!'         => 'no-animation',
-					'animation_out_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->end_controls_section();
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation.php';
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
 	}
@@ -3080,7 +2883,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 		$showEntries = ! empty( $settings['show_entries'] ) ? $settings['show_entries'] : '';
 
 		$tableSelection  = ! empty( $settings['table_selection'] ) ? $settings['table_selection'] : '';
-		$searchableLabel = ! empty( $settings['searchable_label'] ) ? tp_senitize_js_input( $settings['searchable_label'] ) : '';
+		$searchableLabel = ! empty( $settings['searchable_label'] ) ? $settings['searchable_label'] : '';
 
 		$cell_align_head_desktop = ! empty( $settings['cell_align_head_normal'] ) ? $settings['cell_align_head_normal'] : '';
 		$cell_align_head_tablet  = ! empty( $settings['cell_align_head_normal_tablet'] ) ? $settings['cell_align_head_normal_tablet'] : '';
@@ -3091,10 +2894,13 @@ class L_ThePlus_Data_Table extends Widget_Base {
 			$tmdefaultclass = ' tp-table-mobresswipe';
 		}
 
+		/*--On Scroll View Animation ---*/
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation-attr.php';
+
 		ob_start();
 
 		// Table Wrapper.
-		$this->add_render_attribute( 'plus_table_wrapper', 'class', 'plus-table-wrapper' . esc_attr( $tmdefaultclass ) );
+		$this->add_render_attribute( 'plus_table_wrapper', 'class', 'plus-table-wrapper ' . esc_attr( $animated_class ) . ' ' . esc_attr( $tmdefaultclass ) );
 
 		if ( ! empty( $animation_attr ) ) {
 			$this->add_render_attribute( 'plus_table_wrapper', $animation_attr );
@@ -3248,7 +3054,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 												}
 											}
 											?>
-												<span <?php echo $this->get_render_attribute_string( $repeater_heading_text ); ?>><?php echo $head['heading_text']; ?></span>
+												<span <?php echo $this->get_render_attribute_string( $repeater_heading_text ); ?>><?php echo esc_html( $head['heading_text'] ); ?></span>
 											<?php
 											if ( 'icon' === $head['header_content_icon_image'] ) {
 												if ( 'right' === $settings['all_icon_align'] ) {
@@ -3350,11 +3156,13 @@ class L_ThePlus_Data_Table extends Widget_Base {
 
 										/*button attributes start*/
 										$button_custom_attributes = $row['button_custom_attributes'];
-										$custom_attributes        = tp_senitize_js_input( $row['custom_attributes'] );
+										$raw_custom_attributes    = ! empty( $row['custom_attributes'] ) ? $row['custom_attributes'] : '';
 
-										$cst_att = '';
-										if ( ( ! empty( $button_custom_attributes ) && 'yes' === $button_custom_attributes ) && ! empty( $custom_attributes ) ) {
-											$cst_att = $custom_attributes;
+										if ( ! empty( $button_custom_attributes ) && 'yes' === $button_custom_attributes && ! empty( $raw_custom_attributes ) ) {
+											$safe_attrs = $this->sanitize_custom_attributes( $raw_custom_attributes );
+											foreach ( $safe_attrs as $attr_key => $attr_val ) {
+												$this->add_render_attribute( $link_key, $attr_key, $attr_val );
+											}
 										}
 										/*button attributes end*/
 
@@ -3365,7 +3173,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 										$data_class  .= ' button-' . esc_attr( $button_style ) . ' ';
 										$button      .= '<div class="pt_plus_button ' . esc_attr( $data_class ) . '">';
 
-											$button .= '<a ' . $this->get_render_attribute_string( $link_key ) . ' ' . $cst_att . ' >';
+											$button .= '<a ' . $this->get_render_attribute_string( $link_key ) . '>';
 											$button .= esc_html( $button_text );
 											$button .= '</a>';
 
@@ -3440,8 +3248,10 @@ class L_ThePlus_Data_Table extends Widget_Base {
 											$toolbox = 'id="' . esc_attr( $uniqid ) . '"' . $this->get_render_attribute_string( 'plus_table_col' . $row['_id'] ) . $this->get_render_attribute_string( $_tooltip );
 										}
 
+										$tp_cell_tag = ( isset( $row['table_th_td'] ) && 'th' === $row['table_th_td'] ) ? 'th' : 'td';
+
 										?>
-										<<?php echo esc_attr( $row['table_th_td'] ); ?> <?php echo $toolbox; ?>>
+										<<?php echo tag_escape( $tp_cell_tag ); ?> <?php echo $toolbox; ?>>
 											<?php if ( ! empty( $row['link']['url'] ) ) { ?>
 											<a <?php echo $this->get_render_attribute_string( 'col-link-' . $row['_id'] ); ?>>
 											<?php } ?>
@@ -3467,7 +3277,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 														}
 
 														if ( isset( $header_text[ $cell_counter_c ]['heading_text'] ) && $header_text[ $cell_counter_c ]['heading_text'] ) {
-															echo '<span class="mob-heading-text">' . $header_text[ $cell_counter_c ]['heading_text'] . '</span>';
+															echo '<span class="mob-heading-text">' . esc_html( $header_text[ $cell_counter_c ]['heading_text'] ) . '</span>';
 														}
 
 														if ( 'icon' === $header_text[ $cell_counter_c ]['icon_image'] ) {
@@ -3535,7 +3345,7 @@ class L_ThePlus_Data_Table extends Widget_Base {
 											<?php if ( ! empty( $row['link']['url'] ) ) { ?>
 											</a>
 											<?php } ?>
-										</<?php echo $row['table_th_td']; ?>>
+										</<?php echo tag_escape( $tp_cell_tag ); ?>>
 											<?php
 											// Increment to next cell.
 											++$cell_counter_c;
@@ -3641,28 +3451,39 @@ class L_ThePlus_Data_Table extends Widget_Base {
 	}
 
 	/**
-	 * Function to It is use for call api
+	 * Parse user-defined "key|value" attribute lines into a safe associative array.
 	 *
-	 * If yes returns Array Data
+	 * Blocks dangerous attribute names (event handlers, sensitive attrs) and
+	 * sanitizes keys via sanitize_key(). Values are left raw here because
+	 * Elementor's add_render_attribute escapes them via esc_attr().
 	 *
-	 * @since 1.4.0
-	 * @version 5.4.2
+	 * @since 6.4.13
+	 *
+	 * @param string $raw_attributes Newline-separated "key|value" pairs.
+	 * @return array<string, string> Sanitized attribute key => value pairs.
 	 */
-	protected function tp_table_api( $a_p_i ) {
-		$settings = $this->get_settings_for_display();
-		$final    = array();
+	private function sanitize_custom_attributes( $raw_attributes ) {
+		$blocked_attrs = array( 'id', 'class', 'href', 'src', 'action', 'formaction', 'srcdoc', 'style', 'xlink:href' );
+		$attr_lines    = explode( "\n", $raw_attributes );
+		$safe_attrs    = array();
 
-		$u_r_l      = wp_remote_get( $a_p_i );
-		$statuscode = wp_remote_retrieve_response_code( $u_r_l );
-		$getdataone = wp_remote_retrieve_body( $u_r_l );
-		$statuscode = array( 'HTTP_CODE' => $statuscode );
+		foreach ( $attr_lines as $attr_line ) {
+			$attr_line = trim( $attr_line );
+			if ( empty( $attr_line ) ) {
+				continue;
+			}
 
-		$response = json_decode( $getdataone, true );
-		if ( is_array( $statuscode ) && is_array( $response ) ) {
-			$final = array_merge( $statuscode, $response );
+			$attr_parts = explode( '|', $attr_line, 2 );
+			$attr_key   = sanitize_key( trim( $attr_parts[0] ) );
+
+			if ( empty( $attr_key ) || preg_match( '/^on/i', $attr_key ) || in_array( $attr_key, $blocked_attrs, true ) ) {
+				continue;
+			}
+
+			$safe_attrs[ $attr_key ] = isset( $attr_parts[1] ) ? trim( $attr_parts[1] ) : '';
 		}
 
-		return $final;
+		return $safe_attrs;
 	}
 
 	/**
@@ -3672,14 +3493,4 @@ class L_ThePlus_Data_Table extends Widget_Base {
 	 * @version 5.4.2
 	 */
 	protected function content_template() {}
-
-	/**
-	 * Prevent JS senitizer
-	 * */
-	public function tpae_senitize_js_input( $input ) {
-
-		$input = preg_replace( '/(on|hr)\w+=/', '', $input );
-
-		return $input;
-	}
 }

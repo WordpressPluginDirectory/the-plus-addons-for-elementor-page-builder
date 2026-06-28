@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
@@ -18,6 +18,11 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Border;
+use ThePlusAddons\Elementor\ButtonStyle\TP_Global_Button_Style_Helper;
+
+if ( ! trait_exists( '\ThePlusAddons\Elementor\ButtonStyle\TP_Global_Button_Style_Helper' ) ) {
+	include_once L_THEPLUS_PATH . 'modules/extensions/global-control/class-tp-global-button-style-helper.php';
+}
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;// Exit if accessed directly.
@@ -26,16 +31,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Info_Box
  */
-class L_ThePlus_Info_Box extends Widget_Base {
-
-	public $tp_doc = L_THEPLUS_TPDOC;
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
+class L_ThePlus_Info_Box extends Plus_Widget_Base {
+	use TP_Global_Button_Style_Helper;
 
 	/**
 	 * Get Widget Name.
@@ -88,55 +85,12 @@ class L_ThePlus_Info_Box extends Widget_Base {
 	}
 
 	/**
-	 * Get custom URL.
-	 *
-	 * @since 1.0.0
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
-	/**
 	 * It is use for widget add in catch or not.
 	 *
 	 * @since 6.1.0
 	 */
 	public function is_dynamic_content(): bool {
 		return false;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**
@@ -165,30 +119,20 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_control(
 			'info_box_layout',
 			array(
-				'label'   => esc_html__( 'Select Layout', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'single_layout',
-				'options' => array(
+				'label'       => esc_html__( 'Select Layout', 'tpebl' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'single_layout',
+				'options'     => array(
 					'single_layout'   => esc_html__( 'Listing', 'tpebl' ),
 					'carousel_layout' => esc_html__( 'Carousel (Pro)', 'tpebl' ),
 				),
-			)
-		);
-		$this->add_control(
-			'single_layout_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer"> %s </a></i></p>',
 						esc_html__( 'Display info boxes in a clean vertical or grid layout, ideal for feature lists, services, or content that needs clear readability.', 'tpebl' ),
 						esc_url( $this->tp_doc . 'show-services-box-in-wordpress-using-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
-						esc_html__( 'Learn More', 'tpebl' ),
+						esc_html__( 'Learn More', 'tpebl' )
 					)
-				),
-				'label_block' => true,
-				'condition'   => array(
-					'info_box_layout' => 'single_layout',
 				),
 			)
 		);
@@ -510,6 +454,45 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'button_type_switch',
+			array(
+				'label'     => esc_html__( 'Button Type', 'tpebl' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'default'   => 'basic',
+				'options'   => array(
+					'basic'  => array(
+						'title' => esc_html__( 'Basic', 'tpebl' ),
+						'icon'  => 'eicon-button',
+					),
+					'global' => array(
+						'title' => esc_html__( 'Global', 'tpebl' ),
+						'icon'  => 'eicon-globe',
+					),
+				),
+				'toggle'    => false,
+				'condition' => array(
+					'info_box_layout' => 'single_layout',
+					'main_style'      => array( 'style_1', 'style_3', 'style_4' ),
+					'display_button'  => 'yes',
+				),
+			)
+		);
+		$this->add_control(
+			'button_global_style_preset',
+			array(
+				'label'     => esc_html__( 'Global Style', 'tpebl' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => $this->get_global_button_style_options(),
+				'default'   => '',
+				'condition' => array(
+					'info_box_layout'     => 'single_layout',
+					'main_style'          => array( 'style_1', 'style_3', 'style_4' ),
+					'display_button'      => 'yes',
+					'button_type_switch'  => 'global',
+				),
+			)
+		);
+		$this->add_control(
 			'button_style',
 			array(
 				'type'      => Controls_Manager::SELECT,
@@ -524,6 +507,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 					'info_box_layout' => 'single_layout',
 					'main_style'      => array( 'style_1', 'style_3', 'style_4' ),
 					'display_button'  => 'yes',
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -536,6 +520,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 					'info_box_layout' => 'single_layout',
 					'main_style'      => array( 'style_1', 'style_3', 'style_4' ),
 					'display_button'  => 'yes',
+					'button_type_switch' => 'basic',
 					'button_style!'   => 'style-8',
 				),
 			)
@@ -790,15 +775,15 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/info-box/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=wcnlT5JE0vM',
 					),
 				),
@@ -808,8 +793,69 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_title_styling',
 			array(
-				'label' => esc_html__( 'Title Style', 'tpebl' ),
+				'label' => esc_html__( 'Title', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+			)
+		);
+		$this->add_responsive_control(
+			'title_top_space',
+			array(
+				'type'            => Controls_Manager::SLIDER,
+				'label'           => esc_html__( 'Title Top Space', 'tpebl' ),
+				'range'           => array(
+					'px' => array(
+						'step' => 2,
+						'min'  => -150,
+						'max'  => 150,
+					),
+				),
+				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
+				'desktop_default' => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'tablet_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'mobile_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'selectors'       => array(
+					'{{WRAPPER}} .pt_plus_info_box.info-box-style_1 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_3 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_4 .info-box-inner .service-media' => 'margin-top : {{SIZE}}{{UNIT}}',
+				),
+			)
+		);
+		$this->add_responsive_control(
+			'title_btm_space',
+			array(
+				'type'            => Controls_Manager::SLIDER,
+				'label'           => esc_html__( 'Title Bottom Space', 'tpebl' ),
+				'range'           => array(
+					'px' => array(
+						'step' => 2,
+						'min'  => -150,
+						'max'  => 150,
+					),
+				),
+				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
+				'desktop_default' => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'tablet_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'mobile_default'  => array(
+					'unit' => 'px',
+					'size' => 0,
+				),
+				'render_type'     => 'ui',
+				'selectors'       => array(
+					'{{WRAPPER}} .pt_plus_info_box.info-box-style_1 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_2 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_3 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_4 .info-box-inner .service-media,{{WRAPPER}} .pt_plus_info_box.info-box-style_7 .info-box-inner .service-title' => 'margin-bottom : {{SIZE}}{{UNIT}}',
+				),
 			)
 		);
 		$this->add_group_control(
@@ -1128,72 +1174,11 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		);
 		$this->end_controls_tab();
 		$this->end_controls_tabs();
-		$this->add_responsive_control(
-			'title_top_space',
-			array(
-				'type'            => Controls_Manager::SLIDER,
-				'label'           => esc_html__( 'Title Top Space', 'tpebl' ),
-				'range'           => array(
-					'px' => array(
-						'step' => 2,
-						'min'  => -150,
-						'max'  => 150,
-					),
-				),
-				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
-				'desktop_default' => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'tablet_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'mobile_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'selectors'       => array(
-					'{{WRAPPER}} .pt_plus_info_box.info-box-style_1 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_3 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_4 .info-box-inner .service-media' => 'margin-top : {{SIZE}}{{UNIT}}',
-				),
-			)
-		);
-		$this->add_responsive_control(
-			'title_btm_space',
-			array(
-				'type'            => Controls_Manager::SLIDER,
-				'label'           => esc_html__( 'Title Bottom Space', 'tpebl' ),
-				'range'           => array(
-					'px' => array(
-						'step' => 2,
-						'min'  => -150,
-						'max'  => 150,
-					),
-				),
-				'devices'         => array( 'desktop', 'tablet', 'mobile' ),
-				'desktop_default' => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'tablet_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'mobile_default'  => array(
-					'unit' => 'px',
-					'size' => 0,
-				),
-				'render_type'     => 'ui',
-				'selectors'       => array(
-					'{{WRAPPER}} .pt_plus_info_box.info-box-style_1 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_2 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_3 .info-box-inner .service-title,{{WRAPPER}} .pt_plus_info_box.info-box-style_4 .info-box-inner .service-media,{{WRAPPER}} .pt_plus_info_box.info-box-style_7 .info-box-inner .service-title' => 'margin-bottom : {{SIZE}}{{UNIT}}',
-				),
-			)
-		);
 		$this->end_controls_section();
 		$this->start_controls_section(
 			'section_title_border_styling',
 			array(
-				'label' => esc_html__( 'Bottom Border Style', 'tpebl' ),
+				'label' => esc_html__( 'Bottom Border', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);
@@ -1283,8 +1268,19 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_desc_styling',
 			array(
-				'label' => esc_html__( 'Description Style', 'tpebl' ),
+				'label' => esc_html__( 'Description', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+			)
+		);
+		$this->add_responsive_control(
+			'desc_padding',
+			array(
+				'label'      => esc_html__( 'Padding', 'tpebl' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .info-box-inner  .info-box-bg-box .service-desc ' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
 			)
 		);
 		$this->add_group_control(
@@ -1313,17 +1309,6 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-desc,{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-desc p,
 					{{WRAPPER}} .pt_plus_info_box .info-box-inner.tp-info-active .service-desc,{{WRAPPER}} .pt_plus_info_box .info-box-inner.tp-info-active .service-desc p' => 'color: {{VALUE}}',
-				),
-			)
-		);
-		$this->add_responsive_control(
-			'desc_padding',
-			array(
-				'label'      => esc_html__( 'Padding', 'tpebl' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .info-box-inner  .info-box-bg-box .service-desc ' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				),
 			)
 		);
@@ -1606,11 +1591,33 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_button_styling',
 			array(
-				'label'     => esc_html__( 'Button Style', 'tpebl' ),
+				'label'     => esc_html__( 'Button', 'tpebl' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'display_button' => 'yes',
 				),
+			)
+		);
+		$this->add_responsive_control(
+			'button_padding',
+			array(
+				'label'      => esc_html__( 'Padding', 'tpebl' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'default'    => array(
+					'top'      => '15',
+					'right'    => '30',
+					'bottom'   => '15',
+					'left'     => '30',
+					'isLinked' => false,
+				),
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .pt_plus_button .button-link-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+				'separator'  => 'after',
 			)
 		);
 		$this->add_control(
@@ -1640,32 +1647,6 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			)
 		);
 		$this->add_responsive_control(
-			'button_padding',
-			array(
-				'label'      => esc_html__( 'Padding', 'tpebl' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'default'    => array(
-					'top'      => '15',
-					'right'    => '30',
-					'bottom'   => '15',
-					'left'     => '30',
-					'isLinked' => false,
-				),
-				'selectors'  => array(
-					'{{WRAPPER}} .pt_plus_button .button-link-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-				'separator'  => 'after',
-			)
-		);
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			array(
-				'name'     => 'button_typography',
-				'selector' => '{{WRAPPER}} .pt_plus_button .button-link-wrap',
-			)
-		);
-		$this->add_responsive_control(
 			'button_icon_size',
 			array(
 				'type'        => Controls_Manager::SLIDER,
@@ -1685,12 +1666,22 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				),
 			)
 		);
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'button_typography',
+				'selector' => '{{WRAPPER}} .pt_plus_button .button-link-wrap',
+			)
+		);
 		$this->start_controls_tabs( 'tabs_button_style' );
 
 		$this->start_controls_tab(
 			'tab_button_normal',
 			array(
 				'label' => esc_html__( 'Normal', 'tpebl' ),
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 
@@ -1699,6 +1690,9 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Text Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_button .button-link-wrap' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .pt_plus_button.button-style-7 .button-link-wrap:after' => 'border-color: {{VALUE}};',
@@ -1712,9 +1706,9 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'name'      => 'button_background',
 				'types'     => array( 'classic', 'gradient' ),
 				'selector'  => '{{WRAPPER}} .pt_plus_button.button-style-8 .button-link-wrap',
-				'separator' => 'after',
 				'condition' => array(
 					'button_style!' => array( 'style-7', 'style-9' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -1736,6 +1730,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				),
 				'condition' => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -1758,6 +1753,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'condition'  => array(
 					'button_style'         => array( 'style-8' ),
 					'button_border_style!' => 'none',
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -1774,6 +1770,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'condition' => array(
 					'button_style'         => array( 'style-8' ),
 					'button_border_style!' => 'none',
+					'button_type_switch' => 'basic',
 				),
 				'separator' => 'after',
 			)
@@ -1790,6 +1787,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				),
 				'condition'  => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -1800,6 +1798,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'selector'  => '{{WRAPPER}} .pt_plus_button.button-style-8 .button-link-wrap',
 				'condition' => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -1809,13 +1808,19 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			'tab_button_hover',
 			array(
 				'label' => esc_html__( 'Hover', 'tpebl' ),
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 			)
 		);
 		$this->add_control(
 			'btn_text_hover_color',
 			array(
-				'label'     => esc_html__( 'Text Hover Color', 'tpebl' ),
+				'label'     => esc_html__( 'Text Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
+				'condition' => array(
+					'button_type_switch' => 'basic',
+				),
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_button .button-link-wrap:hover,{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .pt_plus_button .hover_box_button' => 'color: {{VALUE}};',
 				),
@@ -1831,16 +1836,16 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				{{WRAPPER}} .pt_plus_info_box .info-box-inner.tp-info-active .pt_plus_button .hover_box_button,
 				{{WRAPPER}} .info-box-inner:hover .pt_plus_button .button-link-wrap,
 				{{WRAPPER}} .info-box-inner:hover .pt_plus_button .button-link-wrap',
-				'separator' => 'after',
 				'condition' => array(
 					'button_style!' => array( 'style-7', 'style-9' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
 		$this->add_control(
 			'button_border_hover_color',
 			array(
-				'label'     => esc_html__( 'Hover Border Color', 'tpebl' ),
+				'label'     => esc_html__( 'Border Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#313131',
 				'selectors' => array(
@@ -1849,6 +1854,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'condition' => array(
 					'button_style'         => array( 'style-8' ),
 					'button_border_style!' => 'none',
+					'button_type_switch' => 'basic',
 				),
 				'separator' => 'after',
 			)
@@ -1857,7 +1863,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_responsive_control(
 			'button_hover_radius',
 			array(
-				'label'      => esc_html__( 'Hover Border Radius', 'tpebl' ),
+				'label'      => esc_html__( 'Border Radius', 'tpebl' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array(
@@ -1865,6 +1871,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				),
 				'condition'  => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -1875,6 +1882,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'selector'  => '{{WRAPPER}} .pt_plus_button.button-style-8 .button-link-wrap:hover,{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .pt_plus_button .hover_box_button',
 				'condition' => array(
 					'button_style' => array( 'style-8' ),
+					'button_type_switch' => 'basic',
 				),
 			)
 		);
@@ -1886,7 +1894,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_svg_styling',
 			array(
-				'label'     => esc_html__( 'Svg Style', 'tpebl' ),
+				'label'     => esc_html__( 'Svg', 'tpebl' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'image_icon' => array( 'svg' ),
@@ -1908,7 +1916,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_icon_styling',
 			array(
-				'label'      => esc_html__( 'Icon Style', 'tpebl' ),
+				'label'      => esc_html__( 'Icon ', 'tpebl' ),
 				'tab'        => Controls_Manager::TAB_STYLE,
 				'conditions' => array(
 					'relation' => 'or',
@@ -2225,7 +2233,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_control(
 			'icon_hover_color_option',
 			array(
-				'label'       => esc_html__( 'Icon Hover Color', 'tpebl' ),
+				'label'       => esc_html__( 'Icon Color', 'tpebl' ),
 				'type'        => Controls_Manager::CHOOSE,
 				'options'     => array(
 					'solid'    => array(
@@ -2245,7 +2253,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_control(
 			'icon_hover_color',
 			array(
-				'label'     => esc_html__( 'Hover Color', 'tpebl' ),
+				'label'     => esc_html__( 'Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-icon:before, 
@@ -2376,7 +2384,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_control(
 			'icon_fill_color_hover',
 			array(
-				'label'     => esc_html__( 'Hover Fill', 'tpebl' ),
+				'label'     => esc_html__( 'Fill', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-icon svg path' => 'fill: {{VALUE}} !important;; ',
@@ -2391,7 +2399,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_control(
 			'icon_stroke_color_hover',
 			array(
-				'label'     => esc_html__( 'Hover Stroke', 'tpebl' ),
+				'label'     => esc_html__( 'Stroke', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-icon svg path' => 'stroke: {{VALUE}} !important;; ',
@@ -2415,7 +2423,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->add_control(
 			'icon_border_hover_color',
 			array(
-				'label'     => esc_html__( 'Hover Border Color', 'tpebl' ),
+				'label'     => esc_html__( 'Border Color', 'tpebl' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-icon,{{WRAPPER}} .pt_plus_info_box .info-box-inner.tp-info-active .service-icon' => 'border-color: {{VALUE}}',
@@ -2498,7 +2506,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_image_styling',
 			array(
-				'label'      => esc_html__( 'Image Style', 'tpebl' ),
+				'label'      => esc_html__( 'Image', 'tpebl' ),
 				'tab'        => Controls_Manager::TAB_STYLE,
 				'conditions' => array(
 					'relation' => 'or',
@@ -2590,7 +2598,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_pin_text_styling',
 			array(
-				'label'     => esc_html__( 'Pin Text Style', 'tpebl' ),
+				'label'     => esc_html__( 'Pin Text', 'tpebl' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'info_box_layout'  => 'single_layout',
@@ -2635,7 +2643,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_text_styling',
 			array(
-				'label'     => esc_html__( 'Text Style', 'tpebl' ),
+				'label'     => esc_html__( 'Text', 'tpebl' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'image_icon' => 'text',
@@ -2745,7 +2753,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => array(
-					'{{WRAPPER}} .service-icon-text:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-icon-text' => 'color: {{VALUE}}',
 				),
 				'condition' => array(
 					'image_icon' => 'text',
@@ -2757,7 +2765,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			array(
 				'name'     => 'wl_btn_background_h',
 				'types'    => array( 'classic', 'gradient' ),
-				'selector' => '{{WRAPPER}} .service-icon-text:hover',
+				'selector' => '{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-icon-text',
 			)
 		);
 		$this->add_group_control(
@@ -2768,7 +2776,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'default'  => array(
 					'color' => '#666666',
 				),
-				'selector' => '{{WRAPPER}} .service-icon-text:hover',
+				'selector' => '{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-icon-text',
 			)
 		);
 		$this->add_responsive_control(
@@ -2778,7 +2786,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array(
-					'{{WRAPPER}} .service-icon-text:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
+					'{{WRAPPER}} .pt_plus_info_box .info-box-inner:hover .service-icon-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				),
 				'condition'  => array(
 					'image_icon' => 'text',
@@ -2989,148 +2997,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_animation_styling',
-			array(
-				'label' => esc_html__( 'On Scroll View Animation', 'tpebl' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-
-		$this->add_control(
-			'animation_effects',
-			array(
-				'label'   => esc_html__( 'Choose Animation Effect', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'no-animation',
-				'options' => l_theplus_get_animation_options(),
-			)
-		);
-		$this->add_control(
-			'animation_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_duration_default',
-			array(
-				'label'     => esc_html__( 'Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animate_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'         => 'no-animation',
-					'animation_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_effects',
-			array(
-				'label'     => esc_html__( 'Out Animation Effect', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'no-animation',
-				'options'   => l_theplus_get_out_animation_options(),
-				'separator' => 'before',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Out Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration_default',
-			array(
-				'label'     => esc_html__( 'Out Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'             => 'no-animation',
-					'animation_out_effects!'         => 'no-animation',
-					'animation_out_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->end_controls_section();
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation.php';
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
 	}
@@ -3157,39 +3024,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			$hover_class .= 'content_hover_push';
 		}
 
-		$animation_effects = ! empty( $settings['animation_effects'] ) ? $settings['animation_effects'] : '';
-		$animate_duration  = ! empty( $settings['animate_duration']['size'] ) ? $settings['animate_duration']['size'] : 50;
-
-		$animation_delay = ! empty( $settings['animation_delay']['size'] ) ? $settings['animation_delay']['size'] : 50;
-
-		$out_duration = ! empty( $settings['animation_out_duration_default'] ) ? $settings['animation_out_duration_default'] : '';
-		$ani_duration = ! empty( $settings['animation_duration_default'] ) ? $settings['animation_duration_default'] : '';
-
-		$out_effect = ! empty( $settings['animation_out_effects'] ) ? $settings['animation_out_effects'] : '';
-		$out_delay  = ! empty( $settings['animation_out_delay']['size'] ) ? $settings['animation_out_delay']['size'] : 50;
-		$out_speed  = ! empty( $settings['animation_out_duration']['size'] ) ? $settings['animation_out_duration']['size'] : 50;
-
-		if ( 'no-animation' === $animation_effects ) {
-			$animated_class = '';
-			$animation_attr = '';
-		} else {
-			$animate_offset  = '85%';
-			$animated_class  = 'animate-general';
-			$animation_attr  = ' data-animate-type="' . esc_attr( $animation_effects ) . '" data-animate-delay="' . esc_attr( $animation_delay ) . '"';
-			$animation_attr .= ' data-animate-offset="' . esc_attr( $animate_offset ) . '"';
-
-			if ( 'yes' === $ani_duration ) {
-				$animation_attr .= ' data-animate-duration="' . esc_attr( $animate_duration ) . '"';
-			}
-
-			if ( 'no-animation' !== $out_effect ) {
-				$animation_attr .= ' data-animate-out-type="' . esc_attr( $out_effect ) . '" data-animate-out-delay="' . esc_attr( $out_delay ) . '"';
-
-				if ( 'yes' === $out_duration ) {
-					$animation_attr .= ' data-animate-out-duration="' . esc_attr( $out_speed ) . '"';
-				}
-			}
-		}
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation-attr.php';
 
 		$service_title  = '';
 		$description    = '';
@@ -3256,7 +3091,14 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			$img_src = '';
 			if ( ! empty( $info_img['url'] ) ) {
 				$image_id = $info_img['id'];
-				$img_src  = tp_get_image_rander( $image_id, $settings['select_image_thumbnail_size'], array( 'class' => 'service-img' ) );
+
+				if ( ! empty( $image_id ) ) {
+					$img_src = tp_get_image_rander( $image_id, $settings['select_image_thumbnail_size'], array( 'class' => 'service-img' ) );
+				} else {
+					$image_url = ! empty( $info_img['url'] ) ? $info_img['url'] : '';
+					$image_alt = ! empty( $info_img['alt'] ) ? $info_img['alt'] : '';
+					$img_src   = '<img src="' . esc_url( $image_url ) . '" class="service-img" alt="' . esc_attr( $image_alt ) . '">';
+				}
 			}
 
 			$service_a_start = '';
@@ -3343,6 +3185,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		}
 
 		$the_button = '';
+		$global_button_css = '';
 
 		$btn_on = ! empty( $settings['display_button'] ) ? $settings['display_button'] : '';
 
@@ -3371,10 +3214,20 @@ class L_ThePlus_Info_Box extends Widget_Base {
 			$this->add_render_attribute( 'button', 'class', $hover_box_class );
 			$this->add_render_attribute( 'button', 'role', 'button' );
 
-			$button_style = ! empty( $settings['button_style'] ) ? $settings['button_style'] : '';
+			$button_type_switch        = ! empty( $settings['button_type_switch'] ) ? $settings['button_type_switch'] : 'basic';
+			$button_global_style_preset = ! empty( $settings['button_global_style_preset'] ) ? $settings['button_global_style_preset'] : '';
+			$button_style              = ! empty( $settings['button_style'] ) ? $settings['button_style'] : 'style-8';
 			$button_text  = ! empty( $settings['button_text'] ) ? $settings['button_text'] : '';
 
 			$btn_uid = uniqid( 'btn' );
+
+			if ( 'global' === $button_type_switch ) {
+				$button_style = 'style-8';
+			}
+
+			if ( 'global' === $button_type_switch && ! empty( $button_global_style_preset ) ) {
+				$global_button_css = $this->build_global_button_style_css( $button_global_style_preset, '#' . $btn_uid );
+			}
 
 			$data_class = $btn_uid;
 
@@ -3384,7 +3237,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 
 				$the_button .= '<div class="button_parallax">';
 
-					$the_button .= '<div class="ts-button">';
+					$the_button .= '<div id="' . esc_attr( $btn_uid ) . '" class="ts-button">';
 
 						$the_button .= '<div class="pt_plus_button ' . esc_attr( $data_class ) . '">';
 
@@ -3405,6 +3258,10 @@ class L_ThePlus_Info_Box extends Widget_Base {
 				$the_button .= '</div>';
 
 			$the_button .= '</div>';
+
+			if ( ! empty( $global_button_css ) ) {
+				$the_button .= '<style>' . $global_button_css . '</style>';
+			}
 		}
 
 		if ( 'single_layout' === $info_box_layout ) {
@@ -3558,7 +3415,7 @@ class L_ThePlus_Info_Box extends Widget_Base {
 		}
 
 		if ( 'style-8' === $button_style ) {
-			$button_text = $icons_before . $button_text . $icons_after;
+			$button_text = $icons_before . wp_kses_post( $button_text ) . $icons_after;
 		}
 
 		return $button_text;

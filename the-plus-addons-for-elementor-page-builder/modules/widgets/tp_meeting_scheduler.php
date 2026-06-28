@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,18 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class ThePlus_Meeting_Scheduler
  */
-class ThePlus_Meeting_Scheduler extends Widget_Base {
-
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @since 1.0.1
-	 * @version 5.4.2
-	 *
-	 * @var tp_doc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
-
+class ThePlus_Meeting_Scheduler extends Plus_Widget_Base {
 	/**
 	 * Get Widget Name.
 	 *
@@ -81,23 +70,6 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 	public function get_keywords() {
 		return array( 'Tp Meeting Scheduler', 'Calendly Integration', 'Freebusy Scheduling', 'Vyte Booking', 'Appointment Scheduler', 'Booking Widget', 'Calendar Integration', 'Meeting Booking', 'Scheduler App Integration', 'Meeting Planner', 'Meeting Calendar', 'Appointment Manager' );
 	}
-
-	/**
-	 * Get Widget custom url.
-	 *
-	 * @since 1.0.1
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		if ( defined( 'L_THEPLUS_VERSION' ) && ! defined( 'THEPLUS_VERSION' ) ) {
-			$help_url = L_THEPLUS_HELP;
-		} else {
-			$help_url = THEPLUS_HELP;
-		}
-
-		return esc_url( $help_url );
-	}
-
 	/**
 	 * It is use for widget add in catch or not.
 	 *
@@ -105,40 +77,7 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 	 */
 	public function is_dynamic_content(): bool {
 		return false;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
-
-	/**
+	}	/**
 	 * Register controls.
 	 *
 	 * @since 1.0.1
@@ -275,21 +214,12 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 				'dynamic'     => array(
 					'active' => true,
 				),
-				'condition'   => array(
-					'scheduler_select' => 'calendly',
-				),
-			)
-		);
-		$this->add_control(
-			'calendly_note',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s <a href="%s" class="theplus-btn" target="_blank"> %s</a></i></p>',
 						esc_html__( 'How to get Username from Calendly?', 'tpebl' ),
 						esc_url( 'https://help.calendly.com/hc/en-us' ),
-						esc_html__( 'Get Steps!', 'tpebl' ),
+						esc_html__( 'Get Steps!', 'tpebl' )
 					)
 				),
 				'condition'   => array(
@@ -369,24 +299,14 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 				'default'     => '',
 				'placeholder' => esc_html__( 'Enter URL', 'tpebl' ),
 				'dynamic'     => array( 'active' => true ),
-				'condition'   => array(
-					'scheduler_select' => 'freebusy',
-				),
-			)
-		);
-		$this->add_control(
-			'freebusy_note',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s <a href="%s" class="theplus-btn" target="_blank"> %s</a></i></p>',
 						esc_html__( 'How to get Freebusy URL?', 'tpebl' ),
 						esc_url( 'https://help.freebusy.io/en/articles/3313368-how-to-share-your-availability-by-generating-a-link-though-your-freebusy-account' ),
-						esc_html__( 'Get Steps!', 'tpebl' ),
+						esc_html__( 'Get Steps!', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 				'condition'   => array(
 					'scheduler_select' => 'freebusy',
 				),
@@ -460,24 +380,14 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 				'default'     => '',
 				'placeholder' => esc_html__( 'Enter URL', 'tpebl' ),
 				'dynamic'     => array( 'active' => true ),
-				'condition'   => array(
-					'scheduler_select' => 'meetingbird',
-				),
-			)
-		);
-		$this->add_control(
-			'meetingbird_note',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s <a href="%s" class="theplus-btn" target="_blank"> %s</a></i></p>',
 						esc_html__( 'How to get Meeting Bird URL?', 'tpebl' ),
 						esc_url( 'https://help.meetingbird.com/en/collections/168865-getting-started' ),
-						esc_html__( 'Get Steps!', 'tpebl' ),
+						esc_html__( 'Get Steps!', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 				'condition'   => array(
 					'scheduler_select' => 'meetingbird',
 				),
@@ -521,24 +431,14 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 				'default'     => '',
 				'placeholder' => esc_html__( 'Enter URL', 'tpebl' ),
 				'dynamic'     => array( 'active' => true ),
-				'condition'   => array(
-					'scheduler_select' => 'vyte',
-				),
-			)
-		);
-		$this->add_control(
-			'vyte_note',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s <a href="%s" class="theplus-btn" target="_blank"> %s</a></i></p>',
 						esc_html__( 'If you need help getting details.', 'tpebl' ),
 						esc_url( 'https://support.vyte.in/en/' ),
-						esc_html__( 'Helpdesk!', 'tpebl' ),
+						esc_html__( 'Helpdesk!', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 				'condition'   => array(
 					'scheduler_select' => 'vyte',
 				),
@@ -599,24 +499,14 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 				'default'     => '',
 				'placeholder' => esc_html__( 'Enter User Name', 'tpebl' ),
 				'dynamic'     => array( 'active' => true ),
-				'condition'   => array(
-					'scheduler_select' => 'xai',
-				),
-			)
-		);
-		$this->add_control(
-			'xai_note',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s <a href="%s" class="theplus-btn" target="_blank"> %s</a></i></p>',
 						esc_html__( 'If you need help getting details.', 'tpebl' ),
 						esc_url( 'https://help.x.ai/en/' ),
-						esc_html__( 'Helpdesk!', 'tpebl' ),
+						esc_html__( 'Helpdesk!', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 				'condition'   => array(
 					'scheduler_select' => 'xai',
 				),
@@ -647,15 +537,15 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/meeting-scheduler/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=9-8Ftlb79tI',
 					),
 				),
@@ -736,7 +626,7 @@ class ThePlus_Meeting_Scheduler extends Widget_Base {
 				}
 				$output .= '<div class="calendly-inline-widget" data-url="https://calendly.com/' . esc_attr( $calendly_uname ) . esc_attr( $time_output ) . '?' . esc_attr( $calendly_event ) . esc_attr( $calendly_text_color ) . esc_attr( $calendly_primary_color ) . esc_attr( $calendly_background_color ) . '">';
 				$output .= '</div>';
-				$output .= ' <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>';
+				wp_enqueue_script( 'tpae-calendly-widget', 'https://assets.calendly.com/assets/external/widget.js', array(), L_THEPLUS_VERSION, true );
 				if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 					$output .= '<div class="calendly-wrapper" style="width:100%; position:absolute; top:0; left:0; z-index:100;"></div>';
 				}

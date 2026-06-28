@@ -10,13 +10,19 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
+use TheplusAddons\Widgets\Base\Reload_Preview_Trait;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use ThePlusAddons\Elementor\ScrollAnimation\TP_Global_Scroll_Animation_Helper;
+
+if ( ! class_exists( '\ThePlusAddons\Elementor\ScrollAnimation\TP_Global_Scroll_Animation_Helper' ) ) {
+	include_once L_THEPLUS_PATH . 'modules/extensions/global-control/class-tp-global-scroll-animation-helper.php';
+}
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -25,21 +31,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Gallery_ListOut
  */
-class L_ThePlus_Gallery_ListOut extends Widget_Base {
+class L_ThePlus_Gallery_ListOut extends Plus_Widget_Base {
 
-	/**
-	 * Document Link For Need help.
-	 *
-	 * @var tp_doc of the class.
-	 */
-	public $tp_doc = L_THEPLUS_TPDOC;
+	use Reload_Preview_Trait;
 
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
 
 	/**
 	 * Get Widget Name.
@@ -92,56 +87,12 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 	}
 
 	/**
-	 * Update is_reload_preview_required.
+	 * It is use for widget add in catch or not.
 	 *
-	 * @since 1.0.0
-	 * @version 5.4.2
+	 * @since 6.4.13
 	 */
-	public function is_reload_preview_required() {
+	public function is_dynamic_content(): bool {
 		return true;
-	}
-
-	/**
-	 * Get Widget categories.
-	 *
-	 * @since 1.0.0
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**
@@ -459,49 +410,32 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 		$this->add_control(
 			'display_title',
 			array(
-				'label'     => esc_html__( 'Display Title', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'yes',
-			)
-		);
-		$this->add_control(
-			'display_title_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Display Title', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Show', 'tpebl' ),
+				'label_off'   => esc_html__( 'Hide', 'tpebl' ),
+				'default'     => 'yes',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text">%s</p>',
-						esc_html__( 'Turn this on to show image titles directly inside your gallery items.', 'tpebl' ),
+						esc_html__( 'Turn this on to show image titles directly inside your gallery items.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'post_title_tag',
 			array(
-				'label'     => esc_html__( 'Title Tag', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'h3',
-				'options'   => l_theplus_get_tags_options(),
-				'condition' => array(
-					'display_title' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'post_title_tag_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Title Tag', 'tpebl' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'h3',
+				'options'     => l_theplus_get_tags_options(),
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text">%s</p>',
-						esc_html__( 'Select the proper heading tag for your image titles to keep your design and SEO consistent.', 'tpebl' ),
+						esc_html__( 'Select the proper heading tag for your image titles to keep your design and SEO consistent.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 				'condition'   => array(
 					'display_title' => 'yes',
 				),
@@ -510,55 +444,41 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 		$this->add_control(
 			'display_excerpt',
 			array(
-				'label'     => esc_html__( 'Display Excerpt/Content', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'default'   => 'yes',
-				'separator' => 'before',
-			)
-		);
-		$this->add_control(
-			'display_excerpt_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'label'       => esc_html__( 'Display Excerpt/Content', 'tpebl' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Show', 'tpebl' ),
+				'label_off'   => esc_html__( 'Hide', 'tpebl' ),
+				'default'     => 'yes',
+				'separator'   => 'before',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text">%s</p>',
-						esc_html__( 'Show short captions or descriptions below your gallery images for added context.', 'tpebl' ),
+						esc_html__( 'Show short captions or descriptions below your gallery images for added context.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
 			'display_box_link',
 			array(
-				'label'     => wp_kses_post(
+				'label'       => wp_kses_post(
 					sprintf(
 						'%s <img class="pro-badge-img" src="%s" alt="PRO" style="width:32px; vertical-align:middle;" />',
 						esc_html__( 'Box Link', 'tpebl' ),
 						esc_url( L_THEPLUS_URL . 'assets/images/pro-features/pro-tag.svg' )
 					)
 				),
-				'type'      => Controls_Manager::SWITCHER,
-				'label_on'  => __( 'Show', 'tpebl' ),
-				'label_off' => __( 'Hide', 'tpebl' ),
-				'default'   => 'no',
-				'separator' => 'before',
-			)
-		);
-		$this->add_control(
-			'display_box_link_label',
-			array(
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => wp_kses_post(
+				'type'        => Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Show', 'tpebl' ),
+				'label_off'   => esc_html__( 'Hide', 'tpebl' ),
+				'default'     => 'no',
+				'separator'   => 'before',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text">%s</p>',
-						esc_html__( ' Activate this to make each gallery item clickable and lead users to the desired link.', 'tpebl' ),
+						esc_html__( ' Activate this to make each gallery item clickable and lead users to the desired link.', 'tpebl' )
 					)
 				),
-				'label_block' => true,
 			)
 		);
 		$this->add_control(
@@ -615,15 +535,15 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/gallery-listing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=tw7aIjUKbIk',
 					),
 				),
@@ -688,6 +608,33 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 				),
 			)
 		);
+		$this->add_responsive_control(
+			'icon_bottom_space',
+			array(
+				'type'        => Controls_Manager::SLIDER,
+				'label'       => esc_html__( 'Bottom Space', 'tpebl' ),
+				'size_units'  => array( 'px' ),
+				'range'       => array(
+					'px' => array(
+						'min'  => 0,
+						'max'  => 80,
+						'step' => 1,
+					),
+				),
+				'default'     => array(
+					'unit' => 'px',
+					'size' => 12,
+				),
+				'render_type' => 'ui',
+				'selectors'   => array(
+					'{{WRAPPER}} .gallery-list .meta-search-icon' => 'margin-bottom: {{SIZE}}{{UNIT}}',
+				),
+				'separator'   => 'before',
+				'condition'   => array(
+					'display_icon_zoom' => 'yes',
+				),
+			)
+		);
 
 		$this->start_controls_tabs( 'tabs_icon_style' );
 		$this->start_controls_tab(
@@ -739,33 +686,6 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 		);
 		$this->end_controls_tab();
 		$this->end_controls_tabs();
-		$this->add_responsive_control(
-			'icon_bottom_space',
-			array(
-				'type'        => Controls_Manager::SLIDER,
-				'label'       => esc_html__( 'Bottom Space', 'tpebl' ),
-				'size_units'  => array( 'px' ),
-				'range'       => array(
-					'px' => array(
-						'min'  => 0,
-						'max'  => 80,
-						'step' => 1,
-					),
-				),
-				'default'     => array(
-					'unit' => 'px',
-					'size' => 12,
-				),
-				'render_type' => 'ui',
-				'selectors'   => array(
-					'{{WRAPPER}} .gallery-list .meta-search-icon' => 'margin-bottom: {{SIZE}}{{UNIT}}',
-				),
-				'separator'   => 'before',
-				'condition'   => array(
-					'display_icon_zoom' => 'yes',
-				),
-			)
-		);
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1371,189 +1291,9 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 		);
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_animation_styling',
-			array(
-				'label' => esc_html__( 'On Scroll View Animation', 'tpebl' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-		$this->add_control(
-			'animation_effects',
-			array(
-				'label'   => esc_html__( 'Choose Animation Effect', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'no-animation',
-				'options' => l_theplus_get_animation_options(),
-			)
-		);
-		$this->add_control(
-			'animation_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animated_column_list',
-			array(
-				'label'     => esc_html__( 'List Load Animation', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => '',
-				'options'   => array(
-					''        => esc_html__( 'Content Animation Block', 'tpebl' ),
-					'stagger' => esc_html__( 'Stagger Based Animation', 'tpebl' ),
-					'columns' => esc_html__( 'Columns Based Animation', 'tpebl' ),
-				),
-				'condition' => array(
-					'animation_effects!' => array( 'no-animation' ),
-				),
-			)
-		);
-		$this->add_control(
-			'animation_stagger',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Animation Stagger', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 150,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 6000,
-						'step' => 10,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'   => array( 'no-animation' ),
-					'animated_column_list' => 'stagger',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_duration_default',
-			array(
-				'label'     => esc_html__( 'Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animate_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'         => 'no-animation',
-					'animation_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_effects',
-			array(
-				'label'     => esc_html__( 'Out Animation Effect', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'no-animation',
-				'options'   => l_theplus_get_out_animation_options(),
-				'separator' => 'before',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Out Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration_default',
-			array(
-				'label'     => esc_html__( 'Out Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'label_on'  => esc_html__( 'Show', 'tpebl' ),
-				'label_off' => esc_html__( 'Hide', 'tpebl' ),
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'             => 'no-animation',
-					'animation_out_effects!'         => 'no-animation',
-					'animation_out_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->end_controls_section();
+		$Plus_Listing_block                = 'Plus_Listing_block';
+		$tp_enable_global_scroll_animation = true;
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation.php';
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
 	}
@@ -1567,6 +1307,7 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 	protected function render() {
 
 		$settings        = $this->get_settings_for_display();
+		$settings        = TP_Global_Scroll_Animation_Helper::resolve_widget_settings( $settings );
 		$style           = ! empty( $settings['style'] ) ? $settings['style'] : 'style-1';
 		$layout          = ! empty( $settings['layout'] ) ? $settings['layout'] : 'grid';
 		$display_title   = ! empty( $settings['display_title'] ) ? $settings['display_title'] : '';
@@ -1585,46 +1326,10 @@ class L_ThePlus_Gallery_ListOut extends Widget_Base {
 		$display_icon_zoom = ! empty( $settings['display_icon_zoom'] ) ? $settings['display_icon_zoom'] : '';
 		$display_excerpt   = ! empty( $settings['display_excerpt'] ) ? $settings['display_excerpt'] : '';
 
-		$animation_effects = ! empty( $settings['animation_effects'] ) ? $settings['animation_effects'] : '';
-		$animation_delay   = ! empty( $settings['animation_delay']['size'] ) ? $settings['animation_delay']['size'] : 50;
-		$animation_stagger = ! empty( $settings['animation_stagger']['size'] ) ? $settings['animation_stagger']['size'] : 150;
-		$animated_columns  = '';
+		$Plus_Listing_block = 'Plus_Listing_block';
+		$animated_columns   = '';
 
-		if ( 'no-animation' === $animation_effects ) {
-			$animated_class = '';
-			$animation_attr = '';
-		} else {
-			$animate_offset  = '85%';
-			$animated_class  = 'animate-general';
-			$animation_attr  = ' data-animate-type="' . esc_attr( $animation_effects ) . '" data-animate-delay="' . esc_attr( $animation_delay ) . '"';
-			$animation_attr .= ' data-animate-offset="' . esc_attr( $animate_offset ) . '"';
-
-			$ani_column       = ! empty( $settings['animated_column_list'] ) ? $settings['animated_column_list'] : '';
-			$ani_duration     = ! empty( $settings['animation_duration_default'] ) ? $settings['animation_duration_default'] : '';
-			$animate_duration = ! empty( $settings['animate_duration']['size'] ) ? $settings['animate_duration']['size'] : 50;
-			$out_effect       = ! empty( $settings['animation_out_effects'] ) ? $settings['animation_out_effects'] : '';
-			$ani_delay        = ! empty( $settings['animation_out_delay']['size'] ) ? $settings['animation_out_delay']['size'] : 50;
-			$out_duration     = ! empty( $settings['animation_out_duration_default'] ) ? $settings['animation_out_duration_default'] : '';
-			$out_speed        = ! empty( $settings['animation_out_duration']['size'] ) ? $settings['animation_out_duration']['size'] : 50;
-
-			if ( 'stagger' === $ani_column ) {
-				$animated_columns = 'animated-columns';
-				$animation_attr  .= ' data-animate-columns="stagger"';
-				$animation_attr  .= ' data-animate-stagger="' . esc_attr( $animation_stagger ) . '"';
-			} elseif ( 'columns' === $ani_column ) {
-				$animated_columns = 'animated-columns';
-				$animation_attr  .= ' data-animate-columns="columns"';
-			}
-			if ( 'yes' === $ani_duration ) {
-				$animation_attr .= ' data-animate-duration="' . esc_attr( $animate_duration ) . '"';
-			}
-			if ( 'no-animation' !== $out_effect ) {
-				$animation_attr .= ' data-animate-out-type="' . esc_attr( $out_effect ) . '" data-animate-out-delay="' . esc_attr( $ani_delay ) . '"';
-				if ( 'yes' === $out_duration ) {
-					$animation_attr .= ' data-animate-out-duration="' . esc_attr( $out_speed ) . '"';
-				}
-			}
-		}
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation-attr.php';
 
 		$desktop_class = '';
 		$tablet_class  = '';

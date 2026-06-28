@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Utils;
 use Elementor\Group_Control_Typography;
@@ -26,16 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Countdown
  */
-class L_ThePlus_Countdown extends Widget_Base {
-
-	public $tp_doc = L_THEPLUS_TPDOC;
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
+class L_ThePlus_Countdown extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name.
@@ -79,13 +70,7 @@ class L_ThePlus_Countdown extends Widget_Base {
 	 * @since 1.0.0
 	 */
 	public function get_keywords() {
-		return array( 'Tp Countdown Timer', 'Scarcity Countdown', 'Evergreen Countdown', 'Fake-Number Counter', 'Content Swap Timer', 'WooCommerce Timer', 'FOMO Countdown', 'Inline Countdown', 'Marketing Countdown Timer', 'Urgency Countdown', 'Event Countdown', 'Offer Countdown' );
-	}
-
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
+		return array( 'Tp Countdown Timer','Tp Count Down', 'Scarcity Countdown', 'Evergreen Countdown', 'Fake-Number Counter', 'Content Swap Timer', 'WooCommerce Timer', 'FOMO Countdown', 'Inline Countdown', 'Marketing Countdown Timer', 'Urgency Countdown', 'Event Countdown', 'Offer Countdown' );
 	}
 
 	/**
@@ -96,38 +81,6 @@ class L_ThePlus_Countdown extends Widget_Base {
 	public function is_dynamic_content(): bool {
 		return false;
 	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
-
 	/**
 	 * Register controls.
 	 *
@@ -154,31 +107,21 @@ class L_ThePlus_Countdown extends Widget_Base {
 		$this->add_control(
 			'CDType',
 			array(
-				'label'   => esc_html__( 'Countdown Setup', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'normal',
-				'options' => array(
+				'label'       => esc_html__( 'Countdown Setup', 'tpebl' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'normal',
+				'options'     => array(
 					'normal'   => esc_html__( 'Normal Countdown', 'tpebl' ),
 					'scarcity' => esc_html__( 'Scarcity Countdown (Evergreen) (Pro)', 'tpebl' ),
 					'numbers'  => esc_html__( 'Fake Numbers Counter (Pro)', 'tpebl' ),
 				),
-			)
-		);
-		$this->add_control(
-			'cdtype_normal_label',
-			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i> %s <a class="tp-docs-link" href="%s" target="_blank" rel="noopener noreferrer">%s</a></i></p>',
 						esc_html__( 'Use this when you want to run a countdown to a fixed date and time, like an event launch, sale end, or webinar start. The timer ends for everyone at the same time.', 'tpebl' ),
 						esc_url( $this->tp_doc . 'create-a-sticky-countdown-timer-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget' ),
-						esc_html__( 'Learn More', 'tpebl' ),
+						esc_html__( 'Learn More', 'tpebl' )
 					)
-				),
-				'label_block' => true,
-				'condition'   => array(
-					'CDType' => 'normal',
 				),
 			)
 		);
@@ -341,14 +284,6 @@ class L_ThePlus_Countdown extends Widget_Base {
 			)
 		);
 		$this->start_popover();
-		$this->add_control(
-			'show_labels_name',
-			array(
-				'label'     => esc_html__( 'Show Labels', 'tpebl' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'after',
-			)
-		);
 		$this->add_control(
 			'text_days',
 			array(
@@ -583,15 +518,15 @@ class L_ThePlus_Countdown extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/count-down/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 					array(
-						'label' => __( 'Watch Video', 'tpebl' ),
+						'label' => esc_html__( 'Watch Video', 'tpebl' ),
 						'url'   => 'https://www.youtube.com/watch?v=RdPTAGc3PMY',
 					),
 				),
@@ -1803,144 +1738,7 @@ class L_ThePlus_Countdown extends Widget_Base {
 		$this->end_controls_tabs();
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_animation_styling',
-			array(
-				'label' => esc_html__( 'On Scroll View Animation', 'tpebl' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-		$this->add_control(
-			'animation_effects',
-			array(
-				'label'   => esc_html__( 'Choose Animation Effect', 'tpebl' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'no-animation',
-				'options' => l_theplus_get_animation_options(),
-			)
-		);
-		$this->add_control(
-			'animation_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_duration_default',
-			array(
-				'label'   => esc_html__( 'Animation Duration', 'tpebl' ),
-				'type'    => Controls_Manager::SWITCHER,
-				'default' => 'no',
-			)
-		);
-		$this->add_control(
-			'animate_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'         => 'no-animation',
-					'animation_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_effects',
-			array(
-				'label'     => esc_html__( 'Out Animation Effect', 'tpebl' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'no-animation',
-				'options'   => l_theplus_get_out_animation_options(),
-				'separator' => 'before',
-				'condition' => array(
-					'animation_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_delay',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Out Animation Delay', 'tpebl' ),
-				'default'   => array(
-					'unit' => '',
-					'size' => 50,
-				),
-				'range'     => array(
-					'' => array(
-						'min'  => 0,
-						'max'  => 4000,
-						'step' => 15,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration_default',
-			array(
-				'label'     => esc_html__( 'Out Animation Duration', 'tpebl' ),
-				'type'      => Controls_Manager::SWITCHER,
-				'default'   => 'no',
-				'condition' => array(
-					'animation_effects!'     => 'no-animation',
-					'animation_out_effects!' => 'no-animation',
-				),
-			)
-		);
-		$this->add_control(
-			'animation_out_duration',
-			array(
-				'type'      => Controls_Manager::SLIDER,
-				'label'     => esc_html__( 'Duration Speed', 'tpebl' ),
-				'default'   => array(
-					'unit' => 'px',
-					'size' => 50,
-				),
-				'range'     => array(
-					'px' => array(
-						'min'  => 100,
-						'max'  => 10000,
-						'step' => 100,
-					),
-				),
-				'condition' => array(
-					'animation_effects!'             => 'no-animation',
-					'animation_out_effects!'         => 'no-animation',
-					'animation_out_duration_default' => 'yes',
-				),
-			)
-		);
-		$this->end_controls_section();
+		include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation.php';
 
 		include L_THEPLUS_PATH . 'modules/widgets/theplus-profeatures.php';
 	}
@@ -2029,42 +1827,12 @@ class L_ThePlus_Countdown extends Widget_Base {
 
 		$output .= '<div class="tp-countdown tp-widget-' . esc_attr( $widget_id ) . ' ' . esc_attr( $style_class ) . '" data-basic="' . esc_attr( $cd_data ) . '" >';
 
-			$data_attr .= ' data-days=' . wp_json_encode( $text_days ) . '';
-			$data_attr .= ' data-hours=' . wp_json_encode( $text_hours ) . '';
-			$data_attr .= ' data-minutes=' . wp_json_encode( $text_minutes ) . '';
-			$data_attr .= ' data-seconds=' . wp_json_encode( $text_seconds ) . '';
+			$data_attr .= ' data-days="' . esc_attr( $text_days ) . '"';
+			$data_attr .= ' data-hours="' . esc_attr( $text_hours ) . '"';
+			$data_attr .= ' data-minutes="' . esc_attr( $text_minutes ) . '"';
+			$data_attr .= ' data-seconds="' . esc_attr( $text_seconds ) . '"';
 
-			$animation_effects = ! empty( $settings['animation_effects'] ) ? $settings['animation_effects'] : '';
-			$animation_delay   = ! empty( $settings['animation_delay']['size'] ) ? $settings['animation_delay']['size'] : 50;
-
-			$ani_duration     = ! empty( $settings['animation_duration_default'] ) ? $settings['animation_duration_default'] : '';
-			$animate_duration = ! empty( $settings['animate_duration']['size'] ) ? $settings['animate_duration']['size'] : 50;
-			$out_effect       = ! empty( $settings['animation_out_effects'] ) ? $settings['animation_out_effects'] : '';
-			$out_delay        = ! empty( $settings['animation_out_delay']['size'] ) ? $settings['animation_out_delay']['size'] : 50;
-			$out_duration     = ! empty( $settings['animation_out_duration_default'] ) ? $settings['animation_out_duration_default'] : '';
-			$out_speed        = ! empty( $settings['animation_out_duration']['size'] ) ? $settings['animation_out_duration']['size'] : 50;
-
-		if ( 'no-animation' === $animation_effects ) {
-			$animated_class = '';
-			$animation_attr = '';
-		} else {
-			$animate_offset  = '85%';
-			$animated_class  = 'animate-general';
-			$animation_attr  = ' data-animate-type="' . esc_attr( $animation_effects ) . '" data-animate-delay="' . esc_attr( $animation_delay ) . '"';
-			$animation_attr .= ' data-animate-offset="' . esc_attr( $animate_offset ) . '"';
-
-			if ( 'yes' === $ani_duration ) {
-				$animation_attr .= ' data-animate-duration="' . esc_attr( $animate_duration ) . '"';
-			}
-
-			if ( 'no-animation' !== $out_effect ) {
-				$animation_attr .= ' data-animate-out-type="' . esc_attr( $out_effect ) . '" data-animate-out-delay="' . esc_attr( $out_delay ) . '"';
-
-				if ( 'yes' === $out_duration ) {
-					$animation_attr .= ' data-animate-out-duration="' . esc_attr( $out_speed ) . '"';
-				}
-			}
-		}
+			include L_THEPLUS_PATH . 'modules/widgets/theplus-widget-animation-attr.php';
 
 		$inline_style = ( ! empty( $settings['inline_style'] ) && 'yes' === $settings['inline_style'] ) ? 'count-inline-style' : '';
 

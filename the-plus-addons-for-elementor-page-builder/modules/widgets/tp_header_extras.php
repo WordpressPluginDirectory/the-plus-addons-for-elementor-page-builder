@@ -9,7 +9,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
@@ -24,16 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Header_Extras
  */
-class L_ThePlus_Header_Extras extends Widget_Base {
-
-	public $tp_doc = L_THEPLUS_TPDOC;
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
+class L_ThePlus_Header_Extras extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name.
@@ -86,54 +77,12 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 	}
 
 	/**
-	 * Get Widget categories.
-	 *
-	 * @version 6.1.0
-	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
-	/**
 	 * It is use for widget add in catch or not.
 	 *
 	 * @since 6.1.0
 	 */
 	public function is_dynamic_content(): bool {
 		return false;
-	}
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
 	/**
@@ -2751,11 +2700,11 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 		$this->add_control(
 			'tpebl_help_control',
 			array(
-				'label'   => __( 'Need Help', 'tpebl' ),
+				'label'   => esc_html__( 'Need Help', 'tpebl' ),
 				'type'    => 'tpae_need_help',
 				'default' => array(
 					array(
-						'label' => __( 'Read Docs', 'tpebl' ),
+						'label' => esc_html__( 'Read Docs', 'tpebl' ),
 						'url'   => 'https://theplusaddons.com/help/header-meta-content/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=widget',
 					),
 				),
@@ -2895,10 +2844,10 @@ class L_ThePlus_Header_Extras extends Widget_Base {
 					if ( $woocommerce ) {
 
 						$cart_icon_style = ! empty( $settings['cart_icon_style'] ) ? $settings['cart_icon_style'] : 'style-1';
-						$meta_content   .= '<li class="mini-cart-icon ' . $cart_icon_style . ' elementor-repeater-item-' . esc_attr( $item['_id'] ) . ' ' . esc_attr( $responsive_class_attr ) . '">';
+						$meta_content   .= '<li class="mini-cart-icon ' . esc_attr( $cart_icon_style ) . ' elementor-repeater-item-' . esc_attr( $item['_id'] ) . ' ' . esc_attr( $responsive_class_attr ) . '">';
 						$meta_content   .= '<div class="content-icon-list">';
 
-							$meta_content .= '<a href="' . wc_get_cart_url() . '" class="plus-cart-icon ' . esc_attr( $cart_icon_style ) . ' ' . esc_attr( $cart_icon ) . '">';
+							$meta_content .= '<a href="' . esc_url( wc_get_cart_url() ) . '" class="plus-cart-icon ' . esc_attr( $cart_icon_style ) . ' ' . esc_attr( $cart_icon ) . '">';
 						if ( 'style-1' === $cart_icon_style ) {
 							if ( 'default' === $cart_icon ) {
 								$meta_content .= '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 96 96" height="100%" id="bag" version="1.1" viewBox="0 0 96 96" width="100%" xml:space="preserve" style="&#10;"><path d="M68,24v-4C68,8.954,59.046,0,48,0S28,8.954,28,20v4H12v60c0,6.63,5.37,12,12,12h48c6.63,0,12-5.37,12-12V24H68z M36,20  c0-6.627,5.373-12,12-12c6.627,0,12,5.373,12,12v4H36V20z M76,84c0,2.21-1.79,4-4,4H24c-2.21,0-4-1.79-4-4V32h56V84z"/></svg>';

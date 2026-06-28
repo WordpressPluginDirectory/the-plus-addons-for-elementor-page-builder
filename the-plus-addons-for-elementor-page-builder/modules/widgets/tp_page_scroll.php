@@ -10,7 +10,7 @@
 
 namespace TheplusAddons\Widgets;
 
-use Elementor\Widget_Base;
+use TheplusAddons\Widgets\Base\Plus_Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Repeater;
 use Elementor\Group_Control_Typography;
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class L_ThePlus_Page_Scroll
  */
-class L_ThePlus_Page_Scroll extends Widget_Base {
+class L_ThePlus_Page_Scroll extends Plus_Widget_Base {
 
 	/**
 	 * Get Widget Name.
@@ -36,14 +36,6 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 	public function get_name() {
 		return 'tp-page-scroll';
 	}
-
-	/**
-	 * Helpdesk Link For Need help.
-	 *
-	 * @var tp_help of the class.
-	 */
-	public $tp_help = L_THEPLUS_HELP;
-
 	/**
 	 * Get Widget Title.
 	 *
@@ -83,18 +75,6 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 	public function get_keywords() {
 		return array( 'Tp Page Scroll','Full Page Scroll', 'Vertical Scroll Sections', 'Page Piling', 'Multi-Scroll', 'Horizontal Scrolling Page', 'Scroll-Based Navigation', 'Slide-by-Slide Scrolling', 'Full-Screen Slides', 'Scrolling Transitions', 'Interactive Page Scroll', 'Dot Navigation Scroll', 'Next/Prev Scrolling', 'Smooth Scrolling' );
 	}
-
-	/**
-	 * Get Widget Custom Help Url.
-	 *
-	 * @version 5.4.2
-	 */
-	public function get_custom_help_url() {
-		$help_url = $this->tp_help;
-
-		return esc_url( $help_url );
-	}
-
 	/**
 	 * It is use for widget add in catch or not.
 	 *
@@ -103,37 +83,6 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 	// public function is_dynamic_content(): bool {
 	// return false;
 	// }
-
-	/**
-	 * It is use for adds.
-	 *
-	 * @since 6.1.0
-	 */
-	public function get_upsale_data() {
-		$val = false;
-
-		if ( ! defined( 'THEPLUS_VERSION' ) ) {
-			$val = true;
-		}
-
-		return array(
-			'condition'    => $val,
-			'image'        => esc_url( L_THEPLUS_ASSETS_URL . 'images/pro-features/upgrade-proo.png' ),
-			'image_alt'    => esc_attr__( 'Upgrade', 'tpebl' ),
-			'title'        => esc_html__( 'Unlock all Features', 'tpebl' ),
-			'upgrade_url'  => esc_url( 'https://theplusaddons.com/pricing/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=links' ),
-			'upgrade_text' => esc_html__( 'Upgrade to Pro!', 'tpebl' ),
-		);
-	}
-
-	/**
-	 * Disable Elementor's default inner wrapper for custom HTML control.
-	 *
-	 * @since 6.3.3
-	 */
-	public function has_widget_inner_wrapper(): bool {
-		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
-	}
 
 	/**
 	 * Register controls.
@@ -147,6 +96,19 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			array(
 				'label' => esc_html__( 'Page Scroll', 'tpebl' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
+			)
+		);
+		$this->add_control(
+			'widget_notice',
+			array(
+				'type'        => Controls_Manager::RAW_HTML,
+				'raw'         => wp_kses_post(
+					sprintf(
+						'<p class="tp-controller-label-text"><i>%s</i></p>',
+						esc_html__( 'Avoid using other widgets on the same page as Page Scroll to prevent unexpected behavior.', 'tpebl' ),
+					)
+				),
+				'label_block' => true,
 			)
 		);
 		$this->add_control(
@@ -174,7 +136,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 					)
 				),
 				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'page_scroll_opt' => 'tp_full_page',
 				),
 			)
@@ -190,7 +152,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 					)
 				),
 				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'page_scroll_opt' => 'tp_page_pilling',
 				),
 			)
@@ -206,7 +168,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 					)
 				),
 				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'page_scroll_opt' => 'tp_multi_scroll',
 				),
 			)
@@ -224,7 +186,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 					)
 				),
 				'label_block' => true,
-				'condition' => array(
+				'condition'   => array(
 					'page_scroll_opt' => 'tp_horizontal_scroll',
 				),
 			)
@@ -283,7 +245,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			'liveeditor',
 			array(
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => '<a class="tp-live-editor" id="tp-live-editor-button" >Edit Template</a>',
+				'raw'             => '<a class="tp-live-editor" id="tp-live-editor-button" >' . esc_html__( 'Edit Template', 'tpebl' ) . '</a>',
 				'content_classes' => 'tp-live-editor-btn',
 				'label_block'     => true,
 				'condition'       => array(
@@ -295,7 +257,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 			'create',
 			array(
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => '<a class="tp-live-create" id="tp-live-create-button">Create Template</a>',
+				'raw'             => '<a class="tp-live-create" id="tp-live-create-button">' . esc_html__( 'Create Template', 'tpebl' ) . '</a>',
 				'content_classes' => 'tp-live-create-btn',
 				'label_block'     => true,
 				'condition'       => array(
@@ -402,27 +364,17 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 		$this->add_control(
 			'show_dots',
 			array(
-				'label'     => esc_html__( 'Dots', 'tpebl' ),
-				'type'      => \Elementor\Controls_Manager::SWITCHER,
-				'label_on'  => esc_html__( 'Enable', 'tpebl' ),
-				'label_off' => esc_html__( 'Disable', 'tpebl' ),
-				'default'   => 'yes',
-				'condition' => array(
-					'page_scroll_opt' => 'tp_full_page',
-				),
-			)
-		);
-		$this->add_control(
-			'show_dots_label',
-			array(
-				'type'  => Controls_Manager::RAW_HTML,
-				'raw'   => wp_kses_post(
+				'label'       => esc_html__( 'Dots', 'tpebl' ),
+				'type'        => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'    => esc_html__( 'Enable', 'tpebl' ),
+				'label_off'   => esc_html__( 'Disable', 'tpebl' ),
+				'default'     => 'yes',
+				'description' => wp_kses_post(
 					sprintf(
 						'<p class="tp-controller-label-text"><i>%s</i></p>',
 						esc_html__( 'Show navigation dots on the page to jump between each section.', 'tpebl' ),
 					)
 				),
-				'label_block' => true,
 				'condition'   => array(
 					'page_scroll_opt' => 'tp_full_page',
 				),
@@ -1175,7 +1127,7 @@ class L_ThePlus_Page_Scroll extends Widget_Base {
 
 							$template_status = get_post_status( $elem_templates );
 						if ( 'publish' === $template_status ) {
-							$full_page_content .= L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( $elem_templates );
+							$full_page_content .= L_Theplus_Element_Load::elementor()->frontend->get_builder_content_for_display( $elem_templates, true );
 						} else {
 							$full_page_content .= '<div class="tab-preview-template-notice"><div class="preview-temp-notice-heading">' . esc_html__( 'Unauthorized Access', 'tpebl' ) . '</b></div><div class="preview-temp-notice-desc"><b>' . esc_html__( 'Note :', 'tpebl' ) . '</b> ' . esc_html__( 'You need to upgrade your permissions to Editor or Administrator level to update this option.', 'tpebl' ) . '</div></div>';
 						}

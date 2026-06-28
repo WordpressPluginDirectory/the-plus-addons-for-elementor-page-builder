@@ -41,6 +41,26 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
 		private static $instance = null;
 
 		/**
+		 * Queued hover background-image rules collected during element rendering.
+		 * Each entry: [ 'token' => string, 'url' => string ]. Printed as a single
+		 * <style> block at wp_footer by tpae_print_hover_bg_styles().
+		 *
+		 * @since 6.4.14
+		 * @var   array
+		 */
+		private $hover_bg_queue = [];
+
+		/**
+		 * Monotonic counter used to generate unique per-element classes for
+		 * hover backgrounds, so the :hover rule works correctly even when the
+		 * same element ID is rendered multiple times inside a loop/archive.
+		 *
+		 * @since 6.4.14
+		 * @var   int
+		 */
+		private $hover_bg_counter = 0;
+
+		/**
 		 * Returns a singleton instance of the class.
 		 *
 		 * Ensures only one instance is created during execution.
@@ -139,6 +159,40 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
             add_action('elementor/dynamic_tags/register', [$this, 'tpae_reg_dynamic_tag_group'], 1);
             add_action('elementor/dynamic_tags/register', [$this, 'tpae_reg_dynamic_tag']);
 
+            /*
+             * Inline background-image injection for TPAE image dynamic tags.
+             *
+             * WHY THIS EXISTS
+             * ---------------
+             * Elementor's Dynamic CSS is generated once per page load (static cache).
+             * In loop/archive templates every iteration shows the same cached image
+             * (the one resolved at cache-write time). On fresh loads the CSS is built
+             * at wp_enqueue_scripts time, before the WP loop starts, so get_the_ID()
+             * returns 0 and the background-image rule ends up empty.
+             *
+             * WHY `after_add_attributes` INSTEAD OF `before_render`
+             * -----------------------------------------------------
+             * `elementor/frontend/before_render` fires at line 472 of print_element(),
+             * BEFORE `add_render_attributes()` at line 519. Using `before_render` was
+             * fragile because any code path that re-initialises render attributes
+             * between lines 472–519 could wipe our addition.
+             *
+             * `elementor/element/after_add_attributes` fires inside
+             * `add_render_attributes()` (after all standard class/data attributes are
+             * set), right before `before_render()` prints the wrapper tag. This is
+             * the last safe window to add a `style` attribute on `_wrapper`.
+             *
+             * WHY `get_data('settings')` INSTEAD OF `get_settings()`
+             * --------------------------------------------------------
+             * `get_settings()` runs `sanitize_settings()` which may silently unset
+             * `__dynamic__[control_key]` if something goes wrong with tag lookup.
+             * `get_data('settings')` returns the raw saved data from the DB, which
+             * always preserves the `__dynamic__` entries as the editor stored them.
+             */
+            add_action( 'elementor/element/after_add_attributes', [ $this, 'tpae_inject_featured_image_bg_style' ] );
+
+            add_action( 'wp_footer', [ $this, 'tpae_print_hover_bg_styles' ], 100 );
+
             if ( ! defined( 'THEPLUS_VERSION' ) ) {
                 add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'tpae_pro_dynamic_tags_show' ] );
                 add_action( 'elementor/editor/after_enqueue_styles', function () {
@@ -189,12 +243,23 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
 
                 add_action( 'wp_ajax_tp_mark_dynamic_tag_seen', function () {
                     check_ajax_referer( 'tp_dynamic_tag_nonce', 'nonce' );
+
+                    if ( ! current_user_can( 'manage_options' ) ) {
+                        wp_send_json_error( array( 'message' => 'Insufficient permissions.' ) );
+                    }
+
                     update_option( 'tp_dynamic_tag_seen', true );
                     wp_send_json_success();
                 });
             }
 
             add_action( 'wp_ajax_tpae_dismiss_dynamic_notice', function () {
+                check_ajax_referer( 'tpae_dismiss_dynamic_notice', 'nonce' );
+
+                if ( ! current_user_can( 'manage_options' ) ) {
+                    wp_send_json_error( array( 'message' => 'Invalid permissions.' ) );
+                }
+
                 update_option( 'tpae_dynamictag_notice_dismissed', true );
                 wp_send_json_success();
             });
@@ -215,6 +280,13 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
                             'Archive Title',
                             'Archive Meta',
                             'Archive Description'
+                        ],
+                        'Plus - Dynamic Categories': [
+                            'DC Term Title',
+                            'DC Term Description',
+                            'DC Term Count',
+                            'DC Term URL',
+                            'DC Term Image',
                         ],
                         'Plus - WooCommerce': [
                             'Product Title',
@@ -337,12 +409,13 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
                     'title' => esc_html__( 'Dynamic Content from The Plus Addons for Elementor', 'tpebl' ),
                     'desc'  => esc_html__( 'Dynamic Content is now included with The Plus Addons for Elementor, letting you use dynamic features in Elementor even without Elementor Pro.', 'tpebl' ),
                     'learn' => esc_html__( 'Learn More', 'tpebl' ),
+                    'nonce' => wp_create_nonce( 'tpae_dismiss_dynamic_notice' ),
                 ]
             );
 
             wp_add_inline_script(
                 'elementor-editor',
-                <<<JS
+                <<<'JS'
                 (function () {
 
                     let dismissed = false;
@@ -360,14 +433,14 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
 
                         const notice = document.createElement('div');
                         notice.className = 'tp-plus-dynamic-notice elementor-panel-alert elementor-panel-alert-info';
-                        notice.innerHTML = 
+                        notice.innerHTML =
                             `<button class="tp-plus-dynamic-notice-close"><i class="theplus-i-cross"></i></button>
-                            <div class="tp-plus-dynamic-notice-title">\${TPDynamicNotice.title}</div>
+                            <div class="tp-plus-dynamic-notice-title">${TPDynamicNotice.title}</div>
                             <div class="tp-plus-dynamic-notice-desc">
-                                \${TPDynamicNotice.desc}
+                                ${TPDynamicNotice.desc}
                                 <a href="https://theplusaddons.com/docs/add-dynamic-content-in-elementor/?utm_source=wpbackend&utm_medium=elementoreditor&utm_campaign=dynamiccontent"
                                 target="_blank" rel="noopener noreferrer">
-                                    \${TPDynamicNotice.learn}
+                                    ${TPDynamicNotice.learn}
                                 </a>
                             </div>`;
 
@@ -378,7 +451,7 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
                             fetch(ajaxurl, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                                body: 'action=tpae_dismiss_dynamic_notice'
+                                body: 'action=tpae_dismiss_dynamic_notice&nonce=' + encodeURIComponent(TPDynamicNotice.nonce)
                             });
 
                             notice.remove();
@@ -397,7 +470,7 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
         }
 
         /**
-		 * Register Dynamic Tag Groups (Post, Site, User, Archive, WooCommerce).
+		 * Register Dynamic Tag Groups (Post, Site, User, Archive, Dynamic Categories, WooCommerce, ACF).
          * 
          * @since 6.4.5
 		 *
@@ -433,6 +506,13 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
                     ]
                 );
 
+                $dynamic_ele->register_group(
+                    'plus-opt-dc',
+                    [
+                        'title' => esc_html__( 'Plus - Dynamic Categories', 'tpebl' )
+                    ]
+                );
+
                 if ( class_exists( 'WooCommerce' ) ) {
                     $dynamic_ele->register_group(
                         'plus-opt-woocommerce',
@@ -454,7 +534,7 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
         }
 
         /**
-		 * Registers all dynamic tags (text, image, url, WooCommerce).
+		 * Registers all dynamic tags (text, image, url, User, Archive, Dynamic Categories, WooCommerce, ACF).
 		 *
          * @since 6.4.5
          * 
@@ -473,6 +553,7 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
 
                 $dynamic_ele->register( new TPAE_Pro_Dummy_Tag( 'plus-opt-user', 'user' ) );
                 $dynamic_ele->register( new TPAE_Pro_Dummy_Tag( 'plus-opt-archive', 'archive' ) );
+                $dynamic_ele->register( new TPAE_Pro_Dummy_Tag( 'plus-opt-dc', 'dc' ) );
 
                 if ( class_exists( 'WooCommerce' ) ) {
                     $dynamic_ele->register( new TPAE_Pro_Dummy_Tag( 'plus-opt-woocommerce', 'woo' ) );
@@ -520,7 +601,7 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
 
         /**
 		 * Load and register URL-based dynamic tags.
-         * 
+         *
          * @since 6.4.5
 		 */
         private function tpae_register_url_tags( $dynamic_tags_manager ) {
@@ -533,6 +614,195 @@ if ( ! class_exists( 'Tpae_Dynamic_Tag' ) ) {
                     }
                 }
             }
+        }
+
+        /**
+         * Inject an inline background-image style for TPAE image dynamic tags
+         * assigned to a background image control on any element.
+         *
+         * Why this is needed
+         * ------------------
+         * Elementor's Dynamic CSS (the per-post <style> block) is generated once and
+         * cached. In loop/archive templates every iteration would get the same cached
+         * image (the one resolved when the cache was written). On fresh page loads the
+         * CSS generation happens at wp_enqueue_scripts time, before the WP post loop
+         * runs, so get_the_ID() returns 0 and the background-image rule is often empty.
+         *
+         * This method hooks into `elementor/element/after_add_attributes` — which fires
+         * at the end of add_render_attributes(), per-element, inside the loop — and
+         * resolves the correct image URL for the current iteration, writing it as an
+         * HTML inline style attribute. Inline styles have higher CSS specificity than
+         * external stylesheet rules, so this value always wins regardless of what the
+         * cached CSS file contains.
+         *
+         * @since 6.4.7
+         *
+         * @param \Elementor\Element_Base $element The element about to be rendered.
+         */
+        public function tpae_inject_featured_image_bg_style( $element ) {
+
+            /*
+             * Step 1 — fast guard: check whether any background image control on
+             * this element has one of our TPAE image dynamic tags assigned.
+             *
+             * get_data('settings') is used instead of get_settings() because both
+             * methods run sanitize_settings() under the hood, but get_data() is the
+             * lower-level call that stores results back in $this->data['settings'],
+             * making any subsequent call cheap (the flag is already set).
+             *
+             * If __dynamic__ is absent the element has no dynamic controls at all,
+             * so we exit immediately.
+             */
+            $raw = $element->get_data( 'settings' );
+
+            if ( empty( $raw['__dynamic__'] ) || ! is_array( $raw['__dynamic__'] ) ) {
+                return;
+            }
+
+            /*
+             * Background image control keys Elementor registers on sections,
+             * columns, and containers.
+             *
+             * Default-state keys can be rendered as an inline `style="background-image:…"`
+             * on the wrapper because their CSS selector is the wrapper itself.
+             *
+             * Hover-state keys CANNOT be expressed as an inline style (there is no
+             * `:hover` for inline styles), so they are queued and printed later as a
+             * scoped <style> block targeting a unique per-element class.
+             */
+            $default_bg_keys = [
+                'background_image',
+                'background_overlay_image',
+            ];
+
+            $hover_bg_keys = [
+                'background_hover_image',
+            ];
+
+            $bg_image_keys = array_merge( $default_bg_keys, $hover_bg_keys );
+
+            /*
+             * TPAE image tag slugs this method handles. Add new slugs here as
+             * new image dynamic tags are introduced — no other code needs changing.
+             */
+            $tpae_slugs = [
+                'plus-tag-post-featured-image',
+            ];
+
+            // Collect the keys that carry one of our tags.
+            $inject_keys = [];
+
+            foreach ( $bg_image_keys as $key ) {
+                if ( empty( $raw['__dynamic__'][ $key ] ) ) {
+                    continue;
+                }
+                // The stored value is an Elementor tag shortcode string, e.g.:
+                // [elementor-tag id="…" name="plus-tag-post-featured-image" settings="…"]
+                $dynamic_val = $raw['__dynamic__'][ $key ];
+
+                foreach ( $tpae_slugs as $slug ) {
+                    if ( false !== strpos( $dynamic_val, $slug ) ) {
+                        $inject_keys[] = $key;
+                        break; // inner loop only
+                    }
+                }
+            }
+
+            if ( empty( $inject_keys ) ) {
+                return;
+            }
+
+            /*
+             * Step 2 — resolve the URL via Elementor's own dynamic tag pipeline.
+             *
+             * get_settings_for_display() calls get_parsed_dynamic_settings() which
+             * processes every __dynamic__ entry:
+             *   parse_tags_text( $shortcode, ['returnType'=>'object'], $callback )
+             *     → get_tag_data_content( $id, $name, $settings )
+             *       → $tag->get_content()
+             *         → $tag->get_value()  ← our ThePlus_Dynamic_Tag_*::get_value()
+             *
+             * The result for a MEDIA / IMAGE control is ['id' => …, 'url' => …].
+             * Because this runs inside add_render_attributes() (line 762 of
+             * element-base.php, which is the same call stack that fires
+             * after_add_attributes at line 828), the result is already cached in
+             * $this->parsed_active_settings — so this call is effectively free.
+             *
+             * This approach eliminates ALL per-tag resolution duplication: every
+             * TPAE image tag's get_value() is the single source of truth for how
+             * the image is resolved, and any future changes to get_value() are
+             * automatically reflected here.
+             */
+            $display = $element->get_settings_for_display();
+
+            foreach ( $inject_keys as $key ) {
+                $image_url = ! empty( $display[ $key ]['url'] ) ? $display[ $key ]['url'] : '';
+
+                if ( ! $image_url ) {
+                    continue;
+                }
+
+                if ( in_array( $key, $hover_bg_keys, true ) ) {
+                    /*
+                     * Hover-state: an inline `style` attribute on the wrapper would
+                     * apply to the DEFAULT state (no `:hover` support for inline
+                     * styles), which is exactly the bug this branch fixes.
+                     *
+                     * Instead, tag the wrapper with a unique class and queue a CSS
+                     * rule that targets `.<token>:hover`. The class is unique per
+                     * render invocation, so this also works inside loops/archives
+                     * where the same element ID is rendered multiple times.
+                     */
+                    $token = 'tpae-dyn-hover-bg-' . ( ++$this->hover_bg_counter );
+
+                    $element->add_render_attribute( '_wrapper', 'class', $token );
+
+                    $this->hover_bg_queue[] = [
+                        'token' => $token,
+                        'url'   => $image_url,
+                    ];
+
+                    continue;
+                }
+
+                // Inject the inline style. add_render_attribute() appends to any
+                // existing style value, so other background-* properties set by
+                // Elementor controls are not wiped out.
+                $element->add_render_attribute(
+                    '_wrapper',
+                    'style',
+                    'background-image: url("' . esc_url( $image_url ) . '");'
+                );
+            }
+        }
+
+        /**
+         * Print queued hover background-image rules as a single <style> block
+         * in the footer.
+         *
+         * Inline styles on `_wrapper` cannot express `:hover`, so hover-state
+         * dynamic background images are collected during element rendering and
+         * emitted here with a unique per-element class selector.
+         *
+         * @since 6.4.14
+         */
+        public function tpae_print_hover_bg_styles() {
+
+            if ( empty( $this->hover_bg_queue ) ) {
+                return;
+            }
+
+            $css = '';
+
+            foreach ( $this->hover_bg_queue as $item ) {
+                $css .= '.' . $item['token'] . ':hover{background-image:url("' . esc_url( $item['url'] ) . '") !important;}';
+            }
+
+            // URLs are run through esc_url() above; tokens are generated from an
+            // internal counter so they contain only [a-z0-9-].
+            echo '<style id="tpae-dynamic-hover-bg-styles">' . $css . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+            $this->hover_bg_queue = [];
         }
     }
 }
